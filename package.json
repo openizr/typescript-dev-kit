@@ -1,0 +1,92 @@
+{
+  "name": "typescript-dev-kit",
+  "version": "0.0.9",
+  "description": "Everything you need to develop front-end and back-end TypeScript projects with maximum productivity.",
+  "repository": "https://github.com/matthieujabbour/typescript-dev-kit",
+  "homepage": "https://github.com/matthieujabbour/typescript-dev-kit",
+  "bugs": "https://github.com/matthieujabbour/typescript-dev-kit/issues",
+  "keywords": [
+    "frontend",
+    "backend",
+    "typescript",
+    "node",
+    "react",
+    "js",
+    "ts",
+    "development",
+    "kit",
+    "starter",
+    "project"
+  ],
+  "contributors": [
+    {
+      "name": "Matthieu Jabbour",
+      "email": "matthieu.jabbour@gmail.com",
+      "homepage": "https://github.com/matthieujabbour"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  },
+  "dependencies": {
+    "@types/jest": "^22.1.3",
+    "autoprefixer": "^8.0.0",
+    "awesome-typescript-loader": "^3.4.1",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.1.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.9",
+    "express": "^4.16.2",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.6",
+    "fs-extra": "^5.0.0",
+    "jest": "^22.1.4",
+    "node-sass": "^4.8.3",
+    "postcss-loader": "^2.1.0",
+    "sass-loader": "^6.0.7",
+    "ts-jest": "^22.0.4",
+    "tslint": "^5.9.1",
+    "tslint-config-stumpfi": "^1.0.11",
+    "tslint-loader": "^3.5.3",
+    "typedoc": "^0.10.0",
+    "typescript": "^2.7.2",
+    "uglifyjs-webpack-plugin": "^1.2.4",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-middleware": "^2.0.4",
+    "webpack-hot-middleware": "^2.21.0"
+  },
+  "scripts": {
+    "build": "babel-node scripts/build"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not ie < 11",
+    "> 1%"
+  ],
+  "jest": {
+    "rootDir": "../../",
+    "coverageDirectory": "<rootDir>/coverage",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "roots": ["<rootDir>/src"],
+    "modulePaths": ["<rootDir>/node_modules"],
+    "moduleNameMapper": {
+      "\\.(css|png|jpg|ico)$": "<rootDir>/jest/fileMock.js"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "tsx",
+      "json"
+    ]
+  }
+}
