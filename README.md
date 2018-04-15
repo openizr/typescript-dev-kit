@@ -25,7 +25,3 @@ Everything is already shipped-in : testing (with Jest), bundling (with webpack),
 [MIT](http://opensource.org/licenses/MIT)
 
 Copyright 2016 - present, Matthieu Jabbour.
-
-
-  
-  "doc": "./node_modules/.bin/typedoc --out ./doc/ src/ --exclude \"**/__+(tests|mocks)__/**\""
