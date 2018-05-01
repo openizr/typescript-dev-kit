@@ -4,6 +4,9 @@
  */
 
 
+/* eslint-disable no-console */
+
+
 /**
  * Clears terminal before a webpack compilation.
  */
@@ -11,11 +14,14 @@ class ClearTerminalPlugin {}
 
 
 ClearTerminalPlugin.prototype.apply = (compiler) => {
-  compiler.plugin('emit', (_, done) => {
+  const clear = (_, done) => {
     // '\x1B[2J\x1B[3J\x1B[H' to reset scrolling as well.
     process.stdout.write('\x1B[2J\x1B[0f');
+    console.log('Compiling...');
     done();
-  });
+  };
+  compiler.hooks.run.tapAsync('emit', clear);
+  compiler.hooks.watchRun.tapAsync('emit', clear);
 };
 
 

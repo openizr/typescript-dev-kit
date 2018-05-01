@@ -19,6 +19,7 @@ const productionConfig = {
   target: 'node',
   bail: true,
   cache: false,
+  mode: 'production',
   context: userConfig.srcPath,
   devtool: 'source-map',
   entry: { [packageJson.name]: './main.ts' },
@@ -35,6 +36,18 @@ const productionConfig = {
   ),
   resolve: {
     extensions: ['.json', '.ts', '.tsx', '.js', '*'],
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        sourceMap: true,
+        parallel: true,
+        uglifyOptions: {
+          ecma: 6,
+          mangle: false,
+        },
+      }),
+    ]
   },
   module: {
     rules: [
@@ -60,27 +73,9 @@ const productionConfig = {
           },
         ],
       },
-      {
-        test: /\.json$/,
-        include: [userConfig.srcPath],
-        use: [{ loader: 'json-loader' }],
-      },
     ],
   },
   plugins: [
-    // Handles errors more cleanly and prevents Webpack from outputting anything into a bundle.
-    new webpack.NoEmitOnErrorsPlugin(),
-    // Makes some environment variables available to the JS code.
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
-    }),
-    new UglifyJsPlugin({
-      sourceMap: true,
-      uglifyOptions: {
-        ecma: 6,
-        mangle: false,
-      },
-    }),
     // Includes a banner comment on top of each generated file.
     new webpack.BannerPlugin({
       banner: userConfig.banner,

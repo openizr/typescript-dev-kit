@@ -4,7 +4,7 @@
  */
 
 
-/* eslint-disable no-console */
+
 /* eslint-disable import/no-unresolved */
 
 
@@ -46,7 +46,6 @@ const distPackageJson = JSON.stringify({
 fs.remove(distPath)
   // Running webpack compiler...
   .then(() => new Promise((resolve, reject) => {
-    console.log('Compiling...');
     compiler.run((error, stats) => (error ? reject(error) : resolve(stats)));
   }))
   // Displaying webpack compilation stats...

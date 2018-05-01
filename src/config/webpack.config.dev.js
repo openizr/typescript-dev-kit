@@ -18,6 +18,7 @@ const developmentConfig = {
   target: 'node',
   bail: false,
   cache: true,
+  mode: 'development',
   context: userConfig.srcPath,
   devtool: 'cheap-module-source-map',
   entry: { [packageJson.name]: './main.ts' },
@@ -55,20 +56,9 @@ const developmentConfig = {
           },
         ],
       },
-      {
-        test: /\.json$/,
-        include: [userConfig.srcPath],
-        use: [{ loader: 'json-loader' }],
-      },
     ],
   },
   plugins: [
-    // Handles errors more cleanly and prevents Webpack from outputting anything into a bundle.
-    new webpack.NoEmitOnErrorsPlugin(),
-    // Makes some environment variables available to the JS code.
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"development"',
-    }),
     // Clears terminal between each compilation.
     new ClearTerminalPlugin(),
   ],
