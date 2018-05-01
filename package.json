@@ -1,6 +1,6 @@
 {
   "name": "typescript-dev-kit",
-  "version": "0.0.9",
+  "version": "0.0.13",
   "description": "Everything you need to develop front-end and back-end TypeScript projects with maximum productivity.",
   "repository": "https://github.com/matthieujabbour/typescript-dev-kit",
   "homepage": "https://github.com/matthieujabbour/typescript-dev-kit",
@@ -32,7 +32,7 @@
   "dependencies": {
     "@types/jest": "^22.1.3",
     "autoprefixer": "^8.0.0",
-    "awesome-typescript-loader": "^3.4.1",
+    "awesome-typescript-loader": "^5.0.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.2",
@@ -41,21 +41,21 @@
     "express": "^4.16.2",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
-    "fs-extra": "^5.0.0",
+    "fs-extra": "^6.0.0",
     "jest": "^22.1.4",
     "node-sass": "^4.8.3",
     "postcss-loader": "^2.1.0",
-    "sass-loader": "^6.0.7",
+    "sass-loader": "^7.0.1",
+    "source-map-support": "^0.5.5",
     "ts-jest": "^22.0.4",
     "tslint": "^5.9.1",
-    "tslint-config-stumpfi": "^1.0.11",
+    "tslint-config-stumpfi": "^1.1.1",
     "tslint-loader": "^3.5.3",
-    "typedoc": "^0.10.0",
+    "typedoc": "^0.11.1",
     "typescript": "^2.7.2",
-    "uglifyjs-webpack-plugin": "^1.2.4",
-    "url-loader": "^0.6.2",
-    "webpack": "^3.10.0",
-    "webpack-dev-middleware": "^2.0.4",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.6.0",
+    "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.21.0"
   },
   "scripts": {
@@ -77,8 +77,12 @@
     "transform": {
       ".(ts|tsx)": "ts-jest"
     },
-    "roots": ["<rootDir>/src"],
-    "modulePaths": ["<rootDir>/node_modules"],
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "modulePaths": [
+      "<rootDir>/node_modules"
+    ],
     "moduleNameMapper": {
       "\\.(css|png|jpg|ico)$": "<rootDir>/jest/fileMock.js"
     },
