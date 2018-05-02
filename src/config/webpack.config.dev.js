@@ -62,6 +62,16 @@ const developmentConfig = {
     // Clears terminal between each compilation.
     new ClearTerminalPlugin(),
   ],
+  // Disables all the nodeJS polyfills and mocks only if target is `node`.
+  node: {
+    console: false,
+    global: false,
+    process: false,
+    __filename: false,
+    __dirname: false,
+    Buffer: false,
+    setImmediate: false,
+  },
 };
 
 
