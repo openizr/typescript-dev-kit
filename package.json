@@ -1,6 +1,6 @@
 {
   "name": "typescript-dev-kit",
-  "version": "0.0.16",
+  "version": "1.0.0",
   "description": "Everything you need to develop front-end and back-end TypeScript projects with maximum productivity.",
   "repository": "https://github.com/matthieujabbour/typescript-dev-kit",
   "homepage": "https://github.com/matthieujabbour/typescript-dev-kit",
@@ -27,37 +27,45 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "@babel/node": "^7.5.5"
   },
   "dependencies": {
-    "@types/jest": "^22.1.3",
-    "@types/source-map-support": "^0.4.0",
-    "autoprefixer": "^8.0.0",
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.6.3",
+    "@types/jest": "^24.0.18",
+    "@types/source-map-support": "^0.5.0",
+    "@typescript-eslint/eslint-plugin": "^2.4.0",
+    "@typescript-eslint/parser": "^2.4.0",
+    "autoprefixer": "^9.6.1",
     "awesome-typescript-loader": "^5.0.0",
-    "babel-core": "^6.26.0",
-    "babel-jest": "^22.1.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "css-loader": "^0.28.9",
-    "express": "^4.16.2",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^1.1.6",
-    "fs-extra": "^6.0.0",
-    "jest": "^22.1.4",
-    "node-sass": "^4.8.3",
-    "postcss-loader": "^2.1.0",
-    "sass-loader": "^7.0.1",
-    "source-map-support": "^0.5.5",
-    "ts-jest": "^22.0.4",
-    "tslint": "^5.9.1",
-    "tslint-config-stumpfi": "^1.1.1",
-    "tslint-loader": "^3.5.3",
-    "typedoc": "^0.11.1",
-    "typescript": "^2.7.2",
-    "url-loader": "^1.0.1",
-    "webpack": "^4.6.0",
-    "webpack-dev-middleware": "^3.1.3",
-    "webpack-hot-middleware": "^2.21.0"
+    "css-loader": "^3.2.0",
+    "dts-generator": "^3.0.0",
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.1.2",
+    "express": "^4.17.1",
+    "file-loader": "^4.2.0",
+    "fs-extra": "^8.1.0",
+    "jest": "^24.9.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.12.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "terser-webpack-plugin": "^2.1.3",
+    "ts-jest": "^24.1.0",
+    "typedoc": "^0.15.0",
+    "typescript": "^3.6.4",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^2.1.0",
+    "webpack": "^4.39.2",
+    "webpack-dev-middleware": "^3.6.2",
+    "webpack-hot-middleware": "^2.24.4"
   },
   "scripts": {
     "build": "babel-node scripts/build"
@@ -70,28 +78,5 @@
     "last 2 versions",
     "not ie < 11",
     "> 1%"
-  ],
-  "jest": {
-    "rootDir": "../../",
-    "coverageDirectory": "<rootDir>/coverage",
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",
-    "transform": {
-      ".(ts|tsx)": "ts-jest"
-    },
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "modulePaths": [
-      "<rootDir>/node_modules"
-    ],
-    "moduleNameMapper": {
-      "\\.(css|png|jpg|ico)$": "<rootDir>/jest/fileMock.js"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "ts",
-      "tsx",
-      "json"
-    ]
-  }
+  ]
 }

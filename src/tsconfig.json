@@ -16,6 +16,10 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
   "include": ["./types", "../../"]
 }
