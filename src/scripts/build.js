@@ -74,7 +74,7 @@ fs.remove(distPath)
       // Generating typings into `dist` directory...
       .then(() => dtsGenerator.default({
         name: packageJson.name,
-        main: `module/${Object.keys(config.entry)[0]}`,
+        main: `module/scripts/${Object.keys(config.entry)[0]}`,
         prefix: 'module',
         files: Object.values(config.entry),
         out: path.resolve(distPath, 'types.d.ts'),
