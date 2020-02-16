@@ -51,6 +51,11 @@ module.exports = (userConfig) => {
     throw new Error('User config validation - "distPath" is not a valid path.');
   }
 
+  // Checking chunks splitting...
+  if (userConfig.splitChunks !== undefined && typeof userConfig.splitChunks !== 'boolean') {
+    throw new Error('User config validation - "splitChunks" is not a boolean.');
+  }
+
   // Checking banner message...
   if (userConfig.banner !== undefined && typeof userConfig.banner !== 'string') {
     throw new Error('User config validation - "banner" is not a valid banner.');

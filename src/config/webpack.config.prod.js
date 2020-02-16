@@ -50,7 +50,7 @@ const contextSpecificConfig = {
     modules: [userConfig.srcPath, 'node_modules'],
   },
   plugins: [],
-  optimization: (userConfig.target === 'web')
+  optimization: (userConfig.target === 'web' && userConfig.splitChunks === true)
     ? {
       // Splits code in several chunks to leverage on long-term vendor-caching.
       // To understand the following configuration, check
