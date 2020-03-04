@@ -82,7 +82,7 @@ if (config.target === 'web') {
             // Writing distributable `package.json` file into `dist` directory...
             fs.writeJsonSync(path.join(distPath, 'package.json'), {
               name: packageJson.name,
-              main: `./${packageJson.name}.js`,
+              main: packageJson.main,
               types: './types.d.ts',
               bugs: packageJson.bugs,
               author: packageJson.author,
