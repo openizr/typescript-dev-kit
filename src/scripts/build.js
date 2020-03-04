@@ -47,7 +47,7 @@ fs.remove(distPath)
     // Writing distributable `package.json` file into `dist` directory...
     : fs.writeJson(path.join(distPath, 'package.json'), {
       name: packageJson.name,
-      main: `./${packageJson.name}.js`,
+      main: packageJson.main,
       types: './types.d.ts',
       bugs: packageJson.bugs,
       author: packageJson.author,
