@@ -171,6 +171,11 @@ const developmentConfig = {
       {
         test: /\.s?css$/,
         use: [
+          // `style-loader` turns CSS into JS modules.
+          {
+            loader: 'style-loader',
+            options: {},
+          },
           // `css-loader` resolves paths in CSS and adds assets as dependencies.
           {
             loader: 'css-loader',

@@ -48,6 +48,7 @@ In order to keep this package up-to-date, dependencies updates should be checked
 - [optimize-css-assets-webpack-plugin](https://github.com/NMFR/optimize-css-assets-webpack-plugin/releases)
 - [postcss-loader](https://github.com/postcss/postcss-loader/releases)
 - [sass-loader](https://github.com/webpack-contrib/sass-loader/releases)
+- [style-loader](https://github.com/webpack-contrib/style-loader/releases)
 - [ts-jest](https://github.com/kulshekhar/ts-jest/releases)
 - [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin/releases)
 - [typedoc](https://github.com/TypeStrong/typedoc/releases)
