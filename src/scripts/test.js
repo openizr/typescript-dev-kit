@@ -11,5 +11,9 @@ process.env.NODE_ENV = 'test';
 const jest = require('jest');
 const path = require('path');
 
+const watch = (process.argv.indexOf('-w') >= 0)
+  ? '--watchAll'
+  : '';
+
 // We want to run Jest in watch mode and see the code coverage for faster testing.
-jest.run(['--coverage', '--watchAll', `--config=${path.resolve(__dirname, '../config/jest.config.js')}`]);
+jest.run(['--coverage', watch, `--config=${path.resolve(__dirname, '../config/jest.config.js')}`]);
