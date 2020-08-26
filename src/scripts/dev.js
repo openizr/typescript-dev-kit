@@ -53,7 +53,14 @@ if (config.target === 'web') {
         heartbeat: 2000,
       }));
 
+      // Serves all static assets.
       server.use(express.static(path.resolve(config.output.path, '..')));
+
+      // Catch-all to redirect any request to the main entry point (index.html).
+      server.get('*', (_request, response) => {
+        response.sendFile(path.resolve(config.output.path, '../index.html'));
+      });
+
       server.listen(config.devServer.port, config.devServer.ip, () => {
         console.log(`Starting dev server at http://${config.devServer.ip}:${config.devServer.port}...`);
       });
