@@ -22,4 +22,4 @@ sed -i "s%AUTHOR_EMAIL%$author_email%g" package.json
 
 yarn install
 
-echo "successfully initialized template!'
+echo "successfully initialized template!"
