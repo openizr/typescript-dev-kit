@@ -196,22 +196,6 @@ const developmentConfig = {
         options: {
           // We disable CSS extraction in dev mode to enable CSS HMR.
           extractCSS: false,
-          loaders: {
-            css: [
-              // `vue-style-loader` turns CSS into JS modules.
-              'vue-style-loader',
-              // `css-loader` resolves paths in CSS and adds assets as dependencies.
-              { loader: 'css-loader', options: { sourceMap: true } },
-              // `postcss-loader` is used to autoprefix CSS to ensure compatibility with browsers.
-              {
-                loader: 'postcss-loader',
-                options: {
-                  config: { path: path.resolve(__dirname, 'postcss.config.js') },
-                  sourceMap: true,
-                },
-              },
-            ],
-          },
         },
       },
       {
@@ -229,9 +213,9 @@ const developmentConfig = {
       {
         test: /\.s?css$/,
         use: [
-          // `vue-style-loader` turns CSS into JS modules.
+          // `style-loader` turns CSS into JS modules.
           {
-            loader: 'vue-style-loader',
+            loader: 'style-loader',
             options: {},
           },
           // `css-loader` resolves paths in CSS and adds assets as dependencies.
