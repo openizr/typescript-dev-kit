@@ -31,7 +31,7 @@ But if you prefer the hard way, just `yarn add --dev typescript-dev-kit`, config
 
 In your `package.json`:
 
-```json
+```javascript
 ...
 "tsDevKitConfig": {
   "target": "node", // Can be "node" or "web".
@@ -61,7 +61,7 @@ In your `package.json`:
 
 In your `tsconfig.json`:
 
-```json
+```javascript
 {
   "extends": "./node_modules/typescript-dev-kit/tsconfig.json", // Tells your IDE and Webpack to inherit the shipped-in TypeScript config.
   "compilerOptions": {
@@ -69,6 +69,10 @@ In your `tsconfig.json`:
   }
 }
 ```
+
+## Contributing
+
+See the [Contribution guide](https://github.com/openizr/typescript-dev-kit/blob/master/CONTRIBUTING.md)
 
 ## License
 
