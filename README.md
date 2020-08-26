@@ -35,6 +35,11 @@ In your `package.json`:
 ...
 "tsDevKitConfig": {
   "target": "node", // Can be "node" or "web".
+  "devServer": {  // Your dev server configuration.
+      "ip": "0.0.0.0",
+      "port": 3000
+    },
+  "splitChunks": true,  // Whether to split bundle into different chunks (sometimes you don't want it).
   "entry": { // Here you can list all your entrypoints.
     "main": "main.ts",
     ...
