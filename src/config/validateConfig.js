@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - present, Matthieu Jabbour <matthieu.jabbour@gmail.com>.
+ * Copyright (c) Matthieu Jabbour. All Rights Reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,7 +10,9 @@
  * This function checks user config and throws an error if it is not valid, to prevent
  * running misconfigured webpack (which can lead to bad side effects,
  * like unexpected directories deletion).
+ *
  * @param {string} userConfig User configuration for webpack.
+ *
  * @returns {void}
  */
 module.exports = (userConfig) => {

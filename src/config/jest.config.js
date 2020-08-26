@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - present, Matthieu Jabbour <matthieu.jabbour@gmail.com>.
+ * Copyright (c) Matthieu Jabbour. All Rights Reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -27,12 +27,26 @@ module.exports = {
   rootDir: path.resolve(__dirname, '../../../'),
   coverageDirectory: '<rootDir>/coverage',
   collectCoverageFrom: [
-    '**/*.{ts,tsx}',
+    '**/*.{js,ts,jsx,tsx,vue}',
     '!**/*.d.{ts,tsx}',
   ],
-  testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$',
+  globals: {
+    'vue-jest': {
+      transform: {
+        js: path.resolve(__dirname, '../jest/transform.js'),
+      },
+      babelConfig: {
+        presets: ['@babel/preset-env'],
+        // `dynamic-import-node` allows for dynamic import syntax.
+        plugins: ['@babel/plugin-syntax-dynamic-import', 'dynamic-import-node'],
+      },
+    },
+  },
+  testRegex: '(/__tests__/.*|\\.(test|spec))\\.(js|ts|jsx|tsx|vue)$',
   transform: {
+    '\\.(js|jsx)$': path.resolve(__dirname, '../jest/transform.js'),
     '\\.(ts|tsx)$': 'ts-jest',
+    '\\.(vue)$': '<rootDir>/node_modules/vue-jest',
   },
   moduleNameMapper: {
     '\\.(css|png|jpg|ico)$': '<rootDir>/node_modules/typescript-dev-kit/jest/fileMock.js',
@@ -49,6 +63,7 @@ module.exports = {
     'jsx',
     'ts',
     'tsx',
+    'vue',
     'json',
   ],
 };
