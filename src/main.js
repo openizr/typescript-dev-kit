@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018 - present, Matthieu Jabbour <mjabbour@inbenta.com>.
+ * Copyright (c) Matthieu Jabbour. All Rights Reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -12,26 +12,39 @@ const path = require('path');
 const packageJson = require('../../package.json');
 
 module.exports = {
+  parser: 'vue-eslint-parser',
   plugins: ['@typescript-eslint'],
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended'],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:vue/recommended'],
   parserOptions: {
     parser: '@typescript-eslint/parser',
   },
   rules: {
+    '@typescript-eslint/explicit-function-return-type': 'off',
     'react/jsx-filename-extension': [
       'error',
       {
         extensions: ['.tsx', '.jsx'],
       },
     ],
+    'vue/max-attributes-per-line': [
+      'error',
+      {
+        singleline: 10,
+        multiline: {
+          max: 1,
+          allowFirstLine: false,
+        },
+      },
+    ],
     'import/extensions': [
       'error',
       'always',
       {
-        ts: 'never',
-        tsx: 'never',
         js: 'never',
+        ts: 'never',
         jsx: 'never',
+        tsx: 'never',
+        vue: 'always',
       },
     ],
     'no-restricted-imports': [
@@ -42,12 +55,21 @@ module.exports = {
     ],
     'arrow-parens': ['error', 'always'],
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': ['warn'],
+      },
+    },
+  ],
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.ts', '.tsx', 'js', 'jsx', '.json'],
+        extensions: ['.js', '.ts', '.jsx', '.tsx', '.vue', '.json'],
         paths: [path.resolve(__dirname, '../../', packageJson.tsDevKitConfig.srcPath)],
       },
+      'import/extensions': ['.js', '.ts', '.jsx', '.tsx', '.vue'],
     },
   },
   env: {

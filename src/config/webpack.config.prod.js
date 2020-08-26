@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 - present, Matthieu Jabbour <matthieu.jabbour@gmail.com>.
+ * Copyright (c) Matthieu Jabbour. All Rights Reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,6 +11,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const validateConfig = require('./validateConfig');
@@ -45,11 +46,17 @@ const contextSpecificConfig = {
       {},
     ),
   resolve: {
-    alias: {},
+    // We include the Vue compiler along with the builder to allow for `template` syntax.
+    alias: (userConfig.target === 'web') ? { vue: 'vue/dist/vue.runtime.min.js' } : {},
     // Allows importing files as modules (with absolute path).
     modules: [userConfig.srcPath, 'node_modules'],
   },
-  plugins: [],
+  plugins: (userConfig.target === 'web')
+    ? [
+    // Allows .vue files parsing.
+      new VueLoaderPlugin(),
+    ]
+    : [],
   optimization: (userConfig.target === 'web' && userConfig.splitChunks === true)
     ? {
       // Splits code in several chunks to leverage on long-term vendor-caching.
@@ -98,6 +105,9 @@ const contextSpecificConfig = {
     : {},
   node: (userConfig.target === 'web')
     ? {
+      // Prevents webpack from injecting useless setImmediate polyfill because Vue
+      // source contains it (although only uses it if it's native).
+      setImmediate: false,
       // Prevents webpack from injecting mocks to Node native modules
       // that does not make sense for the client.
       dgram: 'empty',
@@ -130,25 +140,77 @@ const productionConfig = {
     libraryTarget: contextSpecificConfig.output.libraryTarget,
   },
   resolve: {
-    extensions: ['.json', '.ts', '.tsx', '.js', 'jsx', '*'],
+    extensions: ['.json', '.js', '.ts', '.jsx', '.tsx', '.vue', '*'],
     alias: contextSpecificConfig.resolve.alias,
     modules: contextSpecificConfig.resolve.modules,
   },
   module: {
     rules: [
+      // `babel-loader` is used to provide polyfills for latest ECMAScript syntax.
       {
-        test: /\.(js|ts)x?$/,
+        test: /\.jsx?$/,
         include: [userConfig.srcPath],
         use: [
-          // `awesome-typescript-loader` is then used, to compile Typescript into Javascript.
           {
-            loader: 'awesome-typescript-loader',
+            loader: 'babel-loader',
             options: {
-              useCache: false,
-              configFileName: path.resolve(__dirname, '../../../tsconfig.json'),
+              cacheDirectory: false,
+              // We don't use the `.babelrc` since it is already used to compile
+              // development environment's scripts, with another configuration than this one.
+              babelrc: false,
+              presets: ['@babel/preset-env', '@babel/react'],
+              plugins: ['@babel/plugin-syntax-dynamic-import'],
             },
           },
-          // `eslint-loader` is used first, to lint the code.
+        ],
+      },
+      // `ts-loader` is used to transpile *.ts(x) Typescript files into Javascript.
+      {
+        test: /\.tsx?$/,
+        include: [userConfig.srcPath],
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              // This option allows to write TypeScript code inside *.vue files.
+              appendTsSuffixTo: [/\.vue$/],
+              configFile: path.resolve(__dirname, '../../../tsconfig.json'),
+            },
+          },
+        ],
+      },
+      // `vue-loader` is used to compile *.vue components files.
+      {
+        test: /\.vue$/,
+        include: [userConfig.srcPath],
+        loader: 'vue-loader',
+        options: {
+          hotReload: false, // disables Hot Reload.
+          // We disable CSS extraction in dev mode to enable CSS HMR.
+          extractCSS: false,
+          loaders: {
+            css: [
+              // `vue-style-loader` turns CSS into JS modules.
+              'vue-style-loader',
+              // `css-loader` resolves paths in CSS and adds assets as dependencies.
+              { loader: 'css-loader', options: { sourceMap: true } },
+              // `postcss-loader` is used to autoprefix CSS to ensure compatibility with browsers.
+              {
+                loader: 'postcss-loader',
+                options: {
+                  config: { path: path.resolve(__dirname, 'postcss.config.js') },
+                  sourceMap: true,
+                },
+              },
+            ],
+          },
+        },
+      },
+      {
+        // `eslint-loader` is used first, to lint the code.
+        test: /\.(vue|jsx?|tsx?)$/,
+        include: [userConfig.srcPath],
+        use: [
           {
             loader: 'eslint-loader',
             options: { cache: false },
