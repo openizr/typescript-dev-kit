@@ -1,66 +1,77 @@
 # typescript-dev-kit
 
-This package contains all the configurations and frameworks that can be useful when developing front-end and back-end TypeScript projects.
-For front-end projects, React is the supported framework.
-Everything is already shipped-in : testing (with Jest), bundling (with webpack), development server and HMR, building script, ...
+This package contains all the configurations and libraries that can be useful when developing
+front-end and back-end JavaScript or TypeScript projects.
 
-# Installation
+## Philosophy
 
-`git clone https://github.com/matthieujabbour/typescript-dev-kit.git`
+Contrary to most development environments out there that provide support and tools for one specific
+ecosystem (i.e. choose your side: React, VueJS ? ExpressJS, Apollo ? ...), the `typescript-dev-kit`
+package is completely unopinionated, meaning you can build front/back ends or libraries using the
+frameworks of your choice, and seamlessly switch over time while keeping the same environment.
 
-`yarn install`
+There are still a few basic rules however:
+- Testing must be performed with [Jest](https://jestjs.io/) (which is by far the best testing framework on the market)
+- Bundling is handled by [Webpack](https://webpack.js.org/) (the most complete bundler)
+- Eslint uses [Airbnb style guide](https://github.com/airbnb/javascript), although you can override the config to provide your own rules
+- SASS is the official CSS preprocessor (and it's good enough)
 
-# Build and deploy for production
+## Other info
+- VueJS and React are the 2 front-end frameworks currently supported
+- Webpack is already configured to provide 100% optimized bundles, even for building npm packages
+- You can develop either in JavaScript (ES6 is supported), or TypeScript depending on your needs
+- Shipped-in HMR, source maps generation, CSS autoprefixer, environment variables definition, ...
 
-`yarn run build`
+## Installation
 
-`npm publish ./dist`
+The [TypeScript boilerplate](https://github.com/openizr/typescript-boilerplate) is made for you, nothing special to do!
+But if you prefer the hard way, just `yarn add --dev typescript-dev-kit`, configure your `package.json` and you're good to go.
 
-# Maintenance
+## Configuration
 
-In order to keep this package up-to-date, dependencies updates should be checked and updated regularily, using the `yarn outdated` and `yarn upgrade-interactive --latest` commands. Here is the list of repositories changelogs to watch for updates:
+In your `package.json`:
 
-- [@babel/core](https://github.com/babel/babel/releases)
-- [@babel/node](https://github.com/babel/babel/releases)
-- [@babel/preset-env](https://github.com/babel/babel/releases)
-- [@babel/plugin-syntax-dynamic-import](https://github.com/babel/babel/releases)
-- [@types/jest](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
-- [@types/source-map-support](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
-- [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint/releases)
-- [@typescript-eslint/parser](https://github.com/typescript-eslint/typescript-eslint/releases)
-- [awesome-typescript-loader](https://github.com/s-panferov/awesome-typescript-loader/releases)
-- [autoprefixer](https://github.com/postcss/autoprefixer/releases)
-- [css-loader](https://github.com/webpack-contrib/css-loader/releases)
-- [dts-generator](https://github.com/SitePen/dts-generator/releases)
-- [eslint](https://github.com/eslint/eslint/releases)
-- [eslint-config-airbnb-base](https://github.com/airbnb/javascript/releases)
-- [eslint-loader](https://github.com/webpack-contrib/eslint-loader/releases)
-- [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import/releases)
-- [eslint-plugin-jsx-a11y](https://github.com/evcohen/eslint-plugin-jsx-a11y/releases)
-- [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react/releases)
-- [eslint-plugin-react-hooks](https://github.com/facebook/react/releases)
-- [express](https://github.com/expressjs/express/releases)
-- [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin/releases)
-- [file-loader](https://github.com/webpack-contrib/file-loader/releases)
-- [fs-extra](https://github.com/jprichardson/node-fs-extra/releases)
-- [jest](https://github.com/facebook/jest/releases)
-- [node-sass](https://github.com/sass/node-sass/releases)
-- [optimize-css-assets-webpack-plugin](https://github.com/NMFR/optimize-css-assets-webpack-plugin/releases)
-- [postcss-loader](https://github.com/postcss/postcss-loader/releases)
-- [sass-loader](https://github.com/webpack-contrib/sass-loader/releases)
-- [style-loader](https://github.com/webpack-contrib/style-loader/releases)
-- [ts-jest](https://github.com/kulshekhar/ts-jest/releases)
-- [terser-webpack-plugin](https://github.com/webpack-contrib/terser-webpack-plugin/releases)
-- [typedoc](https://github.com/TypeStrong/typedoc/releases)
-- [typescript](https://github.com/microsoft/TypeScript/releases)
-- [uglifyjs-webpack-plugin](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/releases)
-- [url-loader](https://github.com/webpack-contrib/url-loader/releases)
-- [webpack](https://github.com/webpack/webpack/releases)
-- [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware/releases)
-- [webpack-hot-middleware](https://github.com/webpack-contrib/webpack-hot-middleware/releases)
+```json
+...
+"tsDevKitConfig": {
+  "target": "node", // Can be "node" or "web".
+  "entry": { // Here you can list all your entrypoints.
+    "main": "main.ts",
+    ...
+  },
+  "srcPath": "src", // Source path, containing your codebase.
+  "distPath": "public", // Distribution path, in which all assets will be compiled.
+  "banner": "/** Copyright Douglas, Inc */", // This banner will be put at the top of all your compiled assets.
+  "env": {  // Here you can specify all your environment variables, they will be automatically replaced in the code at build time.
+    "development": {
+      "NODE_ENV": "\"development\""
+    },
+    "production": {
+      "NODE_ENV": "\"production\""
+    }
+  }
+},
+...
+"eslintConfig": { // Tells your IDE and Webpack to inherit the shipped-in Eslint config (you can also define your own rules).
+  "extends": [
+    "./node_modules/typescript-dev-kit/main.js"
+  ]
+},
+```
 
-# License
+In your `tsconfig.json`:
+
+```json
+{
+  "extends": "./node_modules/typescript-dev-kit/tsconfig.json", // Tells your IDE and Webpack to inherit the shipped-in TypeScript config.
+  "compilerOptions": {
+    "baseUrl": "src"  // Path to your codebase directory.
+  }
+}
+```
+
+## License
 
 [MIT](http://opensource.org/licenses/MIT)
 
-Copyright 2016 - present, Matthieu Jabbour.
+Copyright (c) Matthieu Jabbour. All Rights Reserved.
