@@ -20,6 +20,7 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/jsx-filename-extension': [
       'error',
       {
@@ -60,6 +61,7 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': ['warn'],
+        '@typescript-eslint/explicit-module-boundary-types': ['warn'],
       },
     },
   ],
