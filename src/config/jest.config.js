@@ -42,7 +42,7 @@ module.exports = {
       },
     },
   },
-  testRegex: '(/__tests__/.*|\\.(test|spec))\\.(js|ts|jsx|tsx|vue)$',
+  testRegex: '(/__tests__/.*|\\.(test|spec))([^.]d|[^.][^d])\\.(js|ts|jsx|tsx|vue)$',
   transform: {
     '\\.(js|jsx)$': path.resolve(__dirname, '../jest/transform.js'),
     '\\.(ts|tsx)$': 'ts-jest',
