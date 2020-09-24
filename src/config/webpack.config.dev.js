@@ -43,9 +43,15 @@ const contextSpecificConfig = {
     : userConfig.entry,
   externals: (userConfig.target === 'web')
     ? undefined
-    : Object.keys(packageJson.dependencies).reduce(
-      (externals, dependency) => Object.assign(externals, { [dependency]: dependency }),
-      {},
+    : Object.assign(
+      Object.keys(packageJson.dependencies).reduce(
+        (externals, dependency) => Object.assign(externals, { [dependency]: dependency }),
+        {},
+      ),
+      Object.keys(packageJson.peerDependencies).reduce(
+        (externals, dependency) => Object.assign(externals, { [dependency]: dependency }),
+        {},
+      ),
     ),
   output: {
     path: (userConfig.target === 'web') ? `${userConfig.distPath}/assets` : userConfig.distPath,

@@ -41,9 +41,15 @@ const contextSpecificConfig = {
   },
   externals: (userConfig.target === 'web')
     ? undefined
-    : Object.keys(packageJson.dependencies).reduce(
-      (externals, dependency) => Object.assign(externals, { [dependency]: dependency }),
-      {},
+    : Object.assign(
+      Object.keys(packageJson.dependencies).reduce(
+        (externals, dependency) => Object.assign(externals, { [dependency]: dependency }),
+        {},
+      ),
+      Object.keys(packageJson.peerDependencies).reduce(
+        (externals, dependency) => Object.assign(externals, { [dependency]: dependency }),
+        {},
+      ),
     ),
   resolve: {
     // We include the Vue compiler along with the builder to allow for `template` syntax.
