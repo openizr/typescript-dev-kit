@@ -44,11 +44,11 @@ const contextSpecificConfig = {
   externals: (userConfig.target === 'web')
     ? undefined
     : Object.assign(
-      Object.keys(packageJson.dependencies).reduce(
+      Object.keys(packageJson.dependencies || {}).reduce(
         (externals, dependency) => Object.assign(externals, { [dependency]: dependency }),
         {},
       ),
-      Object.keys(packageJson.peerDependencies).reduce(
+      Object.keys(packageJson.peerDependencies || {}).reduce(
         (externals, dependency) => Object.assign(externals, { [dependency]: dependency }),
         {},
       ),
