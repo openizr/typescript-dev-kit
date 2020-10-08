@@ -53,13 +53,14 @@ fs.remove(distPath)
       author: packageJson.author,
       version: packageJson.version,
       engines: packageJson.engines,
-      licence: packageJson.licence,
+      license: packageJson.license,
       keywords: packageJson.keywords,
       homepage: packageJson.homepage,
       repository: packageJson.repository,
       description: packageJson.description,
       contributors: packageJson.contributors,
       dependencies: packageJson.dependencies,
+      peerDependencies: packageJson.peerDependencies,
     }, { spaces: 2 })
       // Writing distributable `README.md` file into `dist` directory...
       .then(() => fs.pathExists(readmePath))

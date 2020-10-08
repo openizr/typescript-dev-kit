@@ -95,13 +95,14 @@ if (config.target === 'web') {
               author: packageJson.author,
               version: packageJson.version,
               engines: packageJson.engines,
-              licence: packageJson.licence,
+              license: packageJson.license,
               keywords: packageJson.keywords,
               homepage: packageJson.homepage,
               repository: packageJson.repository,
               description: packageJson.description,
               contributors: packageJson.contributors,
               dependencies: packageJson.dependencies,
+              peerDependencies: packageJson.peerDependencies,
             }, { spaces: 2 });
           } catch (fsError) {
             console.error(fsError.message);
