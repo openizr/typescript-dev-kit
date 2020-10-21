@@ -108,7 +108,7 @@ if (config.target === 'web') {
             }, { spaces: 2 });
             // For back-end projects, the final bundle can be executed after each compilation.
             // This is especially useful when developing a NodeJS server for instance.
-            if (config.runInDev === true) {
+            if (packageJson.tsDevKitConfig.runInDev === true) {
               if (nodeProcess !== null) {
                 nodeProcess.kill('SIGKILL');
                 nodeProcess = null;

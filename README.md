@@ -40,6 +40,7 @@ In your `package.json`:
       "port": 3000
     },
   "splitChunks": true,  // Whether to split bundle into different chunks (sometimes you don't want it).
+  "runInDev": true,  // Whether to launch main entrypoint with node after each compilation in dev mode.
   "entry": { // Here you can list all your entrypoints.
     "main": "main.ts",
     ...
