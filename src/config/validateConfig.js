@@ -58,6 +58,11 @@ module.exports = (userConfig) => {
     throw new Error('User config validation - "splitChunks" is not a boolean.');
   }
 
+  // Checking node execution in development mode...
+  if (userConfig.runInDev !== undefined && typeof userConfig.runInDev !== 'boolean') {
+    throw new Error('User config validation - "runInDev" is not a boolean.');
+  }
+
   // Checking banner message...
   if (userConfig.banner !== undefined && typeof userConfig.banner !== 'string') {
     throw new Error('User config validation - "banner" is not a valid banner.');

@@ -15,6 +15,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
+const { spawn } = require('child_process');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const packageJson = require('../../../package.json');
@@ -22,6 +23,7 @@ const config = require('../config/webpack.config.dev');
 
 const distPath = config.output.path;
 const compiler = webpack(config);
+let nodeProcess = null;
 
 // For front-end projects, we setup a dev server to leverage on HMR and Hot Reloading.
 if (config.target === 'web') {
@@ -104,6 +106,21 @@ if (config.target === 'web') {
               dependencies: packageJson.dependencies,
               peerDependencies: packageJson.peerDependencies,
             }, { spaces: 2 });
+            // For back-end projects, the final bundle can be executed after each compilation.
+            // This is especially useful when developing a NodeJS server for instance.
+            if (config.runInDev === true) {
+              if (nodeProcess !== null) {
+                nodeProcess.kill('SIGKILL');
+                nodeProcess = null;
+              }
+              nodeProcess = spawn('node', [path.join(distPath, packageJson.main)]);
+              nodeProcess.stdout.on('data', (data) => {
+                console.log(data.toString());
+              });
+              nodeProcess.on('error', (...args) => {
+                console.log(args);
+              });
+            }
           } catch (fsError) {
             console.error(fsError.message);
           }
