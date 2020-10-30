@@ -16,4 +16,4 @@ const watch = (process.argv.indexOf('-w') >= 0)
   : '';
 
 // We want to run Jest in watch mode and see the code coverage for faster testing.
-jest.run(['--coverage', watch, `--config=${path.resolve(__dirname, '../config/jest.config.js')}`]);
+jest.run(['--coverage', watch, '--passWithNoTests', `--config=${path.resolve(__dirname, '../config/jest.config.js')}`]);
