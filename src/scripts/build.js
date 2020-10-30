@@ -40,8 +40,17 @@ fs.remove(distPath)
       performance: true,
       modules: false,
       children: false,
+      excludeAssets: [/\.d\.ts$/i],
     }));
   })
+  // Removing temporary .d.ts generated files...
+  .then((stats) => (
+    Promise.all(Object.keys(stats.compilation.assets).map((assetPath) => (
+      (assetPath.slice(-5) === '.d.ts')
+        ? fs.remove(path.resolve(__dirname, `../${assetPath}`))
+        : null
+    ))).then(() => stats)
+  ))
   .then(() => ((config.target === 'web')
     ? null
     // Writing distributable `package.json` file into `dist` directory...

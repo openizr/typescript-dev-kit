@@ -44,6 +44,7 @@ if (config.target === 'web') {
           performance: true,
           modules: false,
           children: false,
+          excludeAssets: [/\.d\.ts$/i],
         },
         publicPath: '/assets',
         index: 'index.html',
@@ -83,6 +84,7 @@ if (config.target === 'web') {
           performance: true,
           modules: false,
           children: false,
+          excludeAssets: [/\.d\.ts$/i],
         }));
 
         if (!stats.hasErrors()) {
