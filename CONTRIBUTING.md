@@ -200,6 +200,7 @@ In order to keep this package up-to-date, dependencies updates should be checked
 - [jest](https://github.com/facebook/jest/releases)
 - [node-sass](https://github.com/sass/node-sass/releases)
 - [optimize-css-assets-webpack-plugin](https://github.com/NMFR/optimize-css-assets-webpack-plugin/releases)
+- [postcss](https://github.com/postcss/postcss/releases)
 - [postcss-loader](https://github.com/postcss/postcss-loader/releases)
 - [sass-loader](https://github.com/webpack-contrib/sass-loader/releases)
 - [style-loader](https://github.com/webpack-contrib/style-loader/releases)
