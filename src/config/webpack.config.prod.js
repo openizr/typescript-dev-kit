@@ -218,8 +218,10 @@ const productionConfig = {
           {
             loader: 'postcss-loader',
             options: {
-              config: { path: path.resolve(__dirname, 'postcss.config.js') },
-              sourceMap: true,
+              postcssOptions: {
+                plugins: [['autoprefixer']],
+                sourceMap: true,
+              },
             },
           },
           // `sass-loader` converts SASS syntax into CSS.

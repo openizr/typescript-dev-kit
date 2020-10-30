@@ -19,6 +19,12 @@ module.exports = {
     parser: '@typescript-eslint/parser',
   },
   rules: {
+    // See https://github.com/typescript-eslint/typescript-eslint/issues/2540.
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': 2,
+    // See https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-shadow.md.
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/jsx-filename-extension': [
