@@ -233,10 +233,8 @@ const developmentConfig = {
           {
             loader: 'postcss-loader',
             options: {
-              postcssOptions: {
-                plugins: [['autoprefixer']],
-                sourceMap: true,
-              },
+              config: { path: path.resolve(__dirname, 'postcss.config.js') },
+              sourceMap: true,
             },
           },
           // `sass-loader` converts SASS syntax into CSS.
