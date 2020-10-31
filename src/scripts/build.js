@@ -35,7 +35,7 @@ fs.remove(distPath)
   .then((stats) => (
     Promise.all(Object.keys(stats.compilation.assets).map((assetPath) => (
       (assetPath.slice(-5) === '.d.ts')
-        ? fs.remove(path.resolve(__dirname, `../${assetPath}`))
+        ? fs.remove(path.resolve(__dirname, `../${(config.target === 'web') ? '' : '../'}${assetPath}`))
         : null
     ))).then(() => stats)
   ))
