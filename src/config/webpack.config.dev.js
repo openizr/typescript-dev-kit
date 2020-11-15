@@ -65,14 +65,15 @@ const contextSpecificConfig = {
     // Allows importing files as modules (with absolute path).
     modules: [userConfig.srcPath, 'node_modules'],
   },
-  plugins: (userConfig.target === 'web')
+  plugins: [
+    // Allows .vue files parsing.
+    new VueLoaderPlugin(),
+  ].concat((userConfig.target === 'web')
     ? [
       // Enables HMR with webpack-dev-middleware.
       new webpack.HotModuleReplacementPlugin(),
-      // Allows .vue files parsing.
-      new VueLoaderPlugin(),
     ]
-    : [],
+    : []),
   optimization: (userConfig.target === 'web' && userConfig.splitChunks === true)
     ? {
       // Splits code in several chunks to leverage on long-term vendor-caching.
@@ -202,6 +203,8 @@ const developmentConfig = {
         options: {
           // We disable CSS extraction in dev mode to enable CSS HMR.
           extractCSS: false,
+          // Setting this option to `true` generates issues when developing components libraries.
+          optimizeSSR: false,
         },
       },
       {

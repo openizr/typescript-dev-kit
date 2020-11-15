@@ -57,12 +57,10 @@ const contextSpecificConfig = {
     // Allows importing files as modules (with absolute path).
     modules: [userConfig.srcPath, 'node_modules'],
   },
-  plugins: (userConfig.target === 'web')
-    ? [
+  plugins: [
     // Allows .vue files parsing.
-      new VueLoaderPlugin(),
-    ]
-    : [],
+    new VueLoaderPlugin(),
+  ],
   optimization: (userConfig.target === 'web' && userConfig.splitChunks === true)
     ? {
       // Splits code in several chunks to leverage on long-term vendor-caching.
@@ -193,6 +191,8 @@ const productionConfig = {
         options: {
           extractCSS: true,
           hotReload: false, // Disable Hot Reloading.
+          // Setting this option to `true` generates issues when developing components libraries.
+          optimizeSSR: false,
         },
       },
       {
