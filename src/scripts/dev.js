@@ -78,6 +78,12 @@ if (config.target === 'web') {
   // Running webpack compiler...
     .then(() => {
       compiler.watch({}, (error, stats) => {
+        // Removing temporary .d.ts generated files...
+        Object.keys(stats.compilation.assets).forEach((assetPath) => (
+          (assetPath.slice(-5) === '.d.ts')
+            ? fs.removeSync(path.resolve(__dirname, `../${(config.target === 'web') ? '' : '../'}${assetPath}`))
+            : null
+        ));
         console.log(stats.toString({
           colors: true,
           cached: true,
