@@ -14,6 +14,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const validateConfig = require('./validateConfig');
 const packageJson = require('../../../package.json');
 const ClearTerminalPlugin = require('./ClearTerminalPlugin');
@@ -60,6 +61,10 @@ const contextSpecificConfig = {
   plugins: [
     // Allows .vue files parsing.
     new VueLoaderPlugin(),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: path.resolve(__dirname, '../../../report.html'),
+    }),
   ],
   optimization: (userConfig.target === 'web' && userConfig.splitChunks === true)
     ? {
