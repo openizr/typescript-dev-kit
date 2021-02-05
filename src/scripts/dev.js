@@ -48,6 +48,10 @@ if (config.target === 'web') {
         },
         publicPath: '/assets',
         index: 'index.html',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+        },
       }));
 
       // `webpack-hot-middleware` package enables HMR, along with a dev server.

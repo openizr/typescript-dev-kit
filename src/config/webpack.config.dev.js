@@ -149,7 +149,7 @@ const developmentConfig = {
   externals: contextSpecificConfig.externals,
   output: {
     filename: contextSpecificConfig.output.filename,
-    publicPath: (userConfig.target === 'web') ? '/assets/' : undefined,
+    publicPath: (userConfig.target === 'web') ? `http://${userConfig.devServer.ip}:${userConfig.devServer.port}/assets/` : undefined,
     path: contextSpecificConfig.output.path,
     pathinfo: true,
     library: contextSpecificConfig.output.library,
