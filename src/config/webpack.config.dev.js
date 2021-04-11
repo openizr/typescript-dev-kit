@@ -10,6 +10,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const validateConfig = require('./validateConfig');
 const packageJson = require('../../../package.json');
@@ -56,7 +57,6 @@ const contextSpecificConfig = {
   output: {
     path: (userConfig.target === 'web') ? `${userConfig.distPath}/assets` : userConfig.distPath,
     filename: (userConfig.target === 'web') ? 'scripts/[name].js' : '[name].js',
-    library: (userConfig.target === 'web') ? undefined : packageJson.name,
     libraryTarget: (userConfig.target === 'web') ? undefined : 'commonjs2',
   },
   resolve: {
@@ -74,66 +74,6 @@ const contextSpecificConfig = {
       new webpack.HotModuleReplacementPlugin(),
     ]
     : []),
-  optimization: (userConfig.target === 'web' && userConfig.splitChunks === true)
-    ? {
-      // Splits code in several chunks to leverage on long-term vendor-caching.
-      // To understand the following configuration, check
-      // https://itnext.io/react-router-and-webpack-v4-code-splitting-using-splitchunksplugin-f0a48f110312.
-      runtimeChunk: 'single',
-      splitChunks: {
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          // All common sync chunks will be grouped inside the `common.js`file.
-          common: {
-            name: 'common',
-            minChunks: 2,
-            chunks: 'initial',
-            priority: 40,
-            reuseExistingChunk: true,
-            enforce: true,
-          },
-          // All vendor sync chunks will be grouped inside the `vendor.js` file.
-          vendor: {
-            name: 'vendor',
-            chunks: 'initial',
-            test: /node_modules/,
-            priority: 30,
-          },
-          // All common async chunks will be grouped inside the `common-async.js` file.
-          commonAsync: {
-            name: 'common-async',
-            minChunks: 2,
-            chunks: 'async',
-            priority: 20,
-            reuseExistingChunk: true,
-            enforce: true,
-          },
-          // All vendor async chunks will be grouped inside the `vendor-async.js` file.
-          vendorAsync: {
-            name: 'vendor-async',
-            chunks: 'async',
-            test: /node_modules/,
-            priority: 10,
-          },
-        },
-      },
-    }
-    : {},
-  node: (userConfig.target === 'web')
-    ? {
-      // Prevents webpack from injecting useless setImmediate polyfill because Vue
-      // source contains it (although only uses it if it's native).
-      setImmediate: false,
-      // Prevents webpack from injecting mocks to Node native modules
-      // that does not make sense for the client.
-      dgram: 'empty',
-      fs: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      child_process: 'empty',
-    }
-    : {},
   devServer: (userConfig.target === 'web') ? userConfig.devServer : undefined,
 };
 
@@ -152,13 +92,26 @@ const developmentConfig = {
     publicPath: (userConfig.target === 'web') ? '/assets/' : undefined,
     path: contextSpecificConfig.output.path,
     pathinfo: true,
-    library: contextSpecificConfig.output.library,
     libraryTarget: contextSpecificConfig.output.libraryTarget,
   },
   resolve: {
     extensions: ['.json', '.js', '.ts', '.jsx', '.tsx', '.vue', '*'],
     alias: contextSpecificConfig.resolve.alias,
     modules: contextSpecificConfig.resolve.modules,
+    fallback: {
+      fs: false,
+      crypto: false,
+      buffer: false,
+    },
+  },
+  stats: {
+    colors: true,
+    cached: true,
+    modules: false,
+    children: false,
+    performance: true,
+    errorDetails: true,
+    excludeAssets: [/\.d\.ts$/i],
   },
   module: {
     rules: [
@@ -188,6 +141,8 @@ const developmentConfig = {
           {
             loader: 'ts-loader',
             options: {
+              // Needed as we use `fork-ts-checker-webpack-plugin` for typechecking.
+              transpileOnly: true,
               // This option allows to write TypeScript code inside *.vue files.
               appendTsSuffixTo: [/\.vue$/],
               configFile: path.resolve(__dirname, '../../../tsconfig.json'),
@@ -207,17 +162,6 @@ const developmentConfig = {
           optimizeSSR: false,
         },
       },
-      {
-        // `eslint-loader` is used first, to lint the code.
-        test: /\.(vue|jsx?|tsx?)$/,
-        include: [userConfig.srcPath],
-        use: [
-          {
-            loader: 'eslint-loader',
-            options: { cache: true },
-          },
-        ],
-      },
       // Stylesheets.
       {
         test: /\.s?css$/,
@@ -236,8 +180,10 @@ const developmentConfig = {
           {
             loader: 'postcss-loader',
             options: {
-              config: { path: path.resolve(__dirname, 'postcss.config.js') },
-              sourceMap: true,
+              postcssOptions: {
+                plugins: [['autoprefixer']],
+                sourceMap: true,
+              },
             },
           },
           // `sass-loader` converts SASS syntax into CSS.
@@ -247,49 +193,69 @@ const developmentConfig = {
       // Audio and video files.
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10 * 1024,
-          name: 'media/[name].[ext]',
+        type: 'asset',
+        generator: {
+          filename: 'media/[name].[ext]',
         },
       },
       // Images files.
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10 * 1024,
-          name: 'images/[name].[ext]',
+        type: 'asset',
+        generator: {
+          filename: 'images/[name].[ext]',
         },
       },
       // Fonts files.
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10 * 1024,
-          name: 'fonts/[name].[ext]',
+        type: 'asset',
+        generator: {
+          filename: 'fonts/[name].[ext]',
         },
       },
     ],
   },
   plugins: [
+    // Performs type checking and linting in parallel threads to improve compilation performance.
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        extensions: {
+          vue: true,
+        },
+        configOverwrite: {
+          exclude: [userConfig.distPath],
+        },
+        configFile: path.resolve(__dirname, '../../../', 'tsconfig.json'),
+      },
+      eslint: {
+        enabled: true,
+        files: [userConfig.srcPath],
+        options: {
+          cache: true,
+          cacheLocation: path.resolve(__dirname, '../../../node_modules/.eslintcache'),
+        },
+      },
+    }),
     // Makes some environment variables available to the JS code.
     new webpack.DefinePlugin(Object.keys(userConfig.env.development).reduce((envVars, key) => (
       Object.assign(envVars, { [`process.env.${key}`]: userConfig.env.development[key] })
     ), {})),
     // Includes copyright comment on top of each generated file.
-    new webpack.BannerPlugin({
-      banner: userConfig.banner,
-      raw: true,
-    }),
+    new webpack.BannerPlugin({ banner: userConfig.banner, raw: true }),
     // Clears terminal between each compilation.
     new ClearTerminalPlugin(),
   ].concat(contextSpecificConfig.plugins),
-  optimization: Object.assign(contextSpecificConfig.optimization, {
-    noEmitOnErrors: true,
-  }),
-  node: contextSpecificConfig.node,
+  // Removes heavy chunks splitting process to improve compilation performance.
+  optimization: {
+    splitChunks: false,
+    emitOnErrors: false,
+    removeEmptyChunks: false,
+    removeAvailableModules: false,
+  },
+  // Prevents webpack from injecting mocks to Node native modules
+  // that do not make sense for the client.
+  node: false,
   devServer: contextSpecificConfig.devServer,
 };
 

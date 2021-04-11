@@ -38,15 +38,6 @@ if (config.target === 'web') {
       // We use it instead of `webpack-dev-server` package because it offers more flexibility and
       // control over the server.
       server.use(webpackDevMiddleware(compiler, {
-        stats: {
-          colors: true,
-          cached: true,
-          performance: true,
-          modules: false,
-          children: false,
-          excludeAssets: [/\.d\.ts$/i],
-        },
-        publicPath: '/assets',
         index: 'index.html',
       }));
 
