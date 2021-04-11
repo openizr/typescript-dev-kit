@@ -13,8 +13,7 @@ class ClearTerminalPlugin {}
 
 ClearTerminalPlugin.prototype.apply = (compiler) => {
   compiler.hooks.emit.tapAsync('emit', (_, done) => {
-    // '\x1B[2J\x1B[3J\x1B[H' to reset scrolling as well.
-    process.stdout.write('\x1B[2J\x1B[0f');
+    process.stdout.write('\033c');
     done();
   });
 };
