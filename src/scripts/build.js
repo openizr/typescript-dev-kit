@@ -14,12 +14,10 @@ process.env.NODE_ENV = 'production';
 const path = require('path');
 const fs = require('fs-extra');
 const webpack = require('webpack');
-const dtsGenerator = require('dts-generator');
 const packageJson = require('../../../package.json');
 const config = require('../config/webpack.config.prod');
 
 const compiler = webpack(config);
-const srcPath = config.context;
 const distPath = config.output.path;
 const readmePath = path.resolve(__dirname, '../../../README.md');
 const licensePath = path.resolve(__dirname, '../../../LICENSE');
@@ -81,16 +79,12 @@ fs.remove(distPath)
       .then((licenseExists) => ((licenseExists)
         ? fs.copy(licensePath, path.resolve(distPath, 'LICENSE'))
         : null))
-      // Generating typings into `dist` directory...
-      .then(() => dtsGenerator.default({
-        name: packageJson.name,
-        main: `module/scripts/${Object.keys(config.entry)[0]}`,
-        prefix: 'module',
-        files: Object.values(config.entry),
-        out: path.resolve(distPath, 'types.d.ts'),
-        verbose: true,
-        baseDir: srcPath,
-      }))
+      // Writing distributable `types.d.ts` file into `dist` directory...
+      .then(() => {
+        fs.copySync(path.resolve(config.context), path.resolve(distPath), {
+          filter: (src) => (src === path.resolve(config.context)) || /^(.*)\.d\.ts$/i.test(src),
+        });
+      })
   ))
   // All went well...
   .then(() => {

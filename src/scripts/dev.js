@@ -69,12 +69,6 @@ if (config.target === 'web') {
   // Running webpack compiler...
     .then(() => {
       compiler.watch({}, (error, stats) => {
-        // Removing temporary .d.ts generated files...
-        Object.keys(stats.compilation.assets).forEach((assetPath) => (
-          (assetPath.slice(-5) === '.d.ts')
-            ? fs.removeSync(path.resolve(__dirname, `../${(config.target === 'web') ? '' : '../'}${assetPath}`))
-            : null
-        ));
         console.log(stats.toString({
           colors: true,
           cached: true,
@@ -85,7 +79,6 @@ if (config.target === 'web') {
         }));
 
         if (!stats.hasErrors()) {
-          // Writing distributable `package.json` file into `dist` directory...
           try {
             // Writing distributable `package.json` file into `dist` directory...
             fs.writeJsonSync(path.join(distPath, 'package.json'), {
@@ -105,6 +98,10 @@ if (config.target === 'web') {
               dependencies: packageJson.dependencies,
               peerDependencies: packageJson.peerDependencies,
             }, { spaces: 2 });
+            // Writing distributable types definition files into `dist` directory...
+            fs.copySync(path.resolve(config.context), path.resolve(distPath), {
+              filter: (src) => (src === path.resolve(config.context)) || /^(.*)\.d\.ts$/i.test(src),
+            });
             // For back-end projects, the final bundle can be executed after each compilation.
             // This is especially useful when developing a NodeJS server for instance.
             if (packageJson.tsDevKitConfig.runInDev === true) {
