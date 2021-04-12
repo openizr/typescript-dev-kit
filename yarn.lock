@@ -6977,6 +6977,13 @@ postcss-selector-parser@^6.0.4:
     uniq "^1.0.1"
     util-deprecate "^1.0.2"
 
+postcss-sort-media-queries@^3.8.9:
+  version "3.8.9"
+  resolved "https://registry.yarnpkg.com/postcss-sort-media-queries/-/postcss-sort-media-queries-3.8.9.tgz#9162b0eb1924eca3fa6ee0e9d969f673f2e5173b"
+  integrity sha512-YzpBgvuHrzwnFgdQ1jr0CXKBXf47w5OlFKF3ZXe5LrSlJGDP0XuoRUbFnnLUdP/BL4hN+IrJMh0IFr8hxCHIOw==
+  dependencies:
+    sort-css-media-queries "1.5.4"
+
 postcss-svgo@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/postcss-svgo/-/postcss-svgo-5.0.0.tgz#c8d806e573394ab24f1e233cac5be4c199e9f1b2"
@@ -7771,6 +7778,11 @@ snapdragon@^0.8.1:
     source-map "^0.5.6"
     source-map-resolve "^0.5.0"
     use "^3.1.0"
+
+sort-css-media-queries@1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/sort-css-media-queries/-/sort-css-media-queries-1.5.4.tgz#24182b12002a13d01ba943ddf74f5098d7c244ce"
+  integrity sha512-YP5W/h4Sid/YP7Lp87ejJ5jP13/Mtqt2vx33XyhO+IAugKlufRPbOrPlIiEUuxmpNBSBd3EeeQpFhdu3RfI2Ag==
 
 source-list-map@^2.0.0, source-list-map@^2.0.1:
   version "2.0.1"

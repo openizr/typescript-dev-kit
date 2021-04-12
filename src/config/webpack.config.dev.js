@@ -181,7 +181,7 @@ const developmentConfig = {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
-                plugins: [['autoprefixer']],
+                plugins: [['postcss-sort-media-queries'], ['autoprefixer']],
                 sourceMap: true,
               },
             },
