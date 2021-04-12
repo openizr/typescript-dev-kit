@@ -62,6 +62,7 @@ const contextSpecificConfig = {
     // Allows .vue files parsing.
     new VueLoaderPlugin(),
     new BundleAnalyzerPlugin({
+      logLevel: 'silent',
       analyzerMode: 'static',
       reportFilename: path.resolve(__dirname, '../../../report.html'),
     }),
@@ -262,7 +263,7 @@ const productionConfig = {
     new MiniCssExtractPlugin({ filename: 'styles/[name].[chunkhash].css' }),
     // Makes some environment variables available to the JS code.
     new webpack.DefinePlugin(Object.keys(userConfig.env.production).reduce((envVars, key) => (
-      Object.assign(envVars, { [`process.env.${key}`]: userConfig.env.production[key] })
+      Object.assign(envVars, { [`process.env.${key}`]: JSON.stringify(userConfig.env.production[key]) })
     ), {})),
     new TerserPlugin({
       terserOptions: {

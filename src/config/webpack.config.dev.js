@@ -239,7 +239,7 @@ const developmentConfig = {
     }),
     // Makes some environment variables available to the JS code.
     new webpack.DefinePlugin(Object.keys(userConfig.env.development).reduce((envVars, key) => (
-      Object.assign(envVars, { [`process.env.${key}`]: userConfig.env.development[key] })
+      Object.assign(envVars, { [`process.env.${key}`]: JSON.stringify(userConfig.env.development[key]) })
     ), {})),
     // Includes copyright comment on top of each generated file.
     new webpack.BannerPlugin({ banner: userConfig.banner, raw: true }),
