@@ -84,7 +84,7 @@ if (config.target === 'web') {
             fs.writeJsonSync(path.join(distPath, 'package.json'), {
               name: packageJson.name,
               main: packageJson.main,
-              types: './types.d.ts',
+              types: packageJson.types,
               bugs: packageJson.bugs,
               author: packageJson.author,
               version: packageJson.version,
@@ -98,10 +98,6 @@ if (config.target === 'web') {
               dependencies: packageJson.dependencies,
               peerDependencies: packageJson.peerDependencies,
             }, { spaces: 2 });
-            // Writing distributable types definition files into `dist` directory...
-            fs.copySync(path.resolve(config.context), path.resolve(distPath), {
-              filter: (src) => (src === path.resolve(config.context)) || /^(.*)\.d\.ts$/i.test(src),
-            });
             // For back-end projects, the final bundle can be executed after each compilation.
             // This is especially useful when developing a NodeJS server for instance.
             if (packageJson.tsDevKitConfig.runInDev === true) {

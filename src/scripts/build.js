@@ -29,14 +29,6 @@ fs.remove(distPath)
     console.log('Compiling...');
     compiler.run((error, stats) => (error ? reject(error) : resolve(stats)));
   }))
-  // Removing temporary .d.ts generated files...
-  .then((stats) => (
-    Promise.all(Object.keys(stats.compilation.assets).map((assetPath) => (
-      (assetPath.slice(-5) === '.d.ts')
-        ? fs.remove(path.resolve(__dirname, `../${(config.target === 'web') ? '' : '../'}${assetPath}`))
-        : null
-    ))).then(() => stats)
-  ))
   // Displaying webpack compilation stats...
   .then((stats) => {
     if (stats.hasErrors()) throw new Error(stats.toJson().errors[0]);
@@ -55,7 +47,7 @@ fs.remove(distPath)
     : fs.writeJson(path.join(distPath, 'package.json'), {
       name: packageJson.name,
       main: packageJson.main,
-      types: './types.d.ts',
+      types: packageJson.types,
       bugs: packageJson.bugs,
       author: packageJson.author,
       version: packageJson.version,
@@ -79,12 +71,6 @@ fs.remove(distPath)
       .then((licenseExists) => ((licenseExists)
         ? fs.copy(licensePath, path.resolve(distPath, 'LICENSE'))
         : null))
-      // Writing distributable `types.d.ts` file into `dist` directory...
-      .then(() => {
-        fs.copySync(path.resolve(config.context), path.resolve(distPath), {
-          filter: (src) => (src === path.resolve(config.context)) || /^(.*)\.d\.ts$/i.test(src),
-        });
-      })
   ))
   // All went well...
   .then(() => {
