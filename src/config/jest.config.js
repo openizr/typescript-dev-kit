@@ -49,7 +49,7 @@ module.exports = {
     '\\.(vue)$': '<rootDir>/node_modules/vue-jest',
   },
   moduleNameMapper: {
-    '\\.(css|png|jpg|ico)$': '<rootDir>/node_modules/typescript-dev-kit/jest/fileMock.js',
+    '\\.(?!js|ts|jsx|tsx|vue)([a-z0-9]+)$': '<rootDir>/node_modules/typescript-dev-kit/jest/fileMock.js',
   },
   moduleDirectories: [
     '<rootDir>/node_modules',
