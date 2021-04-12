@@ -26,12 +26,12 @@ const licensePath = path.resolve(__dirname, '../../../LICENSE');
 fs.remove(distPath)
   // Running webpack compiler...
   .then(() => new Promise((resolve, reject) => {
-    console.log('Compiling...');
+    console.log('\n\x1B[0m\x1B[34m\x1B[1m > Compiling...\x1B[0m\n');
     compiler.run((error, stats) => (error ? reject(error) : resolve(stats)));
   }))
   // Displaying webpack compilation stats...
   .then((stats) => {
-    if (stats.hasErrors()) throw new Error(stats.toJson().errors[0]);
+    if (stats.hasErrors()) throw stats.toJson().errors;
     console.log(stats.toString({
       colors: true,
       cached: true,
@@ -74,9 +74,14 @@ fs.remove(distPath)
   ))
   // All went well...
   .then(() => {
-    console.log('Done.');
+    console.log('\n\x1B[0m\x1B[32m\x1B[1m ✔️ Compiled successfully! \x1B[0m\n');
   })
   // If any error occurs...
   .catch((error) => {
-    console.error(error);
+    console.error('\x1B[0m\x1B[31m\x1B[1m ✖ Compilation failed: \x1B[0m\n');
+    const errors = Array.isArray(error) ? error : [error];
+    errors.forEach((error) => {
+      console.error(error.message);
+    });
+    console.error('');
   });

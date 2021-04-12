@@ -37,9 +37,13 @@ if (config.target === 'web') {
       // for a better development experience.
       // We use it instead of `webpack-dev-server` package because it offers more flexibility and
       // control over the server.
-      server.use(webpackDevMiddleware(compiler, {
+      const devMiddleware = webpackDevMiddleware(compiler, {
         index: 'index.html',
-      }));
+      });
+      devMiddleware.waitUntilValid(() => {
+        console.log(`\n\x1B[0m\x1B[32m\x1B[1m ✔️ Dev server is listening at http://${config.devServer.ip}:${config.devServer.port} \x1B[0m\n`);
+      });
+      server.use(devMiddleware);
 
       // `webpack-hot-middleware` package enables HMR, along with a dev server.
       server.use(webpackHotMiddleware(compiler, {
@@ -55,13 +59,12 @@ if (config.target === 'web') {
         response.sendFile(path.resolve(config.output.path, '../index.html'));
       });
 
-      server.listen(config.devServer.port, config.devServer.ip, () => {
-        console.log(`Starting dev server at http://${config.devServer.ip}:${config.devServer.port}...`);
-      });
+      server.listen(config.devServer.port, config.devServer.ip);
     })
     // If any error occurs...
     .catch((error) => {
-      console.error(error);
+      console.error('\x1B[0m\x1B[31m\x1B[1m ✖ Compilation failed: \x1B[0m\n');
+      console.error(error.message);
     });
 } else {
   // Removing existing `dist` directory...
@@ -109,11 +112,19 @@ if (config.target === 'web') {
               nodeProcess.stdout.on('data', (data) => {
                 console.log(data.toString());
               });
+              nodeProcess.stderr.on('data', (data) => {
+                console.error('\n\x1B[0m\x1B[31m\x1B[1m ✖ Error occurred in main entry: \x1B[0m\n');
+                console.error(data.toString());
+                console.error('');
+              });
               nodeProcess.on('error', (...args) => {
-                console.log(args);
+                console.error('\n\x1B[0m\x1B[31m\x1B[1m ✖ Could not run main entry: \x1B[0m\n');
+                console.error(args[0]);
+                console.error('');
               });
             }
           } catch (fsError) {
+            console.error('\x1B[0m\x1B[31m\x1B[1m ✖ Compilation failed: \x1B[0m\n');
             console.error(fsError.message);
           }
         }
@@ -121,6 +132,7 @@ if (config.target === 'web') {
     })
     // If any error occurs...
     .catch((error) => {
-      console.error(error);
+      console.error('\x1B[0m\x1B[31m\x1B[1m ✖ Compilation failed: \x1B[0m\n');
+      console.error(error.message);
     });
 }
