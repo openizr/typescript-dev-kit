@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`routes/v1/postMessage correctly handles request 1`] = `
+Object {
+  "body": Object {
+    "additionalProperties": false,
+    "errorMessage": Object {
+      "properties": Object {
+        "message": "Body.message must be a string",
+      },
+      "required": Object {
+        "message": "Body.message is required",
+      },
+      "type": "Request body should be a valid object",
+    },
+    "properties": Object {
+      "message": Object {
+        "type": "string",
+      },
+    },
+    "required": Array [
+      "message",
+    ],
+    "type": "object",
+  },
+  "response": Object {
+    "200": Object {
+      "type": "string",
+    },
+  },
+}
+`;

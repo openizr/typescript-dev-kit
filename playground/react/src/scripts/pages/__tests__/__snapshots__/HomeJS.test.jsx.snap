@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`react/HomeJS renders correctly - basic 1`] = `
+<div>
+  <p>
+    <img
+      alt="test"
+      src="file"
+    />
+    <img
+      alt="test"
+      src="file"
+    />
+    LABEL_TEST
+  </p>
+</div>
+`;
