@@ -1,84 +1,196 @@
 # typescript-dev-kit
 
-This package contains all the configurations and libraries that can be useful when developing
-front-end and back-end JavaScript or TypeScript projects.
+Build any JavaScript or TypeScript project in minutes, without worrying about the configuration.
+
+
+## Table of Contents
+
+1. [Philosophy](#Philosophy)
+2. [Features](#Features)
+3. [Installation](#Installation)
+4. [Configuration](#Configuration)
+    1. [The Easy Way](#Theeasyway)
+    2. [The (less) Easy Way](#The(less)easyway)
+5. [Usage](#Usage)
+6. [Contributing](#Contributing)
+7. [Sponsor](#Sponsor)
+8. [Maintainers](#Maintainers)
+9. [License](#License)
+
 
 ## Philosophy
 
-Contrary to most development environments out there that provide support and tools for one specific
-ecosystem (i.e. choose your side: React, VueJS ? ExpressJS, Apollo ? ...), the `typescript-dev-kit`
-package is completely unopinionated, meaning you can build front/back ends or libraries using the
-frameworks of your choice, and seamlessly switch over time while keeping the same environment.
+Most JS/TS development environments out there are often completely opinionated (i.e. meant to build exclusively React, VueJS, or Svelte apps). It can be very frustrating when developing cross-frameworks solutions, or dealing with multiple stacks.
 
-There are still a few basic rules however:
-- Testing must be performed with [Jest](https://jestjs.io/) (which is by far the best testing framework on the market)
-- Bundling is handled by [Webpack](https://webpack.js.org/) (the most complete bundler)
-- Eslint uses [Airbnb style guide](https://github.com/airbnb/javascript), although you can override the config to provide your own rules
-- SASS is the official CSS preprocessor (and it's good enough)
+Also, managing and maintaining dozens of similar configuration (`.eslintrc`, `.babelrc`, `webpack.config.dev.js`, `tsconfig.json`, `.npmrc`, the list is endless) files over your projects is an unecessary, time-consuming task. Most of the time, configuration are exactly the same, they bloat your repositories, and impacts projects structuration/legibility.
 
-## Other info
-- VueJS and React are the 2 front-end frameworks currently supported
-- Webpack is already configured to provide 100% optimized bundles, even for building npm packages
-- You can develop either in JavaScript (ES6 is supported), or TypeScript depending on your needs
-- Shipped-in HMR, source maps generation, CSS autoprefixer, environment variables definition, ...
+That's precisely why `typescript-dev-kit` is here. It aims to provide:
+- A nice, simple, performant development experience
+- A 0-configuration (but still flexible) flow, with no setup headtaches
+- A framework-agnostic setup, allowing you to develop either for front or back ends, or even libraries to publish over NPM
+- An all-included environment, with shipped-in unit-testing solution, linter, bundler, optimizations, transpiler, ...
+
+
+## Features
+
+This toolbox includes:
+
+- **Unit testing solution**: with [Jest](https://jestjs.io/) (which is by far the best JS/TS testing framework on the market)
+- **Optimized bundling**: with [Webpack](https://webpack.js.org/) (the most complete bundler)
+- **Bundle analyser**: with [Webpack Bundle Analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
+- **Coverage reporting**: with [Istanbul](https://github.com/gotwarlost/istanbul)
+- **Automated documentation generation**: with [TypeDoc](http://typedoc.org/)
+- **TypeScript support**
+- **SASS support**
+- **Dynamic imports support**
+- **Sourcemaps generation**
+- **React / VueJS support**: with VueJS Single File Components
+- **Code Linting**: based on [Airbnb Style Guide](https://github.com/airbnb/javascript)
+- **Hot Module Reloading** when developing front-end solutions
+- **Automatic package bundling**: if you are writing a NPM package
+- **Node 10+ / Evergreen browsers support**: with ES7 features and [Autoprefixer](https://github.com/postcss/autoprefixer)
+- **Environment initialization command**
+
 
 ## Installation
 
-The [TypeScript boilerplate](https://github.com/openizr/typescript-boilerplate) is made for you, nothing special to do!
-But if you prefer the hard way, just `yarn add --dev typescript-dev-kit`, configure your `package.json` and you're good to go.
+```bash
+yarn add --dev typescript-dev-kit
+```
+
 
 ## Configuration
 
-In your `package.json`:
+### The easy way
+
+You can pick-up one of the boilerplates that are available on [project-boilerplate](https://github.com/openizr/project-boilerplate), depending on your needs (based on Docker). No configuration required, you're aleady good to go!
+
+### The (less) easy way
+
+If you prefer setting up your project from scratch without using an existing boilerplate, here are the files you need to change in order to unleash the full power of `typescript-dev-kit`.
+
+Add the following to your `package.json`:
 
 ```javascript
 ...
 "tsDevKitConfig": {
-  "target": "node", // Can be "node" or "web".
-  "devServer": {  // Your dev server configuration.
+  "target": "node",     // Can be "node" (back-end projects or libraries) or "web" (front-end projects).
+  "devServer": {        // Your dev server configuration (front-end projects).
       "ip": "0.0.0.0",
       "port": 3000
     },
-  "splitChunks": true,  // Whether to split bundle into different chunks (sometimes you don't want it).
-  "runInDev": true,  // Whether to launch main entrypoint with node after each compilation in dev mode.
-  "entry": { // Here you can list all your entrypoints.
+  "splitChunks": true,  // Whether to split the final bundle into multiple chunks (front-end projects).
+  "runInDev": true,     // Whether to launch main entrypoint with node after each compilation in dev mode (back-end projects).
+  "entry": {            // Here you can list all your entrypoints (relative paths from your "srcPath").
     "main": "main.ts",
+    "other": "otherScript.js",
     ...
   },
-  "srcPath": "src", // Source path, containing your codebase.
+  "srcPath": "src",     // Source path, containing your codebase.
   "distPath": "public", // Distribution path, in which all assets will be compiled.
-  "banner": "/** Copyright Douglas, Inc */", // This banner will be put at the top of all your compiled assets.
-  "env": {  // Here you can specify all your environment variables, they will be automatically replaced in the code at build time.
+  "banner": "/*! Copyright John Doe. */", // This banner will be put at the top of all your bundled assets.
+  "env": {              // Set your environment variables, they will be automatically inserted in the code at build time (front-end projects).
     "development": {
-      "NODE_ENV": "\"development\""
+      "NODE_ENV": "development",
+      "API": "http://dev.api.com",
+      ...
     },
     "production": {
-      "NODE_ENV": "\"production\""
+      "NODE_ENV": "production",
+      "API": "http://api.com",
+      ...
     }
   }
 },
 ...
-"eslintConfig": { // Tells your IDE and Webpack to inherit the shipped-in Eslint config (you can also define your own rules).
+"eslintConfig": {       // Includes the shipped-in Eslint config (you can also override some rules if you want).
   "extends": [
     "./node_modules/typescript-dev-kit/main.js"
   ]
 },
 ```
 
-In your `tsconfig.json`:
+If you wish to develop in TypeScript, you need to create the following `tsconfig.json` file:
 
 ```javascript
 {
-  "extends": "./node_modules/typescript-dev-kit/tsconfig.json", // Tells your IDE and Webpack to inherit the shipped-in TypeScript config.
+  "extends": "./node_modules/typescript-dev-kit/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "src"  // Path to your codebase directory.
+    "baseUrl": "src"    // Must be the same as your `package.json`'s "srcPath".
   }
 }
 ```
 
+
+## Usage
+
+### Project initialization
+
+```bash
+yarn run init
+```
+
+This script will initialize your project, populating metadata where they belong (authors/contributors, project name, git repository, ...).
+
+### Development mode
+
+```bash
+yarn run dev
+```
+
+Starts the development mode. In this mode, you benefit of the HMR on your pages (front-end projects) and automatic restart of your scripts (back-end project). This allows you to see your changes in real time. Final bundle isn't optimized to provide maximum responsiveness of the environment.
+
+### Testing mode
+
+```bash
+yarn run test
+```
+
+Starts the testing mode. All your tests written in `*.test.js(x)` / `*.test.ts(x)` files are run, and code coverage report is generated at the end of the whole testing suite, in a `coverage` directory.
+
+### Build mode
+
+```bash
+yarn run build
+```
+
+Starts the build mode. This mode bundles and optimizes your codebase and related assets for distribution. Sourcemaps are also generated (see [node-source-map-support](https://github.com/evanw/node-source-map-support) to leverage on sourcemaps in Node), as well as the bundle analysis report in a `report.html` file. When building a NPM package, any relevant file (`README.md`, `LICENSE`, ...) is also included in your distributable directory.
+
+### Documentation mode
+
+```bash
+yarn run doc
+```
+
+Starts the documentation mode. Generates an automatic technical documentation based on the comments and typings present in your code. The result is available in the `docs` directory.
+
+
 ## Contributing
 
-See the [Contribution guide](https://github.com/openizr/typescript-dev-kit/blob/master/CONTRIBUTING.md)
+You're free to contribute to this project by submitting [issues](https://github.com/openizr/typescript-dev-kit/issues) and/or [pull requests](https://github.com/openizr/pulls). For more information, please read the [Contribution guide](https://github.com/openizr/typescript-dev-kit/blob/master/CONTRIBUTING.md).
+
+
+## Sponsor
+
+Love this project and want to support it? You can [buy me a coffee](https://www.buymeacoffee.com/matthieujabbour) :)
+
+Or just sending me a quick message saying "Thanks" is also very gratifying, and keeps me motivated to maintain open-source projects I work on!
+
+
+## Maintainers
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+        <img width="150" height="150" src="https://avatars.githubusercontent.com/u/29428247?v=4&s=150">
+        </br>
+        <a href="https://github.com/matthieujabbour">Matthieu Jabbour</a>
+      </td>
+    </tr>
+  <tbody>
+</table>
+
 
 ## License
 

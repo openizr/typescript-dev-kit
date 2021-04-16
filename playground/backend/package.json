@@ -1,0 +1,42 @@
+{
+  "main": "./typescript.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/ajv-errors": "^1.0.3",
+    "typescript-dev-kit": "file:../../../../typescript-dev-kit/dist"
+  },
+  "dependencies": {
+    "ajv-errors": "^1.0.1",
+    "basx": "^1.0.0",
+    "fastify": "^3.6.0",
+    "source-map-support": "^0.5.19"
+  },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/typescript-dev-kit/main.js"
+    ]
+  },
+  "tsDevKitConfig": {
+    "target": "node",
+    "entry": {
+      "typescript": "./scripts/typescript.ts",
+      "javascript": "./scripts/javascript.js"
+    },
+    "runInDev": true,
+    "srcPath": "src",
+    "distPath": "dist",
+    "banner": "/*!\n * Copyright (c) Matthieu Jabbour.\n * All rights reserved.\n */",
+    "env": {
+      "development": {},
+      "production": {}
+    }
+  },
+  "scripts": {
+    "init": "node_modules/typescript-dev-kit/scripts/init.sh",
+    "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev",
+    "build": "cd node_modules/typescript-dev-kit/ && node scripts/build",
+    "test": "cd node_modules/typescript-dev-kit/ && node scripts/test",
+    "doc": "node_modules/.bin/typedoc --out ./doc/ --exclude \"**/assets/**\" --exclude \"**/__+(tests|mocks)__/**\" src/",
+    "postinstall": "rm -f node_modules/.eslintcache"
+  }
+}
