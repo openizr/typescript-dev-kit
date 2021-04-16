@@ -39,6 +39,10 @@ if (config.target === 'web') {
       // control over the server.
       const devMiddleware = webpackDevMiddleware(compiler, {
         index: 'index.html',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+        },
       });
       devMiddleware.waitUntilValid(() => {
         console.log(`\n\x1B[0m\x1B[32m\x1B[1m ✔️ Dev server is listening at http://${config.devServer.ip}:${config.devServer.port} \x1B[0m\n`);
