@@ -241,6 +241,9 @@ $RECYCLE.BIN/
 
 # Additional rules
 
+# Documentation
+doc
+
 # Testing
 coverage
 report.html
