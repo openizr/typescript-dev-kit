@@ -2,6 +2,10 @@
 
 Build any JavaScript or TypeScript project in minutes, without worrying about the configuration.
 
+[![npm](https://img.shields.io/npm/v/typescript-dev-kit.svg)](https://www.npmjs.com/package/typescript-dev-kit)
+[![node](https://img.shields.io/node/v/typescript-dev-kit.svg)](https://nodejs.org)
+[![downloads](https://img.shields.io/npm/dm/typescript-dev-kit.svg?style=flat-square)](https://www.npmjs.com/package/typescript-dev-kit)
+
 
 ## Table of Contents
 
@@ -100,6 +104,15 @@ Add the following to your `package.json`:
       "API": "http://api.com",
       ...
     }
+  },
+  ...
+  "scripts": {
+    "init": "node_modules/typescript-dev-kit/scripts/init.sh",
+    "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev",
+    "build": "cd node_modules/typescript-dev-kit/ && node scripts/build",
+    "test": "cd node_modules/typescript-dev-kit/ && node scripts/test",
+    "doc": "node_modules/.bin/typedoc --out ./doc/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
+    "postinstall": "rm -f node_modules/.eslintcache"
   }
 },
 ...
@@ -143,10 +156,10 @@ Starts the development mode. In this mode, you benefit of the HMR on your pages 
 ### Testing mode
 
 ```bash
-yarn run test
+yarn run test [-w]
 ```
 
-Starts the testing mode. All your tests written in `*.test.js(x)` / `*.test.ts(x)` files are run, and code coverage report is generated at the end of the whole testing suite, in a `coverage` directory.
+Starts the testing mode. All your tests written in `*.test.js(x)` / `*.test.ts(x)` files are run, and code coverage report is generated at the end of the whole testing suite, in a `coverage` directory. The `-w` option allows you to run Jest in watch mode.
 
 ### Build mode
 
