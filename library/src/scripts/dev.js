@@ -94,7 +94,9 @@ if (config.target === 'web') {
               types: packageJson.types,
               bugs: packageJson.bugs,
               author: packageJson.author,
-              version: packageJson.version,
+              // This tricks forces invalidating webpack cache and allows real-time package testing.
+              // See https://github.com/webpack/webpack/issues/11612.
+              version: `${packageJson.version}-${Math.round(Math.random() * 10000)}`,
               engines: packageJson.engines,
               license: packageJson.license,
               keywords: packageJson.keywords,

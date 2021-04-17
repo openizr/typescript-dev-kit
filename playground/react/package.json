@@ -34,9 +34,11 @@
     "banner": "/*!\n * Copyright (c) Matthieu Jabbour.\n * All rights reserved.\n */",
     "env": {
       "development": {
+        "ENV": "development",
         "NODE_ENV": "development"
       },
       "production": {
+        "ENV": "production",
         "NODE_ENV": "production"
       }
     }
