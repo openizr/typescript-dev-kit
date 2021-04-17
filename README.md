@@ -175,7 +175,7 @@ Starts the build mode. This mode bundles and optimizes your codebase and related
 yarn run doc
 ```
 
-Starts the documentation mode. Generates an automatic technical documentation based on the comments and typings present in your code. The result is available in the `docs` directory.
+Starts the documentation mode. Generates an automatic technical documentation based on the comments and typings present in your code. The result is available in the `doc` directory.
 
 
 ## Contributing
