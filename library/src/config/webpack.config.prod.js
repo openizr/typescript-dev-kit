@@ -270,6 +270,7 @@ const productionConfig = {
         ecma: 6,
         mangle: true,
       },
+      extractComments: false,
     }),
     // Includes copyright comment on top of each generated file.
     new webpack.BannerPlugin({
