@@ -1,8 +1,8 @@
 import * as fastify from 'fastify';
-import ajvErrors from 'ajv-errors';
 
 type Misc = any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
+jest.mock('ajv');
 jest.mock('fastify');
 jest.mock('ajv-errors');
 jest.spyOn(process, 'exit').mockImplementation((code: number | undefined) => code as unknown as never);
@@ -24,13 +24,6 @@ describe('typescript', () => {
       require('scripts/typescript');
       expect(mockedFastify.fastify).toHaveBeenCalledTimes(1);
       expect(mockedFastify.fastify).toHaveBeenCalledWith({
-        ajv: {
-          customOptions: {
-            allErrors: true,
-            jsonPointers: true,
-          },
-          plugins: [ajvErrors],
-        },
         connectionTimeout: 3000,
         ignoreTrailingSlash: true,
         keepAliveTimeout: 2000,
@@ -50,13 +43,6 @@ describe('typescript', () => {
       require('scripts/typescript');
       expect(mockedFastify.fastify).toHaveBeenCalledTimes(1);
       expect(mockedFastify.fastify).toHaveBeenCalledWith({
-        ajv: {
-          customOptions: {
-            allErrors: true,
-            jsonPointers: true,
-          },
-          plugins: [ajvErrors],
-        },
         connectionTimeout: 3000,
         ignoreTrailingSlash: true,
         keepAliveTimeout: 2000,

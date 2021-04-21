@@ -1,7 +1,12 @@
+import Ajv from 'ajv';
 import fastify from 'fastify';
 import ajvErrors from 'ajv-errors';
 import configuration from 'scripts/conf/app';
 import declareRoutes from 'scripts/conf/routes';
+
+// Initializing validator compiler...
+const ajv = new Ajv({ allErrors: true });
+ajvErrors(ajv);
 
 // Initializing fastify server...
 const app = fastify({
@@ -9,7 +14,6 @@ const app = fastify({
   keepAliveTimeout: configuration.keepAliveTimeout,
   connectionTimeout: configuration.connectionTimeout,
   ignoreTrailingSlash: configuration.ignoreTrailingSlash,
-  ajv: { customOptions: { allErrors: true, jsonPointers: true }, plugins: [ajvErrors] },
 });
 
 // Handles CORS in development mode.
@@ -19,6 +23,11 @@ if (configuration.mode === 'development') {
     next(null, _payload);
   });
 }
+
+// Applies custom validator compiler.
+app.setValidatorCompiler(({ schema }) => (
+  ajv.compile(schema)
+));
 
 // Adding app routes...
 declareRoutes(app);

@@ -2,13 +2,13 @@
   "main": "./typescript.js",
   "license": "MIT",
   "devDependencies": {
-    "@types/ajv-errors": "^1.0.3",
     "typescript-dev-kit": "file:../../../../typescript-dev-kit/dist"
   },
   "dependencies": {
-    "ajv-errors": "^1.0.1",
+    "ajv": "^8.1.0",
+    "ajv-errors": "^3.0.0",
     "basx": "^1.0.0",
-    "fastify": "^3.6.0",
+    "fastify": "^3.15.0",
     "source-map-support": "^0.5.19"
   },
   "eslintConfig": {

@@ -1,6 +1,6 @@
-import ajvErrors from 'ajv-errors';
 import fastify, { register, addHook, listen } from 'fastify';
 
+jest.mock('ajv');
 jest.mock('fastify');
 jest.mock('ajv-errors');
 jest.spyOn(process, 'exit').mockImplementation();
@@ -20,13 +20,6 @@ describe('javascript', () => {
       require('scripts/javascript');
       expect(fastify).toHaveBeenCalledTimes(1);
       expect(fastify).toHaveBeenCalledWith({
-        ajv: {
-          customOptions: {
-            allErrors: true,
-            jsonPointers: true,
-          },
-          plugins: [ajvErrors],
-        },
         connectionTimeout: 3000,
         ignoreTrailingSlash: true,
         keepAliveTimeout: 2000,
@@ -46,13 +39,6 @@ describe('javascript', () => {
       require('scripts/javascript');
       expect(fastify).toHaveBeenCalledTimes(1);
       expect(fastify).toHaveBeenCalledWith({
-        ajv: {
-          customOptions: {
-            allErrors: true,
-            jsonPointers: true,
-          },
-          plugins: [ajvErrors],
-        },
         connectionTimeout: 3000,
         ignoreTrailingSlash: true,
         keepAliveTimeout: 2000,

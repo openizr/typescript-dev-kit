@@ -20,9 +20,9 @@ services:
       - "127.0.0.1:${PLAYGROUND_PORT}:${PLAYGROUND_PORT}"
     # You can switch between the following lines to play with either use case.
     # command: sh -c "cd vue && yarn && yarn run dev"
-    command: sh -c "cd react && yarn && yarn run dev"
+    # command: sh -c "cd react && yarn && yarn run dev"
     # command: sh -c "cd library && yarn && yarn run dev"
-    # command: sh -c "cd backend && yarn && yarn run dev"
+    command: sh -c "cd backend && yarn && yarn run dev"
     volumes:
       - ./playground:/var/www/html
       - ./library:/typescript-dev-kit
