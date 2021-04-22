@@ -182,7 +182,7 @@ Starts the documentation mode. Generates an automatic technical documentation ba
 
 ## Contributing
 
-You're free to contribute to this project by submitting [issues](https://github.com/openizr/typescript-dev-kit/issues) and/or [pull requests](https://github.com/openizr/pulls). For more information, please read the [Contribution guide](https://github.com/openizr/typescript-dev-kit/blob/master/CONTRIBUTING.md).
+You're free to contribute to this project by submitting [issues](https://github.com/openizr/typescript-dev-kit/issues) and/or [pull requests](https://github.com/openizr/typescript-dev-kit/pulls). For more information, please read the [Contribution guide](https://github.com/openizr/typescript-dev-kit/blob/master/CONTRIBUTING.md).
 
 
 ## Sponsor
