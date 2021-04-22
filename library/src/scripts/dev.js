@@ -23,6 +23,7 @@ const config = require('../config/webpack.config.dev');
 
 const distPath = config.output.path;
 const compiler = webpack(config);
+const random = () => Math.floor(Math.random() * 10);
 let nodeProcess = null;
 
 // For front-end projects, we setup a dev server to leverage on HMR and Hot Reloading.
@@ -96,7 +97,7 @@ if (config.target === 'web') {
               author: packageJson.author,
               // This tricks forces invalidating webpack cache and allows real-time package testing.
               // See https://github.com/webpack/webpack/issues/11612.
-              version: `${packageJson.version}-${Math.round(Math.random() * 10000)}`,
+              version: [random(), random(), random()].join('.'),
               engines: packageJson.engines,
               license: packageJson.license,
               keywords: packageJson.keywords,

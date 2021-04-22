@@ -153,7 +153,7 @@ yarn run dev
 
 Starts the development mode. In this mode, you benefit of the HMR on your pages (front-end projects) and automatic restart of your scripts (back-end project). This allows you to see your changes in real time. Final bundle isn't optimized to provide maximum responsiveness of the environment.
 
-**Note:** _when developing a library (`"target": "node"`), a random number is added to at the end of your `package.json` file in the  distributable directory. It allows you to test your package in real time by forcing webpack's cache invalidation._
+**Note:** _when developing a library (`"target": "node"`), a random semver-compliant number is set in place of your `package.json`'s version in the distributable directory. It allows you to test your package in real time by forcing webpack's cache invalidation._
 
 ### Testing mode
 
