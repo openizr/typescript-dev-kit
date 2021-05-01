@@ -30,7 +30,7 @@ Also, managing and maintaining dozens of similar configuration (`.eslintrc`, `.b
 
 That's precisely why `typescript-dev-kit` is here. It aims to provide:
 - A nice, simple, performant development experience
-- A 0-configuration (but still flexible) flow, with no setup headtaches
+- A 0-configuration (but still flexible) flow, with no setup headaches
 - A framework-agnostic setup, allowing you to develop either for front or back ends, or even libraries to publish over NPM
 - An all-included environment, with shipped-in unit-testing solution, linter, bundler, optimizations, transpiler, ...
 
