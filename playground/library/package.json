@@ -4,13 +4,13 @@
   "types": "./types.d.ts",
   "license": "MIT",
   "devDependencies": {
-    "typescript-dev-kit": "file:../../../../typescript-dev-kit/dist"
-  },
-  "peerDependencies": {
     "@types/prop-types": "^15.7.3",
     "@types/react": "^17.0.4",
     "@types/react-dom": "^17.0.3",
     "@vue/test-utils": "^1.2.0",
+    "typescript-dev-kit": "file:../../../../typescript-dev-kit/dist"
+  },
+  "peerDependencies": {
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -44,5 +44,7 @@
     "doc": "node_modules/.bin/typedoc --out ./doc/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
     "postinstall": "rm -f node_modules/.eslintcache && test -n \"$POSTINSTALLED\" || POSTINSTALLED=1 yarn add --peer @vue/test-utils @types/prop-types prop-types @types/react react @types/react-dom react-dom vue"
   },
-  "dependencies": {}
+  "dependencies": {
+    "sonar-ui": "^0.0.31"
+  }
 }

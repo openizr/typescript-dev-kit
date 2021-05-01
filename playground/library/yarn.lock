@@ -6928,6 +6928,11 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
+sonar-ui@^0.0.31:
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/sonar-ui/-/sonar-ui-0.0.31.tgz#dd9dcbd545c664d40acd0c34aaf7be933ad61474"
+  integrity sha512-Q2wY297xBlEeYP6Jf1vyCsU9HZ8MpAk3O3q24+mlsiS/PJXB5RLR2ij/h/AeVYGXOt6zWbXJhfY9mCD70wTOQw==
+
 sort-css-media-queries@1.5.4:
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/sort-css-media-queries/-/sort-css-media-queries-1.5.4.tgz#24182b12002a13d01ba943ddf74f5098d7c244ce"

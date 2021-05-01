@@ -15,6 +15,7 @@
   ESLint Airbnb
   Watch support
   Supports both TS and JS
+  Externalizes all dependencies
   Bundle generation (1 per entry)
   VueJS components library creation support
 
@@ -25,6 +26,7 @@
   Transpiles to ES5
   Supports both TS and JS
   Doesn't generate sourcemaps
+  Externalizes all dependencies
   Bundle generation (1 per entry)
   Generates bundle analysis report
   VueJS components library creation support
