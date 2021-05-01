@@ -248,6 +248,7 @@ const developmentConfig = {
   ].concat(contextSpecificConfig.plugins),
   // Removes heavy chunks splitting process to improve compilation performance.
   optimization: {
+    runtimeChunk: 'single',
     splitChunks: false,
     emitOnErrors: false,
     removeEmptyChunks: false,
