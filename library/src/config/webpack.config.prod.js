@@ -121,7 +121,7 @@ const productionConfig = {
   context: userConfig.srcPath,
   devtool: 'source-map',
   performance: {
-    hints: 'warning',
+    hints: (userConfig.target === 'web') ? 'warning' : false,
   },
   entry: userConfig.entry,
   externals: contextSpecificConfig.externals,
