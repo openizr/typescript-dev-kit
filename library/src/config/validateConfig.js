@@ -43,6 +43,17 @@ module.exports = (userConfig) => {
     throw new Error('User config validation - "srcPath" is not a valid path.');
   }
 
+  // Checking HTML template settings...
+  if (
+    userConfig.target === 'web'
+    && !(
+      typeof userConfig.html === 'object'
+      && Array.isArray(userConfig.html.entries)
+      && typeof userConfig.html.template === 'string'
+    )) {
+    throw new Error('User config validation - "html" params are not valid.');
+  }
+
   // Checking entries...
   if (typeof userConfig.entry !== 'object') {
     throw new Error('User config validation - "entry" is not a valid entries object.');

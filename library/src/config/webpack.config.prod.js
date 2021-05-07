@@ -12,10 +12,12 @@ const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const validateConfig = require('./validateConfig');
 const packageJson = require('../../../package.json');
 const ClearTerminalPlugin = require('./ClearTerminalPlugin');
@@ -57,7 +59,20 @@ const contextSpecificConfig = {
       analyzerMode: 'static',
       reportFilename: path.resolve(__dirname, '../../../report.html'),
     }),
-  ],
+  ].concat((userConfig.target === 'web')
+    ? [
+      // Generates a manifest containing all generated chunks' filenames.
+      new WebpackManifestPlugin({}),
+      // Generates final `index.html` from template.
+      new HtmlWebpackPlugin({
+        inject: false,
+        environment: 'production',
+        chunks: userConfig.html.entries,
+        filename: path.resolve(userConfig.distPath, 'index.html'),
+        template: path.resolve(userConfig.srcPath, userConfig.html.template),
+      }),
+    ]
+    : []),
   optimization: (userConfig.target === 'web' && userConfig.splitChunks === true)
     ? {
       // Splits code in several chunks to leverage on long-term vendor-caching.

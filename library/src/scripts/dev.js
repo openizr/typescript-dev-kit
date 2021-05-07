@@ -60,8 +60,17 @@ if (config.target === 'web') {
       server.use(express.static(path.resolve(config.output.path, '..')));
 
       // Catch-all to redirect any request to the main entry point (index.html).
-      server.get('*', (_request, response) => {
-        response.sendFile(path.resolve(config.output.path, '../index.html'));
+      server.get('*', (_request, response, next) => {
+        const filePath = path.resolve(config.output.path, '../index.html');
+        compiler.outputFileSystem.readFile(filePath, (error, content) => {
+          if (error !== null) {
+            next(error);
+          } else {
+            response.set('content-type', 'text/html');
+            response.send(content);
+            response.end();
+          }
+        });
       });
 
       server.listen(config.devServer.port, config.devServer.ip);

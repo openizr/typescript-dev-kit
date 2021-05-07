@@ -11,6 +11,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const validateConfig = require('./validateConfig');
 const packageJson = require('../../../package.json');
@@ -63,6 +64,14 @@ const contextSpecificConfig = {
     ? [
       // Enables HMR with webpack-dev-middleware.
       new webpack.HotModuleReplacementPlugin(),
+      // Generates final `index.html` from template.
+      new HtmlWebpackPlugin({
+        inject: false,
+        environment: 'development',
+        chunks: userConfig.html.entries,
+        filename: path.resolve(userConfig.distPath, 'index.html'),
+        template: path.resolve(userConfig.srcPath, userConfig.html.template),
+      }),
     ]
     : []),
   devServer: (userConfig.target === 'web') ? userConfig.devServer : undefined,
