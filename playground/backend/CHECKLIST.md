@@ -25,8 +25,9 @@
   Optimized bundle
   Transpiles to ES5
   Supports both TS and JS
-  Doesn't generate sourcemaps
+  Doesn't generate manifest
   Externalizes all dependencies
   Bundle generation (1 per entry)
   Generates bundle analysis report
+  Doesn't display performance hints
 

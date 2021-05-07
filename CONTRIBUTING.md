@@ -196,6 +196,7 @@ In order to keep this package up-to-date, dependencies updates should be checked
 - [express](https://github.com/expressjs/express/releases)
 - [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin/releases)
 - [fs-extra](https://github.com/jprichardson/node-fs-extra/releases)
+- [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin/blob/main/CHANGELOG.md)
 - [jest](https://github.com/facebook/jest/releases)
 - [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin/releases)
 - [postcss](https://github.com/postcss/postcss/releases)
@@ -216,6 +217,7 @@ In order to keep this package up-to-date, dependencies updates should be checked
 - [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer/releases)
 - [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware/releases)
 - [webpack-hot-middleware](https://github.com/webpack-contrib/webpack-hot-middleware/releases)
+- [webpack-manifest-plugin](https://github.com/shellscape/webpack-manifest-plugin/releases)
 
 
 ## Build & Deployment

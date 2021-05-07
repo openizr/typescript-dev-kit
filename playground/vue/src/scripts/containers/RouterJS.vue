@@ -10,8 +10,9 @@
 import { i18n } from 'basx';
 import store from 'scripts/store';
 import routes from 'scripts/store/routes';
-import connect from 'diox/connectors/vuejs';
+import useStore from 'diox/connectors/vue';
 
+const [useCombiner] = useStore(store);
 const lazyComponents = Object.keys(routes).reduce((mapping, route, index) => ({
   ...mapping,
   [route]: `Component${index}`,
@@ -20,7 +21,7 @@ const lazyComponents = Object.keys(routes).reduce((mapping, route, index) => ({
 /**
  * App router.
  */
-export default connect(store, { router: (newState) => ({ route: newState.route }) })(() => ({
+export default useCombiner('router', {
   name: 'RouterJS',
   components: Object.keys(routes).reduce((components, route) => ({
     ...components,
@@ -45,5 +46,5 @@ export default connect(store, { router: (newState) => ({ route: newState.route }
       return routes[this.route];
     },
   },
-}));
+});
 </script>
