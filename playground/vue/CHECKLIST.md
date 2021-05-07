@@ -30,6 +30,7 @@
   ESLint Airbnb
   Transpiles to ES5
   Optimized bundle
+  Generates manifest
   Supports scoped CSS
   Sourcemap generation
   Dynamic imports support
@@ -38,6 +39,7 @@
   Bundle generation (1 per entry)
   Generates bundle analysis report
   Merges same CSS media queries into one
+  Generates final index.html from template
   Correctly bundles small assets into inline
   Autoprefixer (compiles for evergreen browsers)
   Correctly bundles large assets into static assets

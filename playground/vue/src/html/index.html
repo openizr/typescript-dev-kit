@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base href="/" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <% if (htmlWebpackPlugin.options.environment === 'development') { %>
+    <!-- Development mode. -->
+  <% } %>
+  <% if (htmlWebpackPlugin.options.environment === 'production') { %>
+    <!-- Production mode. -->
+  <% } %>
+  <% for (var filePath in htmlWebpackPlugin.files.js) { %>
+    <script async src="<%= htmlWebpackPlugin.files.js[filePath] %>"></script>
+  <% } %>
+
+  <style>
+    /*WEBPACK_CSS*/
+  </style>
+</head>
+
+<body>
+  <section id="root"></section>
+</body>
+
+</html>
