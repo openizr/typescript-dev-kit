@@ -47,7 +47,9 @@ This toolbox includes:
 - **TypeScript support**
 - **SASS support**
 - **Dynamic imports support**
+- **Manifest generation**
 - **Sourcemaps generation**
+- **index.html generation from template**
 - **React / VueJS support**: with VueJS Single File Components
 - **Code Linting**: based on [Airbnb Style Guide](https://github.com/airbnb/javascript)
 - **Hot Module Reloading** when developing front-end solutions
@@ -80,9 +82,15 @@ Add the following to your `package.json`:
 "tsDevKitConfig": {
   "target": "node",     // Can be "node" (back-end projects or libraries) or "web" (front-end projects).
   "devServer": {        // Your dev server configuration (front-end projects).
-      "ip": "0.0.0.0",
-      "port": 3000
-    },
+    "ip": "0.0.0.0",
+    "port": 3000
+  },
+  "html": {             // Your index.html template configuration (front-end projects).
+    "template": "./html/index.html", // HTML template to generate index.html from (relative path from your "srcPath").
+    "entries": [        // Determines which chunks will be injected into the index.html, amongst entrypoints defined in `entry`.
+      "main"
+    ]
+  },
   "splitChunks": true,  // Whether to split the final bundle into multiple chunks (front-end projects).
   "runInDev": true,     // Whether to launch main entrypoint with node after each compilation in dev mode (back-end projects).
   "entry": {            // Here you can list all your entrypoints (relative paths from your "srcPath").
@@ -154,6 +162,8 @@ yarn run dev
 Starts the development mode. In this mode, you benefit of the HMR on your pages (front-end projects) and automatic restart of your scripts (back-end project). This allows you to see your changes in real time. Final bundle isn't optimized to provide maximum responsiveness of the environment.
 
 **Note:** _when developing a library (`"target": "node"`), a random semver-compliant number is set in place of your `package.json`'s version in the distributable directory. It allows you to test your package in real time by forcing webpack's cache invalidation._
+
+**Note:** _when developing a web app (`"target": "web"`), the `index.html` served by the development web server will be generated from the template you specified in your configuration, and will be kept in memory (not written on disk) for performance purpose._
 
 ### Testing mode
 
