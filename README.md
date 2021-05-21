@@ -14,7 +14,7 @@ Build any JavaScript or TypeScript project in minutes, without worrying about th
 3. [Installation](#Installation)
 4. [Configuration](#Configuration)
     1. [The Easy Way](#Theeasyway)
-    2. [The (less) Easy Way](#The(less)easyway)
+    2. [The (less) Easy Way](#The-less-easy-way)
 5. [Usage](#Usage)
 6. [Contributing](#Contributing)
 7. [Sponsor](#Sponsor)
