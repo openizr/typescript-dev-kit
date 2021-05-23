@@ -195,7 +195,7 @@ const developmentConfig = {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         type: 'asset',
         generator: {
-          filename: 'media/[name].[ext]',
+          filename: 'media/[name][ext]',
         },
       },
       // Images files.
@@ -203,7 +203,7 @@ const developmentConfig = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         type: 'asset',
         generator: {
-          filename: 'images/[name].[ext]',
+          filename: 'images/[name][ext]',
         },
       },
       // Fonts files.
@@ -211,7 +211,7 @@ const developmentConfig = {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         type: 'asset',
         generator: {
-          filename: 'fonts/[name].[ext]',
+          filename: 'fonts/[name][ext]',
         },
       },
     ],

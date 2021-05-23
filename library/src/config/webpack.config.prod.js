@@ -239,7 +239,7 @@ const productionConfig = {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         type: 'asset',
         generator: {
-          filename: 'media/[name].[hash:7].[ext]',
+          filename: 'media/[name].[hash:7][ext]',
         },
       },
       // Images files.
@@ -247,7 +247,7 @@ const productionConfig = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         type: 'asset',
         generator: {
-          filename: 'images/[name].[hash:7].[ext]',
+          filename: 'images/[name].[hash:7][ext]',
         },
       },
       // Fonts files.
@@ -255,7 +255,7 @@ const productionConfig = {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         type: 'asset',
         generator: {
-          filename: 'fonts/[name].[hash:7].[ext]',
+          filename: 'fonts/[name].[hash:7][ext]',
         },
       },
     ],
