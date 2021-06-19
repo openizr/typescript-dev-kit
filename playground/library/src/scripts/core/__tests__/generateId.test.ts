@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import generateId from 'scripts/core/generateId';
 
 describe('generateId', () => {

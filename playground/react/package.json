@@ -2,8 +2,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/prop-types": "^15.7.3",
-    "@types/react": "^17.0.6",
-    "@types/react-dom": "^17.0.5",
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.7",
     "typescript-dev-kit": "file:../../../../typescript-dev-kit/dist"
   },
   "dependencies": {
@@ -56,7 +56,7 @@
     "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev",
     "build": "cd node_modules/typescript-dev-kit/ && node scripts/build && cd ../../ && sed -i -e \"s%/\\*WEBPACK_CSS\\*/%WEBPACK_CSS\\n%g\" public/index.html  && sed -i -e \"/WEBPACK_CSS/r $(ls public/assets/styles/common.*.css)\" public/index.html && sed -i -e \"s/WEBPACK_CSS//g\" public/index.html",
     "test": "cd node_modules/typescript-dev-kit/ && node scripts/test",
-    "doc": "node_modules/.bin/typedoc --out ./doc/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
+    "doc": "node_modules/.bin/typedoc --out ./docs/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
     "postinstall": "rm -f node_modules/.eslintcache"
   }
 }
