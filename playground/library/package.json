@@ -5,16 +5,16 @@
   "license": "MIT",
   "devDependencies": {
     "@types/prop-types": "^15.7.3",
-    "@types/react": "^17.0.5",
-    "@types/react-dom": "^17.0.3",
-    "@vue/test-utils": "^1.2.0",
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.8",
+    "@vue/test-utils": "^1.2.1",
     "typescript-dev-kit": "file:../../../../typescript-dev-kit/dist"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "vue": "^2.6.12"
+    "vue": "^2.6.14"
   },
   "eslintConfig": {
     "extends": [
@@ -41,10 +41,10 @@
     "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev",
     "build": "cd node_modules/typescript-dev-kit/ && node scripts/build",
     "test": "cd node_modules/typescript-dev-kit/ && node scripts/test",
-    "doc": "node_modules/.bin/typedoc --out ./doc/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
+    "doc": "node_modules/.bin/typedoc --out ../docs/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
     "postinstall": "rm -f node_modules/.eslintcache && test -n \"$POSTINSTALLED\" || POSTINSTALLED=1 yarn add --peer @vue/test-utils @types/prop-types prop-types @types/react react @types/react-dom react-dom vue"
   },
   "dependencies": {
-    "sonar-ui": "^0.0.32"
+    "sonar-ui": "^0.0.36"
   }
 }
