@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from 'react';
 import store from 'scripts/store/index';
 import { act } from 'react-dom/test-utils';

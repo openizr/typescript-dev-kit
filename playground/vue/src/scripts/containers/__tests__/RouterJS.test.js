@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { mount } from '@vue/test-utils';
 import store from 'scripts/store/index';
 import RouterJS from 'scripts/containers/RouterJS.vue';

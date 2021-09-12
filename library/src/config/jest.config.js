@@ -9,8 +9,8 @@
 /* eslint-disable import/no-unresolved */
 
 const path = require('path');
-const validateConfig = require('./validateConfig');
 const packageJson = require('../../../package.json');
+const validateConfig = require('./validateConfig.js');
 
 const userConfig = packageJson.tsDevKitConfig;
 userConfig.srcPath = path.resolve(__dirname, '../../../', userConfig.srcPath);
@@ -46,7 +46,7 @@ module.exports = {
   transform: {
     '\\.(js|jsx)$': path.resolve(__dirname, '../jest/transform.js'),
     '\\.(ts|tsx)$': 'ts-jest',
-    '\\.(vue)$': '<rootDir>/node_modules/vue-jest',
+    '\\.(vue)$': path.resolve(__dirname, '../jest/vue-jest.js'),
   },
   moduleNameMapper: {
     '\\.(?!js|ts|jsx|tsx|vue)([a-z0-9]+)$': '<rootDir>/node_modules/typescript-dev-kit/jest/fileMock.js',

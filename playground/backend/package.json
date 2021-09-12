@@ -5,11 +5,11 @@
     "typescript-dev-kit": "file:../../../../typescript-dev-kit/dist"
   },
   "dependencies": {
-    "ajv": "^8.6.0",
+    "ajv": "^8.6.2",
     "ajv-errors": "^3.0.0",
-    "basx": "^1.3.4",
-    "fastify": "^3.18.0",
-    "source-map-support": "^0.5.19"
+    "basx": "^1.3.7",
+    "fastify": "^3.21.0",
+    "source-map-support": "^0.5.20"
   },
   "eslintConfig": {
     "extends": [
@@ -36,7 +36,7 @@
     "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev",
     "build": "cd node_modules/typescript-dev-kit/ && node scripts/build",
     "test": "cd node_modules/typescript-dev-kit/ && node scripts/test",
-    "doc": "node_modules/.bin/typedoc --out ../docs/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
+    "doc": "node_modules/.bin/typedoc --out ./docs/ --exclude \"**/__+(tests|mocks)__/**\" src/scripts/typescript.ts",
     "postinstall": "rm -f node_modules/.eslintcache"
   }
 }

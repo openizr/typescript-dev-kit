@@ -10,9 +10,9 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const validateConfig = require('./validateConfig');
 const packageJson = require('../../../package.json');
 const ClearTerminalPlugin = require('./ClearTerminalPlugin');

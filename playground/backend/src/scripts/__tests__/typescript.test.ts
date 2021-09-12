@@ -1,13 +1,8 @@
-import * as fastify from 'fastify';
-
-type Misc = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+import fastify, { register, addHook, listen } from 'scripts/lib/__mocks__/fastify';
 
 jest.mock('ajv');
-jest.mock('fastify');
 jest.mock('ajv-errors');
 jest.spyOn(process, 'exit').mockImplementation((code: number | undefined) => code as unknown as never);
-
-const mockedFastify = fastify as Misc;
 
 describe('typescript', () => {
   beforeEach(() => {
@@ -20,38 +15,40 @@ describe('typescript', () => {
     delete process.env.PLAYGROUND_PORT;
     process.env.ENV = 'development';
     jest.isolateModules(() => {
+      jest.doMock('fastify', () => fastify);
       // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
       require('scripts/typescript');
-      expect(mockedFastify.fastify).toHaveBeenCalledTimes(1);
-      expect(mockedFastify.fastify).toHaveBeenCalledWith({
+      expect(fastify).toHaveBeenCalledTimes(1);
+      expect(fastify).toHaveBeenCalledWith({
         connectionTimeout: 3000,
         ignoreTrailingSlash: true,
         keepAliveTimeout: 2000,
         logger: { level: 'info' },
       });
-      expect(mockedFastify.register).toHaveBeenCalledTimes(1);
-      expect(mockedFastify.addHook).toHaveBeenCalledTimes(1);
-      expect(mockedFastify.listen).toHaveBeenCalledTimes(1);
-      expect(mockedFastify.listen).toHaveBeenCalledWith(3000, '0.0.0.0', expect.any(Function));
+      expect(register).toHaveBeenCalledTimes(1);
+      expect(addHook).toHaveBeenCalledTimes(1);
+      expect(listen).toHaveBeenCalledTimes(1);
+      expect(listen).toHaveBeenCalledWith(3000, '0.0.0.0', expect.any(Function));
     });
   });
 
   test('correctly initializes server - production mode', () => {
     process.env.ENV = 'production';
     jest.isolateModules(() => {
+      jest.doMock('fastify', () => fastify);
       // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
       require('scripts/typescript');
-      expect(mockedFastify.fastify).toHaveBeenCalledTimes(1);
-      expect(mockedFastify.fastify).toHaveBeenCalledWith({
+      expect(fastify).toHaveBeenCalledTimes(1);
+      expect(fastify).toHaveBeenCalledWith({
         connectionTimeout: 3000,
         ignoreTrailingSlash: true,
         keepAliveTimeout: 2000,
         logger: { level: 'error' },
       });
-      expect(mockedFastify.register).toHaveBeenCalledTimes(1);
-      expect(mockedFastify.addHook).not.toHaveBeenCalled();
-      expect(mockedFastify.listen).toHaveBeenCalledTimes(1);
-      expect(mockedFastify.listen).toHaveBeenCalledWith(4000, '0.0.0.0', expect.any(Function));
+      expect(register).toHaveBeenCalledTimes(1);
+      expect(addHook).not.toHaveBeenCalled();
+      expect(listen).toHaveBeenCalledTimes(1);
+      expect(listen).toHaveBeenCalledWith(4000, '0.0.0.0', expect.any(Function));
     });
   });
 });

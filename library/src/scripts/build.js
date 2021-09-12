@@ -77,10 +77,10 @@ fs.remove(distPath)
     console.log('\n\x1B[0m\x1B[32m\x1B[1m ✔️ Compiled successfully! \x1B[0m\n');
   })
   // If any error occurs...
-  .catch((error) => {
+  .catch((errors) => {
     console.error('\x1B[0m\x1B[31m\x1B[1m ✖ Compilation failed: \x1B[0m\n');
-    const errors = Array.isArray(error) ? error : [error];
-    errors.forEach((error) => {
+    const formattedErrors = Array.isArray(errors) ? errors : [errors];
+    formattedErrors.forEach((error) => {
       console.error(error.message);
     });
     console.error('');

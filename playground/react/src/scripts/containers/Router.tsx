@@ -23,7 +23,7 @@ const propTypes = {
  */
 export default function Router(props: InferProps<typeof propTypes>): JSX.Element {
   const { locale } = props;
-  const [route] = useCombiner('router', (newState) => newState.route);
+  const [route] = useCombiner('router', (newState: { route: string; }) => newState.route);
 
   let currentPage = null;
   if (routes[route] !== undefined) {
