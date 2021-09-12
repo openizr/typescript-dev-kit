@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from 'react';
 import HomeJS from 'scripts/pages/HomeJS';
 import { act } from 'react-dom/test-utils';
