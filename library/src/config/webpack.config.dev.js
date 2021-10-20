@@ -93,6 +93,7 @@ const developmentConfig = {
     path: contextSpecificConfig.output.path,
     pathinfo: true,
     libraryTarget: contextSpecificConfig.output.libraryTarget,
+    crossOriginLoading: 'anonymous',
   },
   resolve: {
     extensions: ['.json', '.js', '.ts', '.jsx', '.tsx', '.vue', '*'],

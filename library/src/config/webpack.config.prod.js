@@ -145,6 +145,7 @@ const productionConfig = {
     path: contextSpecificConfig.output.path,
     publicPath: (userConfig.target === 'web') ? '/assets/' : undefined,
     libraryTarget: contextSpecificConfig.output.libraryTarget,
+    crossOriginLoading: 'anonymous',
   },
   resolve: {
     extensions: ['.json', '.js', '.ts', '.jsx', '.tsx', '.vue', '*'],
