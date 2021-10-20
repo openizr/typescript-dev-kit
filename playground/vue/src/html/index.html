@@ -13,7 +13,7 @@
     <!-- Production mode. -->
   <% } %>
   <% for (var filePath in htmlWebpackPlugin.files.js) { %>
-    <script async src="<%= htmlWebpackPlugin.files.js[filePath] %>"></script>
+    <script async src="<%= htmlWebpackPlugin.files.js[filePath] %>" crossorigin="anonymous"></script>
   <% } %>
 
   <style>
