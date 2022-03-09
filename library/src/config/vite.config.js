@@ -6,13 +6,12 @@
  *
  */
 
-/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-unresolved, global-require */
 
 const fs = require('fs');
 const path = require('path');
 const { defineConfig } = require('vite');
 const autoprefixer = require('autoprefixer');
-const vuePlugin = require('@vitejs/plugin-vue');
 const reactPlugin = require('@vitejs/plugin-react');
 const { visualizer } = require('rollup-plugin-visualizer');
 const postCssSortMediaQueries = require('postcss-sort-media-queries');
@@ -36,11 +35,18 @@ try {
   process.exit(1);
 }
 
+let vuePlugin = null;
+try {
+  require('vue');
+  vuePlugin = require('@vitejs/plugin-vue');
+} catch (e) {
+  // No-op.
+}
+
 const plugins = [
   reactPlugin(),
-  vuePlugin(),
   sveltePlugin({ experimental: { useVitePreprocess: true } }),
-];
+].concat(vuePlugin !== null ? [vuePlugin()] : []);
 
 if (process.env.ENV === 'production') {
   plugins.push(visualizer({
