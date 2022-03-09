@@ -2,19 +2,23 @@
   <button>{{ label }}</button>
 </template>
 
-<script>
-import Vue from 'vue';
-
+<script lang="ts">
 /**
  * Button.
  */
-export default Vue.extend({
-  name: 'VueJsButton',
+export default {
+  name: 'VueTsButton',
   props: {
     label: {
       type: String,
       required: true,
     },
   },
-});
+};
 </script>
+
+<style scoped>
+button {
+  color: blue;
+}
+</style>

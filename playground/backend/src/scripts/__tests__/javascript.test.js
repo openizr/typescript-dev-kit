@@ -2,7 +2,7 @@ import fastify, { register, addHook, listen } from 'scripts/lib/__mocks__/fastif
 
 jest.mock('ajv');
 jest.mock('ajv-errors');
-jest.spyOn(process, 'exit').mockImplementation();
+jest.spyOn(process, 'exit').mockImplementation((code) => code);
 
 describe('javascript', () => {
   beforeEach(() => {
@@ -11,11 +11,11 @@ describe('javascript', () => {
     jest.clearAllMocks();
   });
 
-  test.only('correctly initializes server - development mode', () => {
+  test('correctly initializes server - development mode', () => {
+    delete process.env.PLAYGROUND_PORT;
+    process.env.ENV = 'development';
     jest.isolateModules(() => {
       jest.doMock('fastify', () => fastify);
-      delete process.env.PLAYGROUND_PORT;
-      process.env.ENV = 'development';
       // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
       require('scripts/javascript');
       expect(fastify).toHaveBeenCalledTimes(1);

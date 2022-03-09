@@ -6,20 +6,19 @@
  *
  */
 
-/* eslint-disable no-console */
-
-import * as path from 'path';
-import * as fs from 'fs-extra';
+const path = require('path');
+const fs = require('fs-extra');
 
 process.env.NODE_ENV = 'production';
 
+const { log, error } = console;
 const srcPath = path.resolve(__dirname, '../src');
 const distPath = path.resolve(__dirname, '../dist');
 
 // Removing existing `dist` directory...
 fs.remove(distPath)
   .then(() => {
-    console.log('Compiling...');
+    log('Compiling...');
   })
   // Copying the whole `src` directory into `dist`...
   .then(() => fs.copy(srcPath, distPath))
@@ -31,9 +30,9 @@ fs.remove(distPath)
   .then(() => fs.copy(path.join(__dirname, '../LICENSE'), path.join(distPath, 'LICENSE')))
   // All went well...
   .then(() => {
-    console.log('Done.');
+    log('Done.');
   })
   // If any error occurs...
-  .catch((error) => {
-    console.error(error);
+  .catch((e) => {
+    error(e);
   });

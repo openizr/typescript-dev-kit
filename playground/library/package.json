@@ -4,17 +4,22 @@
   "types": "./types.d.ts",
   "license": "MIT",
   "devDependencies": {
+    "@testing-library/dom": "^8.11.3",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.3",
+    "@testing-library/svelte": "^3.0.3",
+    "@testing-library/vue": "^6.5.1",
     "@types/prop-types": "^15.7.4",
-    "@types/react": "^17.0.26",
-    "@types/react-dom": "^17.0.9",
-    "@vue/test-utils": "^1.2.2",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.13",
     "typescript-dev-kit": "file:../../../../typescript-dev-kit/dist"
   },
   "peerDependencies": {
-    "prop-types": "^15.7.2",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "vue": "^2.6.14"
+    "svelte": "^3.46.4",
+    "vue": "^3.2.31"
   },
   "eslintConfig": {
     "extends": [
@@ -23,10 +28,11 @@
   },
   "tsDevKitConfig": {
     "target": "node",
-    "entry": {
+    "entries": {
       "main": "./scripts/main.ts",
       "react": "./scripts/react.js",
-      "vue": "./scripts/vue.ts"
+      "vue": "./scripts/vue.ts",
+      "svelte": "./scripts/svelte.ts"
     },
     "srcPath": "src",
     "distPath": "dist",
@@ -38,11 +44,12 @@
   },
   "scripts": {
     "init": "node_modules/typescript-dev-kit/scripts/init.sh",
-    "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev",
-    "build": "cd node_modules/typescript-dev-kit/ && node scripts/build",
-    "test": "cd node_modules/typescript-dev-kit/ && node scripts/test",
-    "doc": "node_modules/.bin/typedoc --out ./docs/ --exclude \"**/__+(tests|mocks)__/**\" src/scripts/main.ts",
-    "postinstall": "rm -f node_modules/.eslintcache && test -n \"$POSTINSTALLED\" || POSTINSTALLED=1 yarn add --peer @vue/test-utils @types/prop-types prop-types @types/react react @types/react-dom react-dom vue"
+    "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev.js",
+    "build": "cd node_modules/typescript-dev-kit/ && node scripts/build.js",
+    "test": "cd node_modules/typescript-dev-kit/ && node scripts/test.js",
+    "check": "cd node_modules/typescript-dev-kit/ && node scripts/check.js",
+    "doc": "typedoc --out ./docs/ --exclude \"**/__+(tests|mocks)__/**\" src/scripts/main.ts",
+    "postinstall": "rm -f node_modules/.eslintcache && test -n \"$POSTINSTALLED\" || POSTINSTALLED=1 yarn add --peer prop-types react react-dom vue svelte @testing-library/dom @testing-library/jest-dom"
   },
   "dependencies": {
     "sonar-ui": "^0.0.39"

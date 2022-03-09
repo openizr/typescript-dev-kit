@@ -10,53 +10,55 @@
 
 const path = require('path');
 const packageJson = require('../../../package.json');
-const validateConfig = require('./validateConfig.js');
+const validateConfig = require('../helpers/validateConfig.js');
 
-const userConfig = packageJson.tsDevKitConfig;
-userConfig.srcPath = path.resolve(__dirname, '../../../', userConfig.srcPath);
+const { tsDevKitConfig } = packageJson;
+const projectRootPath = path.resolve(__dirname, '../../../');
+const srcPath = path.join(projectRootPath, tsDevKitConfig.srcPath);
 
 try {
-  validateConfig(userConfig);
+  validateConfig(tsDevKitConfig);
 } catch (error) {
   // eslint-disable-next-line no-console
   console.error(error);
-  process.exit();
+  process.exit(1);
+}
+
+const transform = {
+  '\\.(tsx?|jsx?)$': ['esbuild-jest', { sourcemap: true }],
+  '^.+\\.svelte$': [
+    'svelte-jester',
+    {
+      preprocess: path.resolve(__dirname, 'svelte.config.js'),
+    },
+  ],
+};
+
+try {
+  require('@vue/compiler-sfc'); // eslint-disable-line global-require
+  transform['\\.(vue)$'] = '@vue/vue3-jest';
+} catch (e) {
+  // No-op.
 }
 
 module.exports = {
-  rootDir: path.resolve(__dirname, '../../../'),
+  rootDir: projectRootPath,
   coverageDirectory: '<rootDir>/coverage',
   collectCoverageFrom: [
-    '**/*.{js,ts,jsx,tsx,vue}',
+    '**/*.{js,ts,jsx,tsx,vue,svelte}',
     '!**/*.d.{ts,tsx}',
   ],
-  globals: {
-    'vue-jest': {
-      transform: {
-        js: path.resolve(__dirname, '../jest/transform.js'),
-      },
-      babelConfig: {
-        presets: ['@babel/preset-env'],
-        // `dynamic-import-node` allows for dynamic import syntax.
-        plugins: ['@babel/plugin-syntax-dynamic-import', 'dynamic-import-node'],
-      },
-    },
-  },
-  testRegex: '(/__tests__/.*|\\.(test|spec))([^.]d|[^.][^d])\\.(js|ts|jsx|tsx|vue)$',
-  transform: {
-    '\\.(js|jsx)$': path.resolve(__dirname, '../jest/transform.js'),
-    '\\.(ts|tsx)$': 'ts-jest',
-    '\\.(vue)$': path.resolve(__dirname, '../jest/vue-jest.js'),
-  },
+  testRegex: '(/__tests__/.*|\\.(test|spec))([^.]d|[^.][^d])\\.(js|ts|jsx|tsx)$',
+  transform,
   moduleNameMapper: {
-    '\\.(?!js|ts|jsx|tsx|vue)([a-z0-9]+)$': '<rootDir>/node_modules/typescript-dev-kit/jest/fileMock.js',
+    '\\.(?!js|ts|jsx|tsx|vue|svelte)([a-z0-9]+)$': '<rootDir>/node_modules/typescript-dev-kit/helpers/fileMock.js',
   },
   moduleDirectories: [
     '<rootDir>/node_modules',
-    userConfig.srcPath,
+    srcPath,
   ],
   roots: [
-    userConfig.srcPath,
+    srcPath,
   ],
   moduleFileExtensions: [
     'js',
@@ -64,6 +66,7 @@ module.exports = {
     'ts',
     'tsx',
     'vue',
+    'svelte',
     'json',
   ],
 };

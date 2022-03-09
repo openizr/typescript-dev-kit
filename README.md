@@ -24,7 +24,7 @@ Build any JavaScript or TypeScript project in minutes, without worrying about th
 
 ## Philosophy
 
-Most JS/TS development environments out there are often completely opinionated (i.e. meant to build exclusively React, VueJS, or Svelte apps). It can be very frustrating when developing cross-frameworks solutions, or dealing with multiple stacks.
+Most JS/TS development environments out there are often completely opinionated (i.e. meant to build exclusively React, Vue, or Svelte apps). It can be very frustrating when developing cross-frameworks solutions, or dealing with multiple stacks.
 
 Also, managing and maintaining dozens of similar configuration (`.eslintrc`, `.babelrc`, `webpack.config.dev.js`, `tsconfig.json`, `.npmrc`, the list is endless) files over your projects is an unecessary, time-consuming task. Most of the time, configuration are exactly the same, they bloat your repositories, and impacts projects structuration/legibility.
 
@@ -40,21 +40,20 @@ That's precisely why `typescript-dev-kit` is here. It aims to provide:
 This toolbox includes:
 
 - **Unit testing solution**: with [Jest](https://jestjs.io/) (which is by far the best JS/TS testing framework on the market)
-- **Optimized bundling**: with [Webpack](https://webpack.js.org/) (the most complete bundler)
-- **Bundle analyser**: with [Webpack Bundle Analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
+- **Optimized bundling**: with [esbuild](https://esbuild.github.io/) and [vite](https://vitejs.dev/) (the most complete and performant bundlers to date)
+- **Bundle analyser**: with [Rollup Plugin Visualizer](https://github.com/btd/rollup-plugin-visualizer)
 - **Coverage reporting**: with [Istanbul](https://github.com/gotwarlost/istanbul)
 - **Automated documentation generation**: with [TypeDoc](http://typedoc.org/)
 - **TypeScript support**
 - **SASS support**
 - **Dynamic imports support**
-- **Manifest generation**
 - **Sourcemaps generation**
 - **index.html generation from template**
-- **React / VueJS support**: with VueJS Single File Components
+- **React / Svelte / Vue support**: with Svelte / Vue Single File Components
 - **Code Linting**: based on [Airbnb Style Guide](https://github.com/airbnb/javascript)
 - **Hot Module Reloading** when developing front-end solutions
 - **Automatic package bundling**: if you are writing a NPM package
-- **Node 10+ / Evergreen browsers support**: with ES7 features and [Autoprefixer](https://github.com/postcss/autoprefixer)
+- **Node 14+ / Evergreen browsers support**: with ES7 features and [Autoprefixer](https://github.com/postcss/autoprefixer)
 - **Environment initialization command**
 
 
@@ -85,21 +84,16 @@ Add the following to your `package.json`:
     "ip": "0.0.0.0",
     "port": 3000
   },
-  "html": {             // Your index.html template configuration (front-end projects).
-    "template": "./html/index.html", // HTML template to generate index.html from (relative path from your "srcPath").
-    "entries": [        // Determines which chunks will be injected into the index.html, amongst entrypoints defined in `entry`.
-      "main"
-    ]
-  },
-  "splitChunks": true,  // Whether to split the final bundle into multiple chunks (front-end projects).
-  "runInDev": true,     // Whether to launch main entrypoint with node after each compilation in dev mode (back-end projects).
-  "entry": {            // Here you can list all your entrypoints (relative paths from your "srcPath").
+  "html": "./html/index.html" // Your index.html template configuration (front-end projects).
+  "runInDev": true,           // Whether to launch main entrypoint with node after each compilation in dev mode (back-end projects).
+  "entries": {                // Here you can list all your entrypoints (relative paths from your "srcPath").
     "main": "main.ts",
     "other": "otherScript.js",
     ...
   },
   "srcPath": "src",     // Source path, containing your codebase.
   "distPath": "public", // Distribution path, in which all assets will be compiled.
+  "publicPath": "https://assets.dev", // URL from which assets will be fetched (front-end projects).
   "banner": "/*! Copyright John Doe. */", // This banner will be put at the top of all your bundled assets.
   "env": {              // Set your environment variables, they will be automatically inserted in the code at build time (front-end projects).
     "development": {
@@ -119,7 +113,8 @@ Add the following to your `package.json`:
     "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev",
     "build": "cd node_modules/typescript-dev-kit/ && node scripts/build",
     "test": "cd node_modules/typescript-dev-kit/ && node scripts/test",
-    "doc": "node_modules/.bin/typedoc --out ./doc/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
+    "check": "cd node_modules/typescript-dev-kit/ && node scripts/check",
+    "doc": "typedoc --out ./doc/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
     "postinstall": "rm -f node_modules/.eslintcache"
   }
 },
@@ -161,7 +156,7 @@ yarn run dev
 
 Starts the development mode. In this mode, you benefit of the HMR on your pages (front-end projects) and automatic restart of your scripts (back-end project). This allows you to see your changes in real time. Final bundle isn't optimized to provide maximum responsiveness of the environment.
 
-**Note:** _when developing a library (`"target": "node"`), a random semver-compliant number is set in place of your `package.json`'s version in the distributable directory. It allows you to test your package in real time by forcing webpack's cache invalidation._
+**Note:** _when developing a library (`"target": "node"`), a random semver-compliant number is set in place of your `package.json`'s version in the distributable directory. It allows you to test your package in real time by forcing cache invalidation._
 
 **Note:** _when developing a web app (`"target": "web"`), the `index.html` served by the development web server will be generated from the template you specified in your configuration, and will be kept in memory (not written on disk) for performance purpose._
 
@@ -179,15 +174,23 @@ Starts the testing mode. All your tests written in `*.test.js(x)` / `*.test.ts(x
 yarn run build
 ```
 
-Starts the build mode. This mode bundles and optimizes your codebase and related assets for distribution. Sourcemaps are also generated (see [node-source-map-support](https://github.com/evanw/node-source-map-support) to leverage on sourcemaps in Node), as well as the bundle analysis report in a `report.html` file. When building a NPM package, any relevant file (`README.md`, `LICENSE`, ...) is also included in your distributable directory.
+Starts the build mode. This mode bundles and optimizes your codebase and related assets for distribution. Sourcemaps are also generated (use `--enable-source-maps` to leverage on sourcemaps in Node), as well as the bundle analysis report in a `report.html` file. When building a NPM package, any relevant file (`README.md`, `LICENSE`, ...) is also included in your distributable directory.
 
-### Documentation mode
+### Checking
+
+```bash
+yarn run check
+```
+
+Runs linter and type-checkers on your codebase. You can pass the `-w` to enable watch mode.
+
+### Documentation
 
 ```bash
 yarn run doc
 ```
 
-Starts the documentation mode. Generates an automatic technical documentation based on the comments and typings present in your code. The result is available in the `doc` directory.
+Generates an automatic technical documentation based on the comments and typings present in your code. The result is available in the `doc` directory.
 
 
 ## Contributing

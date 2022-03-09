@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`svelte/Loader renders correctly - basic 1`] = `
+<div>
+  <div>
+    undefined
+  </div>
+</div>
+`;

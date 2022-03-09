@@ -11,12 +11,15 @@
 const path = require('path');
 const packageJson = require('../../package.json');
 
+const projectRootPath = path.resolve(__dirname, '../../');
+
 module.exports = {
   parser: 'vue-eslint-parser',
-  plugins: ['@typescript-eslint'],
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:vue/recommended'],
+  plugins: ['@typescript-eslint', 'svelte3'],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:vue/recommended', 'plugin:react-hooks/recommended'],
   parserOptions: {
     parser: '@typescript-eslint/parser',
+    extraFileExtensions: ['.svelte', '.vue'],
   },
   rules: {
     // See https://github.com/typescript-eslint/typescript-eslint/issues/2540.
@@ -37,10 +40,7 @@ module.exports = {
       'error',
       {
         singleline: 10,
-        multiline: {
-          max: 1,
-          allowFirstLine: false,
-        },
+        multiline: 1,
       },
     ],
     'import/extensions': [
@@ -52,6 +52,7 @@ module.exports = {
         jsx: 'never',
         tsx: 'never',
         vue: 'always',
+        svelte: 'always',
       },
     ],
     'no-restricted-imports': [
@@ -70,14 +71,34 @@ module.exports = {
         '@typescript-eslint/explicit-module-boundary-types': ['warn'],
       },
     },
+    {
+      files: ['*.vue'],
+      rules: {
+        'react-hooks/rules-of-hooks': 'off',
+      },
+    },
+    {
+      files: ['*.svelte'],
+      processor: 'svelte3/svelte3',
+      rules: {
+        'no-labels': 'off',
+        'import/first': 'off',
+        'import/no-mutable-exports': 'off',
+        'react-hooks/rules-of-hooks': 'off',
+        'import/prefer-default-export': 'off',
+        'no-multiple-empty-lines': ['error', { max: 2, maxBOF: 2, maxEOF: 0 }],
+        'no-restricted-syntax': ['error', 'ForInStatement', 'ForOfStatement', 'WithStatement'],
+      },
+    },
   ],
   settings: {
+    'svelte3/typescript': true,
     'import/resolver': {
       node: {
-        extensions: ['.js', '.ts', '.jsx', '.tsx', '.vue', '.json'],
-        paths: [path.resolve(__dirname, '../../', packageJson.tsDevKitConfig.srcPath)],
+        extensions: ['.js', '.ts', '.jsx', '.tsx', '.vue', '.svelte', '.json'],
+        paths: [path.join(projectRootPath, packageJson.tsDevKitConfig.srcPath)],
       },
-      'import/extensions': ['.js', '.ts', '.jsx', '.tsx', '.vue'],
+      'import/extensions': ['.js', '.ts', '.jsx', '.tsx', '.vue', '.svelte'],
     },
   },
   env: {

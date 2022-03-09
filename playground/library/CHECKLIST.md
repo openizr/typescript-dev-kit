@@ -8,26 +8,31 @@
 
 # Test mode
   Code coverage
-  Allows testing TS/JS Vue/React components
+  Allows testing TS/JS Vue/React/Svelte components
 
 # Development mode
-  ES6 support
+  ES7+ support
   ESLint Airbnb
-  Watch support
+  Watch mode
+  Sourcemaps support
+  Checks TS/Svelte types
   Supports both TS and JS
   Externalizes all dependencies
   Bundle generation (1 per entry)
-  VueJS components library creation support
+  Vue/React/Svelte components library creation support
 
 # Production mode
-  ES6 support
+  ES7+ support
   ESLint Airbnb
   Optimized bundle
-  Transpiles to ES5
+  Transpiles to ES6
+  Sourcemaps support
+  Checks TS/Svelte types
   Supports both TS and JS
   Doesn't generate manifest
   Externalizes all dependencies
   Bundle generation (1 per entry)
   Generates bundle analysis report
   Doesn't display performance hints
-  VueJS components library creation support
+  Adds a banner on top of each bundled file
+  Vue/React/Svelte components library creation support

@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`svelte/Router renders correctly - loading page 1`] = `
+<div>
+  <div>
+    undefined
+  </div>
+  
+  
+</div>
+`;
+
+exports[`svelte/Router renders correctly - page found 1`] = `
+<div>
+  <p>
+    <img
+      alt="test"
+    />
+     
+    <img
+      alt="test"
+    />
+     
+    Test
+  </p>
+  
+  
+</div>
+`;
+
+exports[`svelte/Router renders correctly - page not found 1`] = `
+<div>
+  
+</div>
+`;

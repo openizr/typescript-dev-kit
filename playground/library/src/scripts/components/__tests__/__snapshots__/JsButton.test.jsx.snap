@@ -1,11 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`react/JsButton renders correctly - basic 1`] = `
-<div>
-  <button
-    type="button"
-  >
-    Test
-  </button>
-</div>
+<button
+  type="button"
+>
+  Test
+</button>
 `;

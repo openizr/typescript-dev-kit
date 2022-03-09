@@ -1,5 +1,4 @@
-declare module '*.vue' {
-  import Vue from 'vue';
+declare module '*.vue';
+declare module '*.svelte';
 
-  export default Vue;
-}
+type JSXElement = any; // eslint-disable-line @typescript-eslint/no-explicit-any

@@ -1,7 +1,6 @@
 import Ajv from 'ajv';
 import fastify from 'fastify';
 import ajvErrors from 'ajv-errors';
-import 'source-map-support/register';
 import configuration from 'scripts/conf/app';
 import declareRoutes from 'scripts/conf/routes';
 

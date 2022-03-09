@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`vue/Router renders correctly - loading page 1`] = `
+<p>
+  <img
+    alt="test"
+    src="file"
+  />
+  <img
+    alt="test"
+    src="file"
+  />
+   Test
+</p>
+`;
+
+exports[`vue/Router renders correctly - page found 1`] = `
+<p>
+  <img
+    alt="test"
+    src="file"
+  />
+  <img
+    alt="test"
+    src="file"
+  />
+   Test
+</p>
+`;
+
+exports[`vue/Router renders correctly - page not found 1`] = `<!--v-if-->`;

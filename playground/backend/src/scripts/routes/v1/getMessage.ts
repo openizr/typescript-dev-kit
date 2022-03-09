@@ -9,7 +9,8 @@ export default {
   handler: (_request: FastifyRequest, response: FastifyReply): void => {
     response.send({ message: 'WELCOME_MESSAGE' });
   },
-  schema: deepMerge(schema,
+  schema: deepMerge(
+    schema,
     {
       body: undefined,
       response: {
@@ -20,5 +21,6 @@ export default {
           },
         },
       },
-    }),
+    },
+  ),
 };

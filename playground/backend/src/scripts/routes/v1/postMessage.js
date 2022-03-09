@@ -8,7 +8,8 @@ export default {
   handler: (_request, response) => {
     response.send();
   },
-  schema: deepMerge(schema,
+  schema: deepMerge(
+    schema,
     {
       body: {
         type: 'object',
@@ -32,5 +33,6 @@ export default {
           type: 'string',
         },
       },
-    }),
+    },
+  ),
 };

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { mount } from '@vue/test-utils';
+import { render } from '@testing-library/vue';
 import VueTsButton from 'scripts/components/VueJsButton.vue';
 
 describe('vue/VueTsButton', () => {
@@ -11,9 +11,9 @@ describe('vue/VueTsButton', () => {
   });
 
   test('renders correctly - basic', () => {
-    const wrapper = mount(VueTsButton, {
-      propsData: { label: 'Test' },
+    const { container } = render(VueTsButton, {
+      props: { label: 'Test' },
     });
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

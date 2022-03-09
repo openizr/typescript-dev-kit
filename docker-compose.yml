@@ -3,17 +3,18 @@ version: "3.6"
 services:
   library:
     container_name: ${PROJECT_NAME}_library
-    image: openizr/node:2.0.1-dev
+    image: openizr/node:3.0.0-dev
     env_file:
       - .env
-    command: sh -c "dsync /mount/LICENSE /var/www/html/LICENSE & dsync /mount/README.md /var/www/html/README.md"
+    command: sh -c "dsync /mount/LICENSE /var/www/html/LICENSE & dsync
+      /mount/README.md /var/www/html/README.md"
     volumes:
       - ./library:/var/www/html
       - ./:/mount
     restart: unless-stopped
   playground:
     container_name: ${PROJECT_NAME}_playground
-    image: openizr/node:2.0.1-dev
+    image: openizr/node:3.0.0-dev
     env_file:
       - .env
     ports:
