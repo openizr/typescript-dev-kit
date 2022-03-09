@@ -84,6 +84,7 @@ async function run() {
           bundle: true,
           target: 'es6',
           minify: true,
+          format: 'esm',
           platform: 'node',
           outdir: distPath,
           metafile: true,

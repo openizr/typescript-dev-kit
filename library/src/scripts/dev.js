@@ -184,6 +184,7 @@ async function run() {
       }), {}),
       bundle: true,
       target: 'es6',
+      format: 'esm',
       minify: false,
       platform: 'node',
       outdir: distPath,
