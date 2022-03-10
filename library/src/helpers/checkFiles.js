@@ -25,11 +25,13 @@ const { log, error } = console;
  *
  * @param {string} srcPath Absolute path to the project's source directory.
  *
+ * @param {boolean} runSvelteChecker Wether to run `svelte-check`.
+ *
  * @param {boolean} watchMode Wether to use watch mode.
  *
  * @returns {void}
  */
-module.exports = async function checkFiles(projectRootPath, srcPath, watchMode) {
+module.exports = async function checkFiles(projectRootPath, srcPath, runSvelteChecker, watchMode) {
   const tsConfigFilePath = path.join(projectRootPath, 'tsconfig.json');
   const cliArguments = watchMode ? ['--watch'] : [];
 
@@ -99,9 +101,9 @@ module.exports = async function checkFiles(projectRootPath, srcPath, watchMode) 
   });
 
   // Running svelte type-checker if necessary...
-  const svelteCheckPromise = new Promise((resolve) => {
-    try {
-      require('svelte');
+  const svelteCheckPromise = (!runSvelteChecker)
+    ? Promise.resolve()
+    : new Promise((resolve) => {
       const svelteChecker = spawn(path.join(projectRootPath, 'node_modules/svelte-check/bin/svelte-check'), cliArguments.concat(['--workspace', srcPath, '--tsconfig', path.join(projectRootPath, 'tsconfig.json'), '--use-new-transformation']));
       svelteChecker.stdout.on('data', (data) => {
         const message = data.toString().trim();
@@ -137,10 +139,7 @@ module.exports = async function checkFiles(projectRootPath, srcPath, watchMode) 
           resolve();
         });
       }
-    } catch (e) {
-    // No-op.
-    }
-  });
+    });
 
   await Promise.all([tscPromise, svelteCheckPromise]);
 };

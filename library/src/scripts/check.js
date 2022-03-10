@@ -25,7 +25,8 @@ const srcPath = path.join(projectRootPath, tsDevKitConfig.srcPath);
  */
 async function run() {
   await fixNpmPackages(projectRootPath);
-  await checkFiles(projectRootPath, srcPath, watchMode);
+  const runSvelteChecker = !!packageJson.dependencies?.svelte || !!packageJson.peerDependencies?.svelte;
+  await checkFiles(projectRootPath, srcPath, runSvelteChecker, watchMode);
 }
 
 run();

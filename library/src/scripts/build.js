@@ -40,7 +40,8 @@ async function run() {
 
   // Checking files...
   log(colors.magenta(colors.bold('Checking files...\n')));
-  await checkFiles(projectRootPath, srcPath, false);
+  const runSvelteChecker = !!packageJson.dependencies?.svelte || !!packageJson.peerDependencies?.svelte;
+  await checkFiles(projectRootPath, srcPath, runSvelteChecker, false);
 
   log(colors.magenta(colors.bold('Building...\n')));
   try {
