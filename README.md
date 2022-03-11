@@ -137,6 +137,7 @@ If you wish to develop in TypeScript, you need to create the following `tsconfig
 }
 ```
 
+/!\ Depending on the type of project you're developing, you might also want to add the `"type": "module"` directive in your `package.json`.
 
 ## Usage
 

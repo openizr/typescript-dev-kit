@@ -102,6 +102,7 @@ async function run() {
         await fs.writeJson(path.join(distPath, 'package.json'), {
           name: packageJson.name,
           main: packageJson.main,
+          type: packageJson.type,
           types: packageJson.types,
           bugs: packageJson.bugs,
           author: packageJson.author,
