@@ -12,7 +12,6 @@ const fs = require('fs');
 const path = require('path');
 const { defineConfig } = require('vite');
 const autoprefixer = require('autoprefixer');
-const reactPlugin = require('@vitejs/plugin-react');
 const { visualizer } = require('rollup-plugin-visualizer');
 const postCssSortMediaQueries = require('postcss-sort-media-queries');
 const { svelte: sveltePlugin } = require('@sveltejs/vite-plugin-svelte');
@@ -43,10 +42,17 @@ try {
   // No-op.
 }
 
-const plugins = [
-  reactPlugin(),
-  sveltePlugin({ experimental: { useVitePreprocess: true } }),
-].concat(vuePlugin !== null ? [vuePlugin()] : []);
+let reactPlugin = null;
+try {
+  require('react');
+  reactPlugin = require('@vitejs/plugin-react');
+} catch (e) {
+  // No-op.
+}
+
+const plugins = [sveltePlugin({ experimental: { useVitePreprocess: true } })]
+  .concat(vuePlugin !== null ? [vuePlugin()] : [])
+  .concat(reactPlugin !== null ? [reactPlugin()] : []);
 
 if (process.env.ENV === 'production') {
   plugins.push(visualizer({
