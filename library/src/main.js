@@ -16,7 +16,7 @@ const projectRootPath = path.resolve(__dirname, '../../');
 module.exports = {
   parser: 'vue-eslint-parser',
   plugins: ['@typescript-eslint', 'svelte3'],
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:vue/recommended', 'plugin:react-hooks/recommended'],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:vue/vue3-recommended', 'plugin:react-hooks/recommended'],
   parserOptions: {
     parser: '@typescript-eslint/parser',
     extraFileExtensions: ['.svelte', '.vue'],
@@ -104,5 +104,6 @@ module.exports = {
   env: {
     browser: true,
     jest: true,
+    'vue/setup-compiler-macros': true,
   },
 };
