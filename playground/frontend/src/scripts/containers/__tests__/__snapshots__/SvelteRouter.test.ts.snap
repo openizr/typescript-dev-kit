@@ -3,7 +3,7 @@
 exports[`svelte/Router renders correctly - loading page 1`] = `
 <div>
   <div>
-    undefined
+    {"LABEL_TEST":"Test"}
   </div>
   
   

@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { defineAsyncComponent } from 'vue';
 
 interface Routes {
