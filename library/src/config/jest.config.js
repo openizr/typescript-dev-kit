@@ -25,7 +25,7 @@ try {
 }
 
 const transform = {
-  '\\.(tsx?|jsx?)$': ['esbuild-jest', { sourcemap: true }],
+  '\\.(tsx?|jsx?)$': 'ts-jest',
   '^.+\\.svelte$': [
     'svelte-jester',
     {
