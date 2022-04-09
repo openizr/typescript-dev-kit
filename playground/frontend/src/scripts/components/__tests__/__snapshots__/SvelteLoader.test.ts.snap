@@ -3,7 +3,7 @@
 exports[`svelte/Loader renders correctly - basic 1`] = `
 <div>
   <div>
-    undefined
+    {"LABEL_TEST":"Test"}
   </div>
 </div>
 `;

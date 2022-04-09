@@ -6,8 +6,7 @@ services:
     image: openizr/node:3.0.0-dev
     env_file:
       - .env
-    command: sh -c "dsync /mount/LICENSE /var/www/html/LICENSE & dsync
-      /mount/README.md /var/www/html/README.md"
+    command: sh -c "dsync /mount/LICENSE /var/www/html/LICENSE & dsync /mount/README.md /var/www/html/README.md"
     volumes:
       - ./library:/var/www/html
       - ./:/mount
@@ -29,4 +28,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.16.57.0/24
+        - subnet: 172.16.52.0/24

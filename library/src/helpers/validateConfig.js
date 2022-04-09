@@ -73,6 +73,11 @@ module.exports = async function validateConfig(userConfig) {
     throw new Error('User config validation - "banner" is not a valid banner.');
   }
 
+  // Checking chunks splitting...
+  if (userConfig.splitChunks !== undefined && typeof userConfig.splitChunks !== 'boolean') {
+    throw new Error('User config validation - "splitChunks" is not a boolean.');
+  }
+
   // Checking env variables...
   if (userConfig.env === undefined) {
     throw new Error('User config validation - "env" is not a valid object.');
