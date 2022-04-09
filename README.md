@@ -86,6 +86,7 @@ Add the following to your `package.json`:
   },
   "html": "./html/index.html" // Your index.html template configuration (front-end projects).
   "runInDev": true,           // Whether to launch main entrypoint with node after each compilation in dev mode (back-end projects).
+  "splitChunks": true,        // Whether to split JS chunks, or bundle everything in 1 file in build mode (front-end projects).
   "entries": {                // Here you can list all your entrypoints (relative paths from your "srcPath").
     "main": "main.ts",
     "other": "otherScript.js",
