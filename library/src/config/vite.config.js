@@ -83,6 +83,8 @@ const viteConfig = defineConfig({
     rollupOptions: {
       output: {
         banner: tsDevKitConfig.banner,
+        format: (tsDevKitConfig.splitChunks === false) ? 'iife' : 'esm',
+        inlineDynamicImports: tsDevKitConfig.splitChunks === false,
         assetFileNames: 'assets/[ext]/[name].[hash][extname]',
         entryFileNames: 'assets/js/[name].[hash].js',
         chunkFileNames: 'assets/js/[name].[hash].js',
