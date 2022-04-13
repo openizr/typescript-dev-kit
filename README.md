@@ -81,7 +81,7 @@ Add the following to your `package.json`:
 "tsDevKitConfig": {
   "target": "node",     // Can be "node" (back-end projects or libraries) or "web" (front-end projects).
   "devServer": {        // Your dev server configuration (front-end projects).
-    "ip": "0.0.0.0",
+    "host": "0.0.0.0",
     "port": 3000
   },
   "html": "./html/index.html" // Your index.html template configuration (front-end projects).
