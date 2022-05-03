@@ -1,4 +1,4 @@
-import { deepMerge } from 'basx';
+import basx from 'basx';
 import schema from 'scripts/lib/baseSchema';
 
 /**
@@ -8,7 +8,7 @@ export default {
   handler: (_request, response) => {
     response.send();
   },
-  schema: deepMerge(
+  schema: basx.deepMerge(
     schema,
     {
       body: {

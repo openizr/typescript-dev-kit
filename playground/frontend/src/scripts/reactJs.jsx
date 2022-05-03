@@ -2,7 +2,7 @@
 
 import 'styles/main.scss';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import RouterJS from 'scripts/containers/RouterJS';
 
 if (process.env.NODE_ENV === 'production') {
@@ -12,9 +12,12 @@ if (process.env.NODE_ENV === 'development') {
   console.log('DEVELOPMENT MODE'); // eslint-disable-line no-console
 }
 
+let app;
+
 function main() {
   import('scripts/locale/en.json').then((locale) => {
-    ReactDOM.render(<RouterJS locale={locale.default} />, document.querySelector('#root'));
+    app = createRoot(document.querySelector('#root'));
+    app.render(<RouterJS locale={locale.default} />);
   });
 }
 
@@ -30,5 +33,5 @@ if (document.readyState === 'loading') {
 // Ensures subscriptions to Store are correctly cleared when page is left, to prevent "ghost"
 // processing, by manually unmounting React components tree.
 window.addEventListener('beforeunload', () => {
-  ReactDOM.unmountComponentAtNode(document.querySelector('#root'));
+  app.unmount();
 });

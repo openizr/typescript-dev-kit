@@ -1,15 +1,16 @@
 {
   "main": "./typescript.js",
   "license": "MIT",
+  "type": "module",
   "devDependencies": {
     "typescript-dev-kit": "file:../../../../typescript-dev-kit/dist"
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.16.7",
-    "ajv": "^8.6.3",
+    "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "basx": "^1.3.7",
-    "fastify": "^3.22.0"
+    "fastify": "^3.29.0"
   },
   "eslintConfig": {
     "extends": [
