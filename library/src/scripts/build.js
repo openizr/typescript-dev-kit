@@ -15,8 +15,6 @@ const fs = require('fs-extra');
 const { build } = require('vite');
 const esbuild = require('esbuild');
 const colors = require('picocolors');
-const sveltePlugin = require('esbuild-svelte');
-const sveltePreprocess = require('svelte-preprocess');
 const packageJson = require('../../../package.json');
 const viteConfig = require('../config/vite.config');
 const checkFiles = require('../helpers/checkFiles.js');
@@ -66,6 +64,18 @@ async function run() {
         // No-op.
       }
 
+      let sveltePlugin = null;
+    try {
+      require('svelte');
+      const sveltePreprocess = require('svelte-preprocess');
+      sveltePlugin = require('esbuild-svelte')({
+        compilerOptions: { css: true },
+        preprocess: sveltePreprocess(),
+      });
+    } catch (e) {
+      // No-op.
+    }
+
       let startTimestamp = 0;
       await fs.remove(distPath);
       startTimestamp = Date.now();
@@ -92,9 +102,9 @@ async function run() {
           external: Object.keys(packageJson.dependencies)
             .concat(Object.keys(packageJson.peerDependencies || [])),
           sourcemap: true,
-          plugins: [
-            sveltePlugin({ compilerOptions: { css: true }, preprocess: sveltePreprocess() }),
-          ].concat(vuePlugin !== null ? [vuePlugin()] : []),
+          plugins: []
+            .concat(vuePlugin !== null ? [vuePlugin()] : [])
+            .concat(sveltePlugin !== null ? [sveltePlugin] : []),
         });
         const analysis = await esbuild.analyzeMetafile(result.metafile);
         log(analysis);

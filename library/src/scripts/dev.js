@@ -15,10 +15,8 @@ const fs = require('fs-extra');
 const esbuild = require('esbuild');
 const colors = require('picocolors');
 const { spawn } = require('child_process');
-const sveltePlugin = require('esbuild-svelte');
 const { send } = require('vite/dist/node/index.js');
 const vitePackageJson = require('vite/package.json');
-const sveltePreprocess = require('svelte-preprocess');
 const { createServer, createLogger } = require('vite');
 const packageJson = require('../../../package.json');
 const viteConfig = require('../config/vite.config');
@@ -138,7 +136,7 @@ async function run() {
                 nodeProcess.kill('SIGKILL');
                 nodeProcess = null;
               }
-              nodeProcess = spawn('node', ['--enable-source-maps', path.join(distPath, packageJson.main)]);
+              nodeProcess = spawn('node', ['--enable-source-maps', '--es-module-specifier-resolution=node', path.join(distPath, packageJson.main)]);
               nodeProcess.stdout.on('data', (data) => {
                 log(`${data.toString()}\n`);
               });
@@ -174,6 +172,18 @@ async function run() {
       // No-op.
     }
 
+    let sveltePlugin = null;
+    try {
+      require('svelte');
+      const sveltePreprocess = require('svelte-preprocess');
+      sveltePlugin = require('esbuild-svelte')({
+        compilerOptions: { css: true },
+        preprocess: sveltePreprocess(),
+      });
+    } catch (e) {
+      // No-op.
+    }
+
     startTimestamp = Date.now();
     const result = await esbuild.build({
       entryPoints: Object.keys(tsDevKitConfig.entries).reduce((entrypoints, entrypoint) => ({
@@ -195,10 +205,9 @@ async function run() {
         onRebuild: displayOutput,
       },
       sourcemap: true,
-      plugins: [
-        tsDevKitPlugin,
-        sveltePlugin({ compilerOptions: { css: true }, preprocess: sveltePreprocess() }),
-      ].concat(vuePlugin !== null ? [vuePlugin()] : []),
+      plugins: [tsDevKitPlugin]
+        .concat(vuePlugin !== null ? [vuePlugin()] : [])
+        .concat(sveltePlugin !== null ? [sveltePlugin] : []),
     });
     displayOutput(null, result);
   }
