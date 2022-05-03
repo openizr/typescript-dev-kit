@@ -26,13 +26,19 @@ try {
 
 const transform = {
   '\\.(tsx?|jsx?)$': 'ts-jest',
-  '^.+\\.svelte$': [
+};
+
+try {
+  require('svelte'); // eslint-disable-line global-require
+  transform['^.+\\.svelte$'] = [
     'svelte-jester',
     {
       preprocess: path.resolve(__dirname, 'svelte.config.js'),
     },
-  ],
-};
+  ];
+} catch (e) {
+  // No-op.
+}
 
 try {
   require('@vue/compiler-sfc'); // eslint-disable-line global-require
