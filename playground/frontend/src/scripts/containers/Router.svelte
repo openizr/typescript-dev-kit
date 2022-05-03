@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
-  import * as routes from 'scripts/store/routes';
+  import routes from 'scripts/store/routes';
   import useCombiner from 'scripts/store/useCombiner';
   import Loader from 'scripts/components/Loader.svelte';
 

@@ -14,7 +14,6 @@ const { defineConfig } = require('vite');
 const autoprefixer = require('autoprefixer');
 const { visualizer } = require('rollup-plugin-visualizer');
 const postCssSortMediaQueries = require('postcss-sort-media-queries');
-const { svelte: sveltePlugin } = require('@sveltejs/vite-plugin-svelte');
 const validateConfig = require('../helpers/validateConfig.js');
 const packageJson = require('../../../package.json');
 
@@ -34,6 +33,14 @@ try {
   process.exit(1);
 }
 
+let sveltePlugin = null;
+try {
+  require('svelte');
+  sveltePlugin = require('@sveltejs/vite-plugin-svelte').svelte;
+} catch (e) {
+  // No-op.
+}
+
 let vuePlugin = null;
 try {
   require('vue');
@@ -50,9 +57,11 @@ try {
   // No-op.
 }
 
-const plugins = [sveltePlugin({ experimental: { useVitePreprocess: true } })]
+const sveltePluginConfiguration = { experimental: { useVitePreprocess: true } };
+const plugins = []
   .concat(vuePlugin !== null ? [vuePlugin()] : [])
-  .concat(reactPlugin !== null ? [reactPlugin()] : []);
+  .concat(reactPlugin !== null ? [reactPlugin()] : [])
+  .concat(sveltePlugin !== null ? [sveltePlugin(sveltePluginConfiguration)] : []);
 
 if (process.env.ENV === 'production') {
   plugins.push(visualizer({
@@ -70,11 +79,11 @@ const viteConfig = defineConfig({
     }), {}),
   },
   server: tsDevKitConfig.devServer,
-  css: (process.env.ENV === 'production') ? {
+  css: {
     postcss: {
-      plugins: [autoprefixer, postCssSortMediaQueries],
+      plugins: [autoprefixer].concat((process.env.ENV === 'production') ? [postCssSortMediaQueries] : []),
     },
-  } : {},
+  },
   build: {
     target: 'es6',
     outDir: '__dist__',
