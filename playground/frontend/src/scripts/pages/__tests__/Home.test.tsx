@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 
 import React from 'react';
@@ -8,7 +8,7 @@ import { render } from '@testing-library/react';
 
 describe('react/Home', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders correctly - basic', () => {

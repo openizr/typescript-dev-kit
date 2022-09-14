@@ -1,15 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`vue/Home renders correctly - basic 1`] = `
+exports[`pages/HomePage > renders correctly - basic 1`] = `
 <p>
   <img
     alt="test"
-    src="file"
+    src="/src/images/test.jpg"
   />
   <img
     alt="test"
-    src="file"
+    src="/src/images/test.svg"
   />
-   LABEL_TEST
+  <a>
+    Test
+  </a>
 </p>
 `;

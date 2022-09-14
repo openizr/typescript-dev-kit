@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Matthieu Jabbour. All Rights Reserved.
+ * Copyright (c) Openizr. All Rights Reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,7 +15,7 @@
  *
  * @returns {void}
  */
-module.exports = async function validateConfig(userConfig) {
+export default async function validateConfig(userConfig) {
   const allowedTargets = ['node', 'web'];
 
   // Checking if user configuration does even exist...
@@ -91,4 +91,4 @@ module.exports = async function validateConfig(userConfig) {
   if (userConfig.env.production === undefined || typeof userConfig.env.production !== 'object') {
     throw new Error('User config validation - "env.production" is not a valid object.');
   }
-};
+}

@@ -1,10 +1,9 @@
-import { i18n } from 'basx';
 import store from 'scripts/store';
-import React, { Suspense } from 'react';
+import * as React from 'react';
 import routes from 'scripts/store/routes';
 import useStore from 'diox/connectors/react';
 import Loader from 'scripts/components/Loader';
-import PropTypes, { InferProps } from 'prop-types';
+import translate from 'scripts/helpers/translate';
 
 type LazyComponent = () => Promise<{
   default: React.ComponentType<{
@@ -12,33 +11,29 @@ type LazyComponent = () => Promise<{
   }>
 }>;
 
-const [useCombiner] = useStore(store); // eslint-disable-line react-hooks/rules-of-hooks
-
-const propTypes = {
-  locale: PropTypes.instanceOf(Object).isRequired,
-};
+const useCombiner = useStore(store); // eslint-disable-line react-hooks/rules-of-hooks
 
 /**
  * App router.
  */
-export default function Router(props: InferProps<typeof propTypes>): JSX.Element {
-  const { locale } = props;
-  const [route] = useCombiner('router', (newState: { route: string; }) => newState.route);
+export default function Router(): JSX.Element {
+  const route = useCombiner('router', (newState: { route: string; }) => newState.route);
 
   let currentPage = null;
   if (routes[route] !== undefined) {
     const Component = React.lazy(routes[route] as LazyComponent) as JSXElement;
-    currentPage = <Component translate={i18n(locale as Record<string, string>)} />;
+    currentPage = <Component translate={translate} />;
   }
 
-  const AnySuspense = Suspense as JSXElement;
+  const Suspense = React.Suspense as JSXElement;
+
   return (
-    <AnySuspense fallback={<Loader /> as JSXElement}>
+    <Suspense fallback={<Loader /> as JSXElement}>
       {currentPage}
-    </AnySuspense>
+    </Suspense>
   );
 }
 
-Router.propTypes = propTypes;
+Router.propTypes = {};
 Router.defaultProps = {};
 Router.displayName = 'Router';

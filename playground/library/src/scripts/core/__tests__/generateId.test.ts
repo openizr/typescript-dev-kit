@@ -1,20 +1,19 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 
 import generateId from 'scripts/core/generateId';
 
 describe('generateId', () => {
-  let windowSpy = jest.spyOn(window, 'window', 'get');
+  let windowSpy = vi.spyOn(global, 'window', 'get');
 
   beforeEach(() => {
     windowSpy.mockClear();
   });
 
   test('should generate a unique id - node environment', () => {
-    windowSpy = jest.spyOn(window, 'window', 'get');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    windowSpy.mockImplementation(() => undefined as any);
+    windowSpy = vi.spyOn(global, 'window', 'get');
+    windowSpy.mockImplementation(() => undefined as unknown as Window & typeof globalThis);
     expect(generateId().length).toBe(40);
   });
 

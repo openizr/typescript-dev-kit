@@ -1,15 +1,15 @@
 import getMessage from 'scripts/routes/v1/getMessage';
 import { FastifyRequest, FastifyReply } from 'fastify';
 
-jest.mock('fastify');
+vi.mock('fastify');
 
 describe('routes/v1/getMessage', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('correctly handles request', () => {
-    const send = jest.fn();
+    const send = vi.fn();
     getMessage.handler({} as FastifyRequest, { send } as unknown as FastifyReply);
     expect(getMessage.schema).toMatchSnapshot();
     expect(send).toHaveBeenCalledTimes(1);

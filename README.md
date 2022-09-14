@@ -110,11 +110,11 @@ Add the following to your `package.json`:
   },
   ...
   "scripts": {
-    "init": "node_modules/typescript-dev-kit/scripts/init.sh",
+    "test": "node_modules/typescript-dev-kit/test",
+    "init": "node_modules/typescript-dev-kit/scripts/init",
     "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev",
     "build": "cd node_modules/typescript-dev-kit/ && node scripts/build",
-    "test": "cd node_modules/typescript-dev-kit/ && node scripts/test",
-    "check": "cd node_modules/typescript-dev-kit/ && node scripts/check",
+    "check": "cd node_modules/typescript-dev-kit/ && node scripts/check -f",
     "doc": "typedoc --out ./doc/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
     "postinstall": "rm -f node_modules/.eslintcache"
   }
@@ -176,7 +176,7 @@ Starts the testing mode. All your tests written in `*.test.js(x)` / `*.test.ts(x
 yarn run build
 ```
 
-Starts the build mode. This mode bundles and optimizes your codebase and related assets for distribution. Sourcemaps are also generated (use `--enable-source-maps` to leverage on sourcemaps in Node), as well as the bundle analysis report in a `report.html` file. When building a NPM package, any relevant file (`README.md`, `LICENSE`, ...) is also included in your distributable directory.
+Starts the build mode. You can pass the `--force` option to prevent pipe from failing in case of linting / typechecking issues. This mode bundles and optimizes your codebase and related assets for distribution. Sourcemaps are also generated (use `--enable-source-maps` to leverage on sourcemaps in Node), as well as the bundle analysis report in a `report.html` file. When building a NPM package, any relevant file (`README.md`, `LICENSE`, ...) is also included in your distributable directory.
 
 ### Checking
 
@@ -184,7 +184,7 @@ Starts the build mode. This mode bundles and optimizes your codebase and related
 yarn run check
 ```
 
-Runs linter and type-checkers on your codebase. You can pass the `-w` to enable watch mode.
+Runs linter and type-checkers on your codebase. You can pass the `-w` option to enable watch mode, and `-f` to automatically fix issues when possible.
 
 ### Documentation
 
@@ -226,4 +226,4 @@ Or just sending me a quick message saying "Thanks" is also very gratifying, and 
 
 [MIT](http://opensource.org/licenses/MIT)
 
-Copyright (c) Matthieu Jabbour. All Rights Reserved.
+Copyright (c) Openizr. All Rights Reserved.

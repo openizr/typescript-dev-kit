@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 
 import { render } from '@testing-library/svelte';
@@ -7,7 +7,7 @@ import SvelteTsButton from 'scripts/components/SvelteTsButton.svelte';
 
 describe('svelte/SvelteTsButton', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders correctly - basic', () => {

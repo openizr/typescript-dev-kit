@@ -1,45 +1,42 @@
 /**
- * Copyright (c) Matthieu Jabbour. All Rights Reserved.
+ * Copyright (c) Openizr. All Rights Reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  */
 
-/* eslint-disable import/no-unresolved, import/no-extraneous-dependencies, global-require */
-
-process.env.ENV = 'production';
-
-const path = require('path');
-const fs = require('fs-extra');
-const { build } = require('vite');
-const esbuild = require('esbuild');
-const colors = require('picocolors');
-const packageJson = require('../../../package.json');
-const viteConfig = require('../config/vite.config');
-const checkFiles = require('../helpers/checkFiles.js');
-const fixNpmPackages = require('../helpers/fixNpmPackages.js');
+import '../config/env.js';
+import path from 'path';
+import fs from 'fs-extra';
+import { build } from 'vite';
+import esbuild from 'esbuild';
+import colors from 'picocolors';
+import viteConfig from '../config/vite.config.js';
+import checkFiles from '../helpers/checkFiles.js';
 
 const { log, error } = console;
-const { tsDevKitConfig } = packageJson;
-const projectRootPath = path.resolve(__dirname, '../../../');
-const srcPath = path.join(projectRootPath, tsDevKitConfig.srcPath);
-const distPath = path.join(projectRootPath, tsDevKitConfig.distPath);
+const projectRootPath = path.resolve(path.dirname('../../../'));
 const readmePath = path.join(projectRootPath, 'README.md');
 const licensePath = path.join(projectRootPath, 'LICENSE');
+const packageJson = JSON.parse(fs.readFileSync(path.join(projectRootPath, 'package.json')));
+const { tsDevKitConfig } = packageJson;
+const srcPath = path.join(projectRootPath, tsDevKitConfig.srcPath);
+const distPath = path.join(projectRootPath, tsDevKitConfig.distPath);
 
 /**
  * Runs `build` CLI command's script.
  */
 async function run() {
   process.stdout.write('\x1Bc');
-
-  await fixNpmPackages(projectRootPath);
+  const force = process.argv.includes('--force');
 
   // Checking files...
   log(colors.magenta(colors.bold('Checking files...\n')));
   const runSvelteChecker = !!packageJson.dependencies?.svelte || !!packageJson.peerDependencies?.svelte;
-  await checkFiles(projectRootPath, srcPath, runSvelteChecker, false);
+  if (!force) {
+    await checkFiles(projectRootPath, srcPath, runSvelteChecker, false);
+  }
 
   log(colors.magenta(colors.bold('Building...\n')));
   try {
@@ -59,22 +56,23 @@ async function run() {
 
       let vuePlugin = null;
       try {
-        vuePlugin = require('esbuild-plugin-vue-next');
+        await import('vue');
+        vuePlugin = (await import('esbuild-plugin-vue-next')).default;
       } catch (e) {
         // No-op.
       }
 
       let sveltePlugin = null;
-    try {
-      require('svelte');
-      const sveltePreprocess = require('svelte-preprocess');
-      sveltePlugin = require('esbuild-svelte')({
-        compilerOptions: { css: true },
-        preprocess: sveltePreprocess(),
-      });
-    } catch (e) {
-      // No-op.
-    }
+      try {
+        await import('svelte');
+        const sveltePreprocess = (await import('svelte-preprocess')).default;
+        sveltePlugin = (await import('esbuild-svelte')).default({
+          compilerOptions: { css: true },
+          preprocess: sveltePreprocess(),
+        });
+      } catch (e) {
+        // No-op.
+      }
 
       let startTimestamp = 0;
       await fs.remove(distPath);
@@ -99,6 +97,7 @@ async function run() {
           platform: 'node',
           outdir: distPath,
           metafile: true,
+          splitting: tsDevKitConfig.splitChunks !== false,
           external: Object.keys(packageJson.dependencies)
             .concat(Object.keys(packageJson.peerDependencies || [])),
           sourcemap: true,
@@ -126,6 +125,7 @@ async function run() {
           contributors: packageJson.contributors,
           dependencies: packageJson.dependencies,
           peerDependencies: packageJson.peerDependencies,
+          peerDependenciesMeta: packageJson.peerDependenciesMeta,
         }, { spaces: 2 });
         // Writing distributable `README.md` file into `dist` directory...
         const readmeExists = await fs.pathExists(readmePath);

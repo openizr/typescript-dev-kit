@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 
 import * as React from 'react';
@@ -8,8 +8,8 @@ import RouterJS from 'scripts/containers/RouterJS';
 import { render } from '@testing-library/react';
 
 // Useful mocks allowing us to easily test React lazy components and Suspense.
-jest.mock('react', () => {
-  const MockedReact = jest.requireActual('react');
+vi.mock('react', () => {
+  const MockedReact = vi.importActual('react');
   MockedReact.Suspense = ({ children, fallback }) => (
     process.env.LOADING === 'true' ? fallback : children
   );
@@ -17,17 +17,19 @@ jest.mock('react', () => {
   return MockedReact;
 });
 
-jest.mock('scripts/store/routes', () => ({
-  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
-  '/': () => require('scripts/pages/Home').default,
-  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
-  '/js': () => require('scripts/pages/HomeJS').default,
+vi.mock('scripts/store/routes', () => ({
+  default: {
+    // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+    '/': () => import('scripts/pages/Home'),
+    // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+    '/js': () => import('scripts/pages/HomeJS'),
+  }
 }));
 
 describe('react/RouterJS', () => {
   beforeEach(() => {
     process.env.LOADING = 'false';
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders correctly - loading page', () => {

@@ -1,31 +1,26 @@
 /**
- * Copyright (c) Matthieu Jabbour. All Rights Reserved.
+ * Copyright (c) Openizr. All Rights Reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  */
 
-/* eslint-disable import/no-unresolved, import/no-extraneous-dependencies, global-require */
+import path from 'path';
+import fs from 'fs-extra';
+import esbuild from 'esbuild';
+import colors from 'picocolors';
+import { spawn } from 'child_process';
+import viteConfig from '../config/vite.config.js';
+import { send, createServer, createLogger } from 'vite';
 
-process.env.ENV = 'development';
-
-const path = require('path');
-const fs = require('fs-extra');
-const esbuild = require('esbuild');
-const colors = require('picocolors');
-const { spawn } = require('child_process');
-const { send } = require('vite/dist/node/index.js');
-const vitePackageJson = require('vite/package.json');
-const { createServer, createLogger } = require('vite');
-const packageJson = require('../../../package.json');
-const viteConfig = require('../config/vite.config');
-const fixNpmPackages = require('../helpers/fixNpmPackages.js');
+const projectRootPath = path.resolve(path.dirname('../../../'));
+const packageJson = JSON.parse(fs.readFileSync(path.join(projectRootPath, 'package.json')));
+const vitePackageJson = JSON.parse(fs.readFileSync(path.join(projectRootPath, 'node_modules/vite/package.json')));
 
 let nodeProcess = null;
 const { log, error } = console;
 const { tsDevKitConfig } = packageJson;
-const projectRootPath = path.resolve(__dirname, '../../../');
 const srcPath = path.join(projectRootPath, tsDevKitConfig.srcPath);
 const distPath = path.join(projectRootPath, tsDevKitConfig.distPath);
 const random = () => Math.floor(Math.random() * 10);
@@ -34,8 +29,6 @@ const random = () => Math.floor(Math.random() * 10);
  * Runs `dev` CLI command's script.
  */
 async function run() {
-  await fixNpmPackages(projectRootPath);
-
   if (tsDevKitConfig.target === 'web') {
     // Front-end projects: we use Vite as a dev server.
     // We manually create the dev server as we want to get control over its built-in
@@ -127,6 +120,7 @@ async function run() {
               contributors: packageJson.contributors,
               dependencies: packageJson.dependencies,
               peerDependencies: packageJson.peerDependencies,
+              peerDependenciesMeta: packageJson.peerDependenciesMeta,
             }, { spaces: 2 });
 
             // Executing main entrypoint if necessary (this is especially useful when developing
@@ -136,7 +130,7 @@ async function run() {
                 nodeProcess.kill('SIGKILL');
                 nodeProcess = null;
               }
-              nodeProcess = spawn('node', ['--enable-source-maps', '--es-module-specifier-resolution=node', path.join(distPath, packageJson.main)]);
+              nodeProcess = spawn('node', ['--enable-source-maps', path.join(distPath, packageJson.main)]);
               nodeProcess.stdout.on('data', (data) => {
                 log(`${data.toString()}\n`);
               });
@@ -167,22 +161,24 @@ async function run() {
 
     let vuePlugin = null;
     try {
-      vuePlugin = require('esbuild-plugin-vue-next');
+      await import('vue');
+      vuePlugin = (await import('esbuild-plugin-vue-next')).default;
     } catch (e) {
       // No-op.
     }
 
     let sveltePlugin = null;
     try {
-      require('svelte');
-      const sveltePreprocess = require('svelte-preprocess');
-      sveltePlugin = require('esbuild-svelte')({
+      await import('svelte');
+      const sveltePreprocess = (await import('svelte-preprocess')).default;
+      sveltePlugin = (await import('esbuild-svelte')).default({
         compilerOptions: { css: true },
         preprocess: sveltePreprocess(),
       });
     } catch (e) {
       // No-op.
     }
+
 
     startTimestamp = Date.now();
     const result = await esbuild.build({
@@ -199,6 +195,7 @@ async function run() {
       minify: false,
       platform: 'node',
       outdir: distPath,
+      splitting: tsDevKitConfig.splitChunks !== false,
       external: Object.keys(packageJson.dependencies)
         .concat(Object.keys(packageJson.peerDependencies || [])),
       watch: {

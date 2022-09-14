@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 
 import { render } from '@testing-library/vue';
@@ -7,7 +7,7 @@ import VueTsButton from 'scripts/components/VueJsButton.vue';
 
 describe('vue/VueTsButton', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders correctly - basic', () => {

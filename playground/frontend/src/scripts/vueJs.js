@@ -2,7 +2,7 @@
 
 import 'styles/main.scss';
 import { createApp } from 'vue';
-import Router from 'scripts/containers/Router.vue';
+import AppRouter from 'scripts/containers/AppRouterJS.vue';
 
 if (process.env.NODE_ENV === 'production') {
   console.log('PRODUCTION MODE'); // eslint-disable-line no-console
@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 
 function main() {
   import('scripts/locale/en.json').then((locale) => {
-    createApp(Router, { locale: locale.default }).mount('#root');
+    createApp(AppRouter, { locale: locale.default }).mount('#root');
   });
 }
 

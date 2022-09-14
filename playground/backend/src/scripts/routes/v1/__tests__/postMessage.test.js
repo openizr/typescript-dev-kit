@@ -1,14 +1,14 @@
 import postMessage from 'scripts/routes/v1/postMessage';
 
-jest.mock('fastify');
+vi.mock('fastify');
 
 describe('routes/v1/postMessage', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('correctly handles request', () => {
-    const send = jest.fn();
+    const send = vi.fn();
     postMessage.handler({}, { send });
     expect(postMessage.schema).toMatchSnapshot();
     expect(send).toHaveBeenCalledTimes(1);
