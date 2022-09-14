@@ -33,7 +33,7 @@ app.setValidatorCompiler(({ schema }) => (
 declareRoutes(app);
 
 // Starting server...
-app.listen(configuration.port, '0.0.0.0', (error) => {
+app.listen({ port: configuration.port, host: '0.0.0.0' }, (error) => {
   if (error) {
     app.log.fatal(error);
     process.exit(1);

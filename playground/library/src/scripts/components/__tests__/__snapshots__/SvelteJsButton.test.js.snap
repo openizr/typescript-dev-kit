@@ -1,11 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`svelte/SvelteTsButton renders correctly - basic 1`] = `
+exports[`svelte/SvelteTsButton > renders correctly - basic 1`] = `
 <div>
   <button
-    class="svelte-1s0j9nk"
+    class="s-IFZIjLgJOD5U"
   >
     Hello
   </button>
+  <!--&lt;SvelteJsButton&gt;-->
 </div>
 `;

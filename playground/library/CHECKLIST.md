@@ -1,4 +1,5 @@
 # Yarn commands
+  Work on nodeJS 16, 17 and 18
   `yarn`
   `yarn run init`
   `yarn run dev`

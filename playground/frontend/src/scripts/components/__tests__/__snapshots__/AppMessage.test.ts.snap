@@ -1,0 +1,17 @@
+// Vitest Snapshot v1
+
+exports[`components/AppMessage > renders correctly - basic 1`] = `
+<p>
+  <img
+    alt="test"
+    src="/src/images/test.jpg"
+  />
+  <img
+    alt="test"
+    src="/src/images/test.svg"
+  />
+  <a>
+    test
+  </a>
+</p>
+`;

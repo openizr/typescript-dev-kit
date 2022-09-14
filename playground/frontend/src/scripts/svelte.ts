@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 import 'styles/main.scss';
 import Router from 'scripts/containers/Router.svelte';
 

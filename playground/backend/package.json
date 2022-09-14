@@ -9,12 +9,12 @@
     "@babel/preset-typescript": "^7.16.7",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
-    "basx": "^1.3.7",
-    "fastify": "^3.29.0"
+    "basx": "^2.0.1",
+    "fastify": "^4.5.3"
   },
   "eslintConfig": {
     "extends": [
-      "./node_modules/typescript-dev-kit/main.js"
+      "./node_modules/typescript-dev-kit/main.cjs"
     ]
   },
   "tsDevKitConfig": {
@@ -26,17 +26,17 @@
     "runInDev": true,
     "srcPath": "src",
     "distPath": "dist",
-    "banner": "/*!\n * Copyright (c) Matthieu Jabbour.\n * All rights reserved.\n */",
+    "banner": "/*!\n * Copyright (c) Openizr.\n * All rights reserved.\n */",
     "env": {
       "development": {},
       "production": {}
     }
   },
   "scripts": {
-    "init": "node_modules/typescript-dev-kit/scripts/init.sh",
+    "init": "node_modules/typescript-dev-kit/scripts/init",
+    "test": "cd node_modules/typescript-dev-kit/ && scripts/test",
     "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev.js",
     "build": "cd node_modules/typescript-dev-kit/ && node scripts/build.js",
-    "test": "cd node_modules/typescript-dev-kit/ && node scripts/test.js",
     "check": "cd node_modules/typescript-dev-kit/ && node scripts/check.js",
     "doc": "typedoc --out ./docs/ --exclude \"**/__+(tests|mocks)__/**\" src/scripts/typescript.ts",
     "postinstall": "rm -f node_modules/.eslintcache"

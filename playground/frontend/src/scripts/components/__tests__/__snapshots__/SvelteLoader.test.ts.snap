@@ -1,9 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`svelte/Loader renders correctly - basic 1`] = `
+exports[`svelte/Loader > renders correctly - basic 1`] = `
 <div>
   <div>
     {"LABEL_TEST":"Test"}
   </div>
+  <!--&lt;Loader&gt;-->
 </div>
 `;

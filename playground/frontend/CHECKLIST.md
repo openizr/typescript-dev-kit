@@ -1,4 +1,5 @@
 # Yarn commands
+  Work on nodeJS 16, 17 and 18
   `yarn`
   `yarn run init`
   `yarn run dev`
@@ -39,10 +40,10 @@
   Supports both TS and JS
   Supports React/Vue/Svelte
   Doesn't generate manifest
+  Displays performance hints
   Resolves absolute import paths
   Bundle generation (1 per entry)
   Generates bundle analysis report
-  Doesn't display performance hints
   Merges same CSS media queries into one
   Generates final index.html from template
   Adds a banner on top of each bundled file

@@ -1,30 +1,30 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`routes/v1/postMessage correctly handles request 1`] = `
-Object {
-  "body": Object {
+exports[`routes/v1/postMessage > correctly handles request 1`] = `
+{
+  "body": {
     "additionalProperties": false,
-    "errorMessage": Object {
-      "properties": Object {
+    "errorMessage": {
+      "properties": {
         "message": "Body.message must be a string",
       },
-      "required": Object {
+      "required": {
         "message": "Body.message is required",
       },
       "type": "Request body should be a valid object",
     },
-    "properties": Object {
-      "message": Object {
+    "properties": {
+      "message": {
         "type": "string",
       },
     },
-    "required": Array [
+    "required": [
       "message",
     ],
     "type": "object",
   },
-  "response": Object {
-    "200": Object {
+  "response": {
+    "200": {
       "type": "string",
     },
   },

@@ -1,17 +1,17 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 
-import Home from 'scripts/pages/Home.vue';
 import { render } from '@testing-library/vue';
+import HomePage from 'scripts/pages/HomePage.vue';
 
-describe('vue/Home', () => {
+describe('pages/HomePage', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test('renders correctly - basic', () => {
-    const { container } = render(Home, { props: { translate: (label: string) => label } });
+    const { container } = render(HomePage, { props: { locale: { LABEL_TEST: 'Test' } } });
     expect(container.firstChild).toMatchSnapshot();
   });
 });

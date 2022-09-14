@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`routes/v1/getMessage correctly handles request 1`] = `
-Object {
+exports[`routes/v1/getMessage > correctly handles request 1`] = `
+{
   "body": undefined,
-  "response": Object {
-    "200": Object {
-      "properties": Object {
-        "message": Object {
+  "response": {
+    "200": {
+      "properties": {
+        "message": {
           "type": "string",
         },
       },
