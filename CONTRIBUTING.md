@@ -207,7 +207,6 @@ changelogs to watch for updates:
 - [vite](https://github.com/vitejs/vite/releases)
 - [vitest](https://github.com/vitest-dev/vitest/releases)
 
-/!\ Babel dependencies should be completely removed over time as soon as other packages fix their issues with esbuild. /!\
 
 ## Build & Deployment
 
