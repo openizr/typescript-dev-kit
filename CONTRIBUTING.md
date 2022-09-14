@@ -172,21 +172,16 @@ In order to keep this package up-to-date, dependencies updates should be checked
 using the `yarn outdated` and `yarn upgrade-interactive --latest` commands. Here is the list of repositories
 changelogs to watch for updates:
 
-- [@babel/core](https://github.com/babel/babel/releases)
-- [@babel/preset-typescript](https://github.com/babel/babel/releases)
 - [@nabla/vite-plugin-eslint](https://github.com/nabla/vite-plugin-eslint/releases)
 - [@sveltejs/vite-plugin-svelte](https://github.com/sveltejs/vite-plugin-svelte/releases)
-- [@types/jest](https://github.com/DefinitelyTyped/DefinitelyTyped/releases)
 - [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint/releases)
 - [@typescript-eslint/parser](https://github.com/typescript-eslint/typescript-eslint/releases)
 - [@vitejs/plugin-react](https://github.com/vitejs/vite/releases)
 - [@vitejs/plugin-vue](https://github.com/vitejs/vite/releases)
-- [@vue/vue3-jest](https://github.com/vuejs/vue-jest/releases)
+- [@vitest/coverage-c8](https://github.com/vitest-dev/vitest/releases)
 - [autoprefixer](https://github.com/postcss/autoprefixer/releases)
-- [babel-jest](https://github.com/facebook/jest/releases)
 - [chokidar](https://github.com/paulmillr/chokidar/releases)
 - [esbuild](https://github.com/evanw/esbuild/releases)
-- [esbuild-jest](https://github.com/aelbore/esbuild-jest)
 - [esbuild-plugin-vue-next](https://github.com/Bigfish8/esbuild-plugin-vue-next/releases)
 - [esbuild-svelte](https://github.com/EMH333/esbuild-svelte/releases)
 - [eslint](https://github.com/eslint/eslint/releases)
@@ -197,20 +192,20 @@ changelogs to watch for updates:
 - [eslint-plugin-react-hooks](https://github.com/facebook/react/releases)
 - [eslint-plugin-svelte3](https://github.com/sveltejs/eslint-plugin-svelte3/releases)
 - [eslint-plugin-vue](https://github.com/vuejs/eslint-plugin-vue/releases)
+- [eslint-plugin-vitest-globals](https://github.com/saqqdy/eslint-plugin-vitest-globals/releases)
 - [fs-extra](https://github.com/jprichardson/node-fs-extra/releases)
-- [jest](https://github.com/facebook/jest/releases)
+- [jsdom](https://github.com/jsdom/jsdom/releases)
 - [postcss](https://github.com/postcss/postcss/releases)
 - [postcss-sort-media-queries](https://github.com/solversgroup/postcss-sort-media-queries/releases)
 - [rollup](https://github.com/rollup/rollup/releases)
 - [rollup-plugin-visualizer](https://github.com/btd/rollup-plugin-visualizer/releases)
 - [sass](https://github.com/sass/sass/releases)
 - [svelte-check](https://github.com/sveltejs/language-tools/releases)
-- [svelte-jester](https://github.com/mihar-22/svelte-jester/blob/master/CHANGELOG.md)
 - [svelte-preprocess](https://github.com/sveltejs/svelte-preprocess/blob/main/CHANGELOG.md)
-- [ts-jest](https://github.com/kulshekhar/ts-jest/blob/main/CHANGELOG.md)
 - [typescript](https://github.com/microsoft/TypeScript/releases)
 - [typedoc](https://github.com/TypeStrong/typedoc/releases)
 - [vite](https://github.com/vitejs/vite/releases)
+- [vitest](https://github.com/vitest-dev/vitest/releases)
 
 /!\ Babel dependencies should be completely removed over time as soon as other packages fix their issues with esbuild. /!\
 
@@ -248,4 +243,4 @@ Project is structured as follow:
 
 [MIT](https://github.com/openizr/typescript-dev-kit/blob/master/LICENSE)
 
-Copyright (c) Matthieu Jabbour. All Rights Reserved.
+Copyright (c) Openizr. All Rights Reserved.
