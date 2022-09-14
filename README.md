@@ -110,11 +110,11 @@ Add the following to your `package.json`:
   },
   ...
   "scripts": {
-    "test": "node_modules/typescript-dev-kit/test",
     "init": "node_modules/typescript-dev-kit/scripts/init",
-    "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev",
-    "build": "cd node_modules/typescript-dev-kit/ && node scripts/build",
-    "check": "cd node_modules/typescript-dev-kit/ && node scripts/check -f",
+    "test": "cd node_modules/typescript-dev-kit && scripts/test",
+    "dev": "cd node_modules/typescript-dev-kit && node scripts/dev",
+    "build": "cd node_modules/typescript-dev-kit && node scripts/build",
+    "check": "cd node_modules/typescript-dev-kit && node scripts/check -f",
     "doc": "typedoc --out ./doc/ --exclude \"**/*.js\" --exclude \"**/__+(tests|mocks)__/**\" src/",
     "postinstall": "rm -f node_modules/.eslintcache"
   }
@@ -122,7 +122,7 @@ Add the following to your `package.json`:
 ...
 "eslintConfig": {       // Includes the shipped-in Eslint config (you can also override some rules if you want).
   "extends": [
-    "./node_modules/typescript-dev-kit/main.js"
+    "./node_modules/typescript-dev-kit/main.cjs"
   ]
 },
 ```
