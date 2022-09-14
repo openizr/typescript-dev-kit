@@ -27,7 +27,10 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": [
+      "vitest/globals"
+    ]
   },
   "include": [
     "../../"

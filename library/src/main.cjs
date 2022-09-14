@@ -1,12 +1,10 @@
 /**
- * Copyright (c) Matthieu Jabbour. All Rights Reserved.
+ * Copyright (c) Openizr. All Rights Reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  */
-
-/* eslint-disable import/no-unresolved */
 
 const path = require('path');
 const packageJson = require('../../package.json');
@@ -16,7 +14,7 @@ const projectRootPath = path.resolve(__dirname, '../../');
 module.exports = {
   parser: 'vue-eslint-parser',
   plugins: ['@typescript-eslint', 'svelte3'],
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:vue/vue3-recommended', 'plugin:react-hooks/recommended'],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:vue/vue3-recommended', 'plugin:react-hooks/recommended', 'plugin:vitest-globals/recommended'],
   parserOptions: {
     parser: '@typescript-eslint/parser',
     extraFileExtensions: ['.svelte', '.vue'],
@@ -36,6 +34,7 @@ module.exports = {
         extensions: ['.tsx', '.jsx'],
       },
     ],
+    'react/require-default-props': 'off',
     'vue/max-attributes-per-line': [
       'error',
       {
@@ -103,7 +102,7 @@ module.exports = {
   },
   env: {
     browser: true,
-    jest: true,
+    'vitest-globals/env': true,
     'vue/setup-compiler-macros': true,
   },
 };

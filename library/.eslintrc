@@ -59,7 +59,6 @@
     }
   },
   "env": {
-    "browser": true,
-    "jest": true
+    "browser": true
   }
 }

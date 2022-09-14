@@ -1,0 +1,3 @@
+#!/bin/sh
+
+./node_modules/.bin/vitest "$1" --passWithNoTests --root=../../ --config=./node_modules/typescript-dev-kit/config/vite.config.js --coverage

@@ -1,24 +1,24 @@
 /**
- * Copyright (c) Matthieu Jabbour. All Rights Reserved.
+ * Copyright (c) Openizr. All Rights Reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  */
 
-/* eslint-disable import/no-unresolved, global-require */
+import fs from 'fs';
+import path from 'path';
+import { defineConfig } from 'vite';
+import autoprefixer from 'autoprefixer';
+import { visualizer } from 'rollup-plugin-visualizer';
+import postCssSortMediaQueries from 'postcss-sort-media-queries';
+import { createRequire as topLevelCreateRequire } from 'module';
+import validateConfig from '../helpers/validateConfig.js';
 
-const fs = require('fs');
-const path = require('path');
-const { defineConfig } = require('vite');
-const autoprefixer = require('autoprefixer');
-const { visualizer } = require('rollup-plugin-visualizer');
-const postCssSortMediaQueries = require('postcss-sort-media-queries');
-const validateConfig = require('../helpers/validateConfig.js');
-const packageJson = require('../../../package.json');
-
+const require = topLevelCreateRequire(import.meta.url);
+const projectRootPath = path.resolve(path.dirname('../../../'));
+const packageJson = JSON.parse(fs.readFileSync(path.join(projectRootPath, 'package.json')));
 const { tsDevKitConfig } = packageJson;
-const projectRootPath = path.resolve(__dirname, '../../../');
 const srcPath = path.join(projectRootPath, tsDevKitConfig.srcPath);
 
 const srcSubDirectories = fs.readdirSync(srcPath, { withFileTypes: true })
@@ -100,6 +100,18 @@ const viteConfig = defineConfig({
       },
     },
   },
+  test: {
+    globals: true,
+    root: srcPath,
+    passWithNoTests: true,
+    include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    coverage: {
+      all: true,
+      root: srcPath,
+      allowExternal: true,
+      exclude: ['**/__mocks__', '**/__tests__'],
+    },
+  },
   // Statically replaces environment variables in JS code.
   define: Object.keys(tsDevKitConfig.env[process.env.ENV]).reduce((envVars, key) => (
     Object.assign(envVars, { [`process.env.${key}`]: JSON.stringify(tsDevKitConfig.env[process.env.ENV][key]) })
@@ -107,4 +119,4 @@ const viteConfig = defineConfig({
   plugins,
 });
 
-module.exports = viteConfig;
+export default viteConfig;

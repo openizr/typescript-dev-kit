@@ -1,20 +1,17 @@
 /**
- * Copyright (c) Matthieu Jabbour. All Rights Reserved.
+ * Copyright (c) Openizr. All Rights Reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
  */
 
-/* eslint-disable import/no-extraneous-dependencies, global-require */
-
-process.env.NODE_ENV = 'production';
-
-const path = require('path');
-const chokidar = require('chokidar');
-const { ESLint } = require('eslint');
-const colors = require('picocolors');
-const { spawn } = require('child_process');
+import '../config/env.js';
+import path from 'path';
+import chokidar from 'chokidar';
+import { ESLint } from 'eslint';
+import colors from 'picocolors';
+import { spawn } from 'child_process';
 
 const { log, error } = console;
 
@@ -29,15 +26,23 @@ const { log, error } = console;
  *
  * @param {boolean} watchMode Wether to use watch mode.
  *
+ * @param {boolean} fixMode Wether to use fix mode.
+ *
  * @returns {void}
  */
-module.exports = async function checkFiles(projectRootPath, srcPath, runSvelteChecker, watchMode) {
+export default async function checkFiles(
+  projectRootPath,
+  srcPath,
+  runSvelteChecker,
+  watchMode,
+  fixMode,
+) {
   const tsConfigFilePath = path.join(projectRootPath, 'tsconfig.json');
   const cliArguments = watchMode ? ['--watch'] : [];
 
   // Running ESlint...
   const cacheLocation = path.join(projectRootPath, 'node_modules/.eslintcache');
-  const eslint = new ESLint({ cache: true, cacheLocation });
+  const eslint = new ESLint({ cache: true, cacheLocation, fix: fixMode });
 
   const lint = async () => {
     process.stdout.write('\x1Bc');
@@ -142,4 +147,4 @@ module.exports = async function checkFiles(projectRootPath, srcPath, runSvelteCh
     });
 
   await Promise.all([tscPromise, svelteCheckPromise]);
-};
+}
