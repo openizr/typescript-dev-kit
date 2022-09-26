@@ -64,7 +64,7 @@ const plugins = []
   .concat(sveltePlugin !== null ? [sveltePlugin(sveltePluginConfiguration)] : []);
 
 // Fixes a conflict between Vue and Svelte when running test with vitest (ESM vs CJS).
-if (process.env.NODE_ENV === 'test') {
+if (sveltePlugin !== null && process.env.NODE_ENV === 'test') {
   const pluginConfig = plugins.slice(-1)[0][0].config;
   plugins.slice(-1)[0][0].config = async (config, configEnv) => {
     const baseConfig = await pluginConfig(config, configEnv);
