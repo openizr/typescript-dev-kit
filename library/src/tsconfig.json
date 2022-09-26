@@ -6,15 +6,15 @@
     "newLine": "LF",
     "strict": true,
     "strictNullChecks": true,
-    "target": "es6",
+    "target": "ES6",
     "lib": [
-      "es6",
-      "dom",
-      "dom.iterable",
-      "scripthost",
-      "es7"
+      "ES6",
+      "ES7",
+      "DOM",
+      "DOM.Iterable",
+      "ScriptHost"
     ],
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noUnusedParameters": true,

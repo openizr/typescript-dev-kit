@@ -32,9 +32,9 @@ async function run() {
   const force = process.argv.includes('--force');
 
   // Checking files...
-  log(colors.magenta(colors.bold('Checking files...\n')));
-  const runSvelteChecker = !!packageJson.dependencies?.svelte || !!packageJson.peerDependencies?.svelte;
   if (!force) {
+    log(colors.magenta(colors.bold('Checking files...\n')));
+    const runSvelteChecker = !!packageJson.dependencies?.svelte || !!packageJson.peerDependencies?.svelte;
     await checkFiles(projectRootPath, srcPath, runSvelteChecker, false);
   }
 

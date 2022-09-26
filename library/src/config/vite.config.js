@@ -63,6 +63,16 @@ const plugins = []
   .concat(reactPlugin !== null ? [reactPlugin()] : [])
   .concat(sveltePlugin !== null ? [sveltePlugin(sveltePluginConfiguration)] : []);
 
+// Fixes a conflict between Vue and Svelte when running test with vitest (ESM vs CJS).
+if (process.env.NODE_ENV === 'test') {
+  const pluginConfig = plugins.slice(-1)[0][0].config;
+  plugins.slice(-1)[0][0].config = async (config, configEnv) => {
+    const baseConfig = await pluginConfig(config, configEnv);
+    baseConfig.resolve.mainFields = [ 'svelte', 'jsnext:main', 'jsnext' ];
+    return baseConfig;
+  }
+}
+
 if (process.env.ENV === 'production') {
   plugins.push(visualizer({
     filename: path.join(projectRootPath, 'report.html'),
@@ -102,14 +112,13 @@ const viteConfig = defineConfig({
   },
   test: {
     globals: true,
-    root: srcPath,
     passWithNoTests: true,
     include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     coverage: {
       all: true,
-      root: srcPath,
+      src: srcPath,
       allowExternal: true,
-      exclude: ['**/__mocks__', '**/__tests__'],
+      exclude: ['**/__mocks__', '**/__tests__', '**/*.d.ts'],
     },
   },
   // Statically replaces environment variables in JS code.
