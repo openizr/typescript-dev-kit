@@ -1,7 +1,9 @@
 // Vitest Snapshot v1
 
 exports[`vue/VueTsButton > renders correctly - basic 1`] = `
-<button>
+<button
+  data-v-783840af=""
+>
   Test
 </button>
 `;
