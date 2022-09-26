@@ -12,8 +12,8 @@ services:
       - ./library:/var/www/html
       - ./:/mount
     restart: unless-stopped
-  playground:
-    container_name: ${PROJECT_NAME}_playground
+  examples:
+    container_name: ${PROJECT_NAME}_examples
     image: openizr/node:4.0.0-dev
     user: node:node
     env_file:
@@ -22,7 +22,7 @@ services:
       - "127.0.0.1:${PLAYGROUND_PORT}:${PLAYGROUND_PORT}"
     command: sh -c "tail -f /dev/null"
     volumes:
-      - ./playground:/var/www/html
+      - ./examples:/var/www/html
       - ./library:/typescript-dev-kit
     restart: unless-stopped
 networks:

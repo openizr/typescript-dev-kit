@@ -161,7 +161,7 @@ To technically contribute to this project, here are the software you will need:
 4. Fill or change environment variables in your `.env` file if necessary
 5. `docker-compose up`
 6. `docker exec -it <PROJECT_NAME>_library sh -c "yarn run build"` to generate final package
-7. `docker exec -it <PROJECT_NAME>_playground sh -c "cd <DIRECTORY> && yarn && yarn run dev"` if you want to run playground
+7. `docker exec -it <PROJECT_NAME>_examples sh -c "cd <DIRECTORY> && yarn && yarn run dev"` if you want to run examples
 
 This will run the project locally and allow you to develop and see changes in real-time.
 
@@ -235,7 +235,7 @@ To provide good and clear git commit messages, you should follow [these guidelin
 Project is structured as follow:
 - **`/docs`:** contains the documentation automatically generated from code
 - **`library`:** contains the actual library codebase
-- **`playground`:** contains a bunch of code samples and allows you to play with the library in real-time while developing it
+- **`examples`:** contains a bunch of code samples and allows you to play with the library in real-time while developing it
 
 
 ## License
