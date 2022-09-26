@@ -33,7 +33,6 @@
   Doesn't generate manifest
   Externalizes all dependencies
   Bundle generation (1 per entry)
-  Generates bundle analysis report
   Doesn't display performance hints
   Adds a banner on top of each bundled file
   Vue/React/Svelte components library creation support

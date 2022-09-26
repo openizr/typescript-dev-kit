@@ -50,7 +50,7 @@
     "dev": "cd node_modules/typescript-dev-kit/ && node scripts/dev.js",
     "build": "cd node_modules/typescript-dev-kit/ && node scripts/build.js",
     "check": "cd node_modules/typescript-dev-kit/ && node scripts/check.js",
-    "doc": "typedoc --out ./docs/ --exclude \"**/__+(tests|mocks)__/**\" src/scripts/javascript.jsx",
+    "doc": "typedoc --out ./docs/ --exclude \"**/__+(tests|mocks)__/**\" src/scripts/reactJs.jsx",
     "postinstall": "rm -f node_modules/.eslintcache"
   }
 }
