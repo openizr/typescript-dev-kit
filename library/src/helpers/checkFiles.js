@@ -18,17 +18,15 @@ const { log, error } = console;
 /**
  * Runs linter & type-checkers on source files.
  *
- * @param {string} projectRootPath Absolute path to the project's root directory.
+ * @param projectRootPath Absolute path to the project's root directory.
  *
- * @param {string} srcPath Absolute path to the project's source directory.
+ * @param srcPath Absolute path to the project's source directory.
  *
- * @param {boolean} runSvelteChecker Wether to run `svelte-check`.
+ * @param runSvelteChecker Wether to run `svelte-check`.
  *
- * @param {boolean} watchMode Wether to use watch mode.
+ * @param watchMode Wether to use watch mode.
  *
- * @param {boolean} fixMode Wether to use fix mode.
- *
- * @returns {void}
+ * @param fixMode Wether to use fix mode.
  */
 export default async function checkFiles(
   projectRootPath,
