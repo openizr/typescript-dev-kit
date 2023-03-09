@@ -66,6 +66,8 @@ yarn add --dev typescript-dev-kit
 
 ## Configuration
 
+*Note*: Your project must be ESM-compatible (`"type": "module"` in your `package.json`).
+
 ### The easy way
 
 You can pick-up one of the boilerplates that are available on [project-boilerplate](https://github.com/openizr/project-boilerplate), depending on your needs (based on Docker). No configuration required, you're aleady good to go!
@@ -96,7 +98,7 @@ Add the following to your `package.json`:
   "distPath": "public", // Distribution path, in which all assets will be compiled.
   "publicPath": "https://assets.dev", // URL from which assets will be fetched (front-end projects).
   "banner": "/*! Copyright John Doe. */", // This banner will be put at the top of all your bundled assets.
-  "env": {              // Set your environment variables, they will be automatically inserted in the code at build time (front-end projects).
+  "env": {              // Set your environment variables if necessary, they will be automatically inserted in the code at build time (front-end projects).
     "development": {
       "NODE_ENV": "development",
       "API": "http://dev.api.com",
