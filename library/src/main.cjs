@@ -28,6 +28,7 @@ module.exports = {
     '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'no-underscore-dangle': 'off',
     'react/jsx-filename-extension': [
       'error',
       {
