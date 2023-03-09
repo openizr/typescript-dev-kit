@@ -9,6 +9,7 @@
 import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
+import { fileURLToPath } from 'url';
 import autoprefixer from 'autoprefixer';
 import vuePlugin from '@vitejs/plugin-vue';
 import reactPlugin from '@vitejs/plugin-react';
@@ -60,11 +61,13 @@ try {
   // No-op.
 }
 
-const sveltePluginConfiguration = { experimental: { useVitePreprocess: true } };
 const plugins = []
   .concat(useVuePlugin ? [vuePlugin()] : [])
   .concat(useReactPlugin ? [reactPlugin()] : [])
-  .concat(useSveltePlugin ? [sveltePlugin(sveltePluginConfiguration)] : []);
+  .concat(useSveltePlugin ? [sveltePlugin({
+    experimental: { useVitePreprocess: true },
+    configFile: path.join(path.dirname(fileURLToPath(new URL(import.meta.url))), './svelte.config.js'),
+  })] : []);
 
 if (process.env.ENV === 'production') {
   plugins.push(visualizer({
