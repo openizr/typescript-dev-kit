@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { UIP } from 'sonar-ui/react';
+import { UIP } from 'biuty/react';
 import PropTypes, { InferProps } from 'prop-types';
 
 const propTypes = {

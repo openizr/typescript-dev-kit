@@ -1,8 +1,8 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`vue/VueTsButton > renders correctly - basic 1`] = `
 <button
-  data-v-783840af=""
+  data-v-8607d5a8=""
 >
   Test
 </button>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { UIP } from 'biuty/react';
 import PropTypes from 'prop-types';
 
 const propTypes = {
@@ -15,6 +16,7 @@ export default function JsButton(props) {
 
   return (
     <button type="button">
+      <UIP label="test" />
       {label}
     </button>
   );

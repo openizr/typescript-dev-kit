@@ -6,6 +6,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import JsButton from 'scripts/components/JsButton';
 
+vi.mock('biuty/react');
+
 describe('react/JsButton', () => {
   beforeEach(() => {
     vi.clearAllMocks();
