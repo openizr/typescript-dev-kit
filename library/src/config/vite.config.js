@@ -9,11 +9,15 @@
 import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
+import { fileURLToPath } from 'url';
 import autoprefixer from 'autoprefixer';
+import vuePlugin from '@vitejs/plugin-vue';
+import reactPlugin from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
-import postCssSortMediaQueries from 'postcss-sort-media-queries';
-import { createRequire as topLevelCreateRequire } from 'module';
 import validateConfig from '../helpers/validateConfig.js';
+import { createRequire as topLevelCreateRequire } from 'module';
+import postCssSortMediaQueries from 'postcss-sort-media-queries';
+import { svelte as sveltePlugin } from '@sveltejs/vite-plugin-svelte';
 
 const require = topLevelCreateRequire(import.meta.url);
 const projectRootPath = path.resolve(path.dirname('../../../'));
@@ -33,45 +37,37 @@ try {
   process.exit(1);
 }
 
-let sveltePlugin = null;
+let useSveltePlugin = false;
 try {
   require('svelte');
-  sveltePlugin = require('@sveltejs/vite-plugin-svelte').svelte;
+  useSveltePlugin = true;
 } catch (e) {
   // No-op.
 }
 
-let vuePlugin = null;
+let useVuePlugin = false;
 try {
   require('vue');
-  vuePlugin = require('@vitejs/plugin-vue');
+  useVuePlugin = true;
 } catch (e) {
   // No-op.
 }
 
-let reactPlugin = null;
+let useReactPlugin = false;
 try {
   require('react');
-  reactPlugin = require('@vitejs/plugin-react');
+  useReactPlugin = true;
 } catch (e) {
   // No-op.
 }
 
-const sveltePluginConfiguration = { experimental: { useVitePreprocess: true } };
 const plugins = []
-  .concat(vuePlugin !== null ? [vuePlugin()] : [])
-  .concat(reactPlugin !== null ? [reactPlugin()] : [])
-  .concat(sveltePlugin !== null ? [sveltePlugin(sveltePluginConfiguration)] : []);
-
-// Fixes a conflict between Vue and Svelte when running test with vitest (ESM vs CJS).
-if (sveltePlugin !== null && process.env.NODE_ENV === 'test') {
-  const pluginConfig = plugins.slice(-1)[0][0].config;
-  plugins.slice(-1)[0][0].config = async (config, configEnv) => {
-    const baseConfig = await pluginConfig(config, configEnv);
-    baseConfig.resolve.mainFields = [ 'svelte', 'jsnext:main', 'jsnext' ];
-    return baseConfig;
-  }
-}
+  .concat(useVuePlugin ? [vuePlugin()] : [])
+  .concat(useReactPlugin ? [reactPlugin()] : [])
+  .concat(useSveltePlugin ? [sveltePlugin({
+    experimental: { useVitePreprocess: true },
+    configFile: path.join(path.dirname(fileURLToPath(new URL(import.meta.url))), './svelte.config.js'),
+  })] : []);
 
 if (process.env.ENV === 'production') {
   plugins.push(visualizer({
@@ -80,7 +76,7 @@ if (process.env.ENV === 'production') {
 }
 
 const viteConfig = defineConfig({
-  root: projectRootPath,
+  root: process.env.ENV === 'test' ? srcPath : projectRootPath,
   base: tsDevKitConfig.publicPath || '/',
   resolve: {
     // Allows absolute imports resolution (e.g. `import 'styles/index.scss'`).
@@ -122,7 +118,7 @@ const viteConfig = defineConfig({
     },
   },
   // Statically replaces environment variables in JS code.
-  define: Object.keys(tsDevKitConfig.env[process.env.ENV]).reduce((envVars, key) => (
+  define: Object.keys(tsDevKitConfig.env?.[process.env.ENV] ?? {}).reduce((envVars, key) => (
     Object.assign(envVars, { [`process.env.${key}`]: JSON.stringify(tsDevKitConfig.env[process.env.ENV][key]) })
   ), {}),
   plugins,

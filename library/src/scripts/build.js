@@ -77,75 +77,70 @@ async function run() {
       let startTimestamp = 0;
       await fs.remove(distPath);
       startTimestamp = Date.now();
-      try {
-        const result = await esbuild.build({
-          entryPoints: Object.keys(tsDevKitConfig.entries).reduce((entrypoints, entrypoint) => ({
-            ...entrypoints,
-            [entrypoint]: path.join(srcPath, tsDevKitConfig.entries[entrypoint]),
-          }), {}),
-          loader: ['woff', 'woff2', 'eot', 'ttf', 'otf', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'mp4', 'webm', 'ogg', 'mp3', 'wav', 'flac', 'aac', 'scss', 'txt'].reduce((extensions, extension) => ({
-            ...extensions, [`.${extension}`]: 'file',
-          }), {}),
-          banner: {
-            js: tsDevKitConfig.banner,
-            css: tsDevKitConfig.banner,
-          },
-          bundle: true,
-          target: 'es6',
-          minify: true,
-          format: 'esm',
-          platform: 'node',
-          outdir: distPath,
-          metafile: true,
-          splitting: tsDevKitConfig.splitChunks !== false,
-          external: Object.keys(packageJson.dependencies)
-            .concat(Object.keys(packageJson.peerDependencies || [])),
-          sourcemap: true,
-          plugins: []
-            .concat(vuePlugin !== null ? [vuePlugin()] : [])
-            .concat(sveltePlugin !== null ? [sveltePlugin] : []),
-        });
-        const analysis = await esbuild.analyzeMetafile(result.metafile);
-        log(analysis);
-        // Writing distributable `package.json` file into `dist` directory...
-        await fs.writeJson(path.join(distPath, 'package.json'), {
-          name: packageJson.name,
-          main: packageJson.main,
-          type: packageJson.type,
-          types: packageJson.types,
-          bugs: packageJson.bugs,
-          author: packageJson.author,
-          version: packageJson.version,
-          engines: packageJson.engines,
-          license: packageJson.license,
-          keywords: packageJson.keywords,
-          homepage: packageJson.homepage,
-          repository: packageJson.repository,
-          description: packageJson.description,
-          contributors: packageJson.contributors,
-          dependencies: packageJson.dependencies,
-          peerDependencies: packageJson.peerDependencies,
-          peerDependenciesMeta: packageJson.peerDependenciesMeta,
-        }, { spaces: 2 });
-        // Writing distributable `README.md` file into `dist` directory...
-        const readmeExists = await fs.pathExists(readmePath);
-        if (readmeExists) {
-          await fs.copy(readmePath, path.resolve(distPath, 'README.md'));
-        }
-        // Writing distributable `LICENSE` file into `dist` directory...
-        const licenseExists = await fs.pathExists(licensePath);
-        if (licenseExists) {
-          await fs.copy(licensePath, path.resolve(distPath, 'LICENSE'));
-        }
-        log(colors.green(`${colors.bold('\n[esbuild]: ')}Successfully built in ${Date.now() - startTimestamp}ms (${result.errors.length} errors, ${result.warnings.length} warnings).\n`));
-      } catch (e) {
-        error(colors.red(colors.bold('\n✖ [esbuild] Bundling failed:\n')));
-        error(e);
+      const result = await esbuild.build({
+        entryPoints: Object.keys(tsDevKitConfig.entries).reduce((entrypoints, entrypoint) => ({
+          ...entrypoints,
+          [entrypoint]: path.join(srcPath, tsDevKitConfig.entries[entrypoint]),
+        }), {}),
+        loader: ['woff', 'woff2', 'eot', 'ttf', 'otf', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'mp4', 'webm', 'ogg', 'mp3', 'wav', 'flac', 'aac', 'scss', 'txt'].reduce((extensions, extension) => ({
+          ...extensions, [`.${extension}`]: 'file',
+        }), {}),
+        banner: {
+          js: tsDevKitConfig.banner,
+          css: tsDevKitConfig.banner,
+        },
+        bundle: true,
+        target: 'es6',
+        minify: true,
+        format: 'esm',
+        platform: 'node',
+        outdir: distPath,
+        metafile: true,
+        splitting: tsDevKitConfig.splitChunks !== false,
+        external: Object.keys(packageJson.dependencies ?? {})
+          .concat(Object.keys(packageJson.peerDependencies ?? {})),
+        sourcemap: true,
+        plugins: []
+          .concat(vuePlugin !== null ? [vuePlugin()] : [])
+          .concat(sveltePlugin !== null ? [sveltePlugin] : []),
+      });
+      const analysis = await esbuild.analyzeMetafile(result.metafile);
+      log(analysis);
+      // Writing distributable `package.json` file into `dist` directory...
+      await fs.writeJson(path.join(distPath, 'package.json'), {
+        name: packageJson.name,
+        main: packageJson.main,
+        type: packageJson.type,
+        types: packageJson.types,
+        bugs: packageJson.bugs,
+        author: packageJson.author,
+        version: packageJson.version,
+        engines: packageJson.engines,
+        license: packageJson.license,
+        keywords: packageJson.keywords,
+        homepage: packageJson.homepage,
+        repository: packageJson.repository,
+        description: packageJson.description,
+        contributors: packageJson.contributors,
+        dependencies: packageJson.dependencies,
+        peerDependencies: packageJson.peerDependencies,
+        peerDependenciesMeta: packageJson.peerDependenciesMeta,
+      }, { spaces: 2 });
+      // Writing distributable `README.md` file into `dist` directory...
+      const readmeExists = await fs.pathExists(readmePath);
+      if (readmeExists) {
+        await fs.copy(readmePath, path.resolve(distPath, 'README.md'));
       }
+      // Writing distributable `LICENSE` file into `dist` directory...
+      const licenseExists = await fs.pathExists(licensePath);
+      if (licenseExists) {
+        await fs.copy(licensePath, path.resolve(distPath, 'LICENSE'));
+      }
+      log(colors.green(`${colors.bold('\n[esbuild]: ')}Successfully built in ${Date.now() - startTimestamp}ms (${result.errors.length} errors, ${result.warnings.length} warnings).\n`));
     }
   } catch (e) {
-    error(colors.red(colors.bold('\n✖ Build failed:\n')));
-    error(e);
+    error(colors.red(colors.bold('\n✖ Build failed.\n')));
+    process.exit(1);
   }
 }
 

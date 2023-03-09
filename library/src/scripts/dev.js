@@ -101,6 +101,7 @@ async function run() {
         });
         build.onEnd((result) => {
           if (result.errors.length === 0) {
+            log(colors.green(`${colors.bold('[esbuild]: ')}Successfully built in ${Date.now() - startTimestamp}ms (${result.errors.length} errors, ${result.warnings.length} warnings).\n`));
             // Writing distributable `package.json` file into `dist` directory...
             fs.writeJsonSync(path.join(distPath, 'package.json'), {
               name: packageJson.name,
@@ -150,14 +151,6 @@ async function run() {
     };
 
     await fs.remove(distPath);
-    const displayOutput = (e, result) => {
-      if (e) {
-        error(colors.red(colors.bold('✖ [esbuild] Build failed:\n')));
-        error(error);
-      } else {
-        log(colors.green(`${colors.bold('[esbuild]: ')}Successfully built in ${Date.now() - startTimestamp}ms (${result.errors.length} errors, ${result.warnings.length} warnings).\n`));
-      }
-    };
 
     let vuePlugin = null;
     try {
@@ -179,9 +172,8 @@ async function run() {
       // No-op.
     }
 
-
     startTimestamp = Date.now();
-    const result = await esbuild.build({
+    const context = await esbuild.context({
       entryPoints: Object.keys(tsDevKitConfig.entries).reduce((entrypoints, entrypoint) => ({
         ...entrypoints,
         [entrypoint]: path.join(srcPath, tsDevKitConfig.entries[entrypoint]),
@@ -196,17 +188,15 @@ async function run() {
       platform: 'node',
       outdir: distPath,
       splitting: tsDevKitConfig.splitChunks !== false,
-      external: Object.keys(packageJson.dependencies)
-        .concat(Object.keys(packageJson.peerDependencies || [])),
-      watch: {
-        onRebuild: displayOutput,
-      },
+      external: Object.keys(packageJson.dependencies ?? {})
+        .concat(Object.keys(packageJson.peerDependencies ?? {})),
       sourcemap: true,
       plugins: [tsDevKitPlugin]
         .concat(vuePlugin !== null ? [vuePlugin()] : [])
         .concat(sveltePlugin !== null ? [sveltePlugin] : []),
     });
-    displayOutput(null, result);
+
+    await context.watch();
   }
 }
 

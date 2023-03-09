@@ -3,7 +3,7 @@ version: "3.6"
 services:
   library:
     container_name: ${PROJECT_NAME}_library
-    image: openizr/node:4.0.0-dev
+    image: openizr/node:5.0.0-dev
     user: node:node
     env_file:
       - .env
@@ -14,20 +14,21 @@ services:
     restart: unless-stopped
   examples:
     container_name: ${PROJECT_NAME}_examples
-    image: openizr/node:4.0.0-dev
+    image: openizr/node:5.0.0-dev
     user: node:node
     env_file:
       - .env
     ports:
-      - "127.0.0.1:${EXAMPLES_PORT}:${EXAMPLES_PORT}"
+      - "${HOST_IP}:${EXAMPLES_PORT}:${EXAMPLES_PORT}"
     command: sh -c "tail -f /dev/null"
     volumes:
       - ./examples:/var/www/html
       - ./library:/typescript-dev-kit
     restart: unless-stopped
+
 networks:
   default:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.16.52.0/24
+        - subnet: ${DOCKER_SUBNET}

@@ -9,6 +9,7 @@
 
 # Test mode
   Code coverage
+  Finds mocked node modules in `src`
   Allows testing TS/JS Vue/React/Svelte components
 
 # Development mode
@@ -34,8 +35,8 @@
   Doesn't generate manifest
   Externalizes all dependencies
   Bundle generation (1 per entry)
-  Generates bundle analysis report
   Doesn't display performance hints
+  Doesn't generate bundle analysis report
   Adds a banner on top of each bundled file
   Vue/React/Svelte components library creation support
 

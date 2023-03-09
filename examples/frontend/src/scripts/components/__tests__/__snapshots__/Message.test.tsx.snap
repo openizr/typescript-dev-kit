@@ -1,14 +1,14 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`react/Message > renders correctly - basic 1`] = `
 <p>
   <img
     alt="test"
-    src="/src/images/test.jpg"
+    src="/images/test.jpg"
   />
   <img
     alt="test"
-    src="/src/images/test.svg"
+    src="/images/test.svg"
   />
   Test
 </p>

@@ -9,6 +9,7 @@
 
 # Test mode
   Code coverage
+  Finds mocked node modules in `src`
   Allows testing TS/JS Vue/React/Svelte components
 
 # Development mode

@@ -4,11 +4,13 @@
   `yarn run init`
   `yarn run dev`
   `yarn run test`
+  `yarn run check`
   `yarn run doc`
   `yarn run build`
 
 # Test mode
   Code coverage
+  Finds mocked node modules in `src`
   Allows testing TS/JS Vue/React/Svelte components
 
 # Development mode
