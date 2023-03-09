@@ -73,7 +73,7 @@ if (process.env.ENV === 'production') {
 }
 
 const viteConfig = defineConfig({
-  root: projectRootPath,
+  root: process.env.ENV === 'test' ? srcPath : projectRootPath,
   base: tsDevKitConfig.publicPath || '/',
   resolve: {
     // Allows absolute imports resolution (e.g. `import 'styles/index.scss'`).
