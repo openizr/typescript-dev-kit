@@ -11,9 +11,9 @@
  * running misconfigured scripts (which can lead to bad side effects,
  * like unexpected directories deletion).
  *
- * @param {string} userConfig User configuration.
+ * @param userConfig User configuration.
  *
- * @returns {void}
+ * @returns
  */
 export default async function validateConfig(userConfig) {
   const allowedTargets = ['node', 'web'];
@@ -79,16 +79,13 @@ export default async function validateConfig(userConfig) {
   }
 
   // Checking env variables...
-  if (userConfig.env === undefined) {
+  if (userConfig.env !== undefined && typeof userConfig.env !== 'object') {
     throw new Error('User config validation - "env" is not a valid object.');
   }
-  if (typeof userConfig.env !== 'object') {
-    throw new Error('User config validation - "env" is not a valid object.');
-  }
-  if (userConfig.env.development === undefined || typeof userConfig.env.development !== 'object') {
+  if (userConfig.env?.development !== undefined && typeof userConfig.env.development !== 'object') {
     throw new Error('User config validation - "env.development" is not a valid object.');
   }
-  if (userConfig.env.production === undefined || typeof userConfig.env.production !== 'object') {
+  if (userConfig.env?.production !== undefined && typeof userConfig.env.production !== 'object') {
     throw new Error('User config validation - "env.production" is not a valid object.');
   }
 }

@@ -115,7 +115,7 @@ const viteConfig = defineConfig({
     },
   },
   // Statically replaces environment variables in JS code.
-  define: Object.keys(tsDevKitConfig.env[process.env.ENV]).reduce((envVars, key) => (
+  define: Object.keys(tsDevKitConfig.env?.[process.env.ENV] ?? {}).reduce((envVars, key) => (
     Object.assign(envVars, { [`process.env.${key}`]: JSON.stringify(tsDevKitConfig.env[process.env.ENV][key]) })
   ), {}),
   plugins,
