@@ -114,7 +114,9 @@ const viteConfig = defineConfig({
       all: true,
       src: srcPath,
       allowExternal: true,
+      reporter: ['html', 'lcov'],
       exclude: ['**/__mocks__', '**/__tests__', '**/*.d.ts'],
+      reportsDirectory: path.join(projectRootPath, 'coverage'),
     },
   },
   // Statically replaces environment variables in JS code.
