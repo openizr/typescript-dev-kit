@@ -1,6 +1,6 @@
 {
   "name": "typescript-dev-kit",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "type": "module",
   "description": "Everything you need to develop front-end and back-end JavaScript/TypeScript projects with maximum productivity.",
   "repository": "https://github.com/matthieujabbour/typescript-dev-kit",
