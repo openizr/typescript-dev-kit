@@ -11,15 +11,10 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import { fileURLToPath } from 'url';
 import autoprefixer from 'autoprefixer';
-import vuePlugin from '@vitejs/plugin-vue';
-import reactPlugin from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import validateConfig from '../helpers/validateConfig.js';
-import { createRequire as topLevelCreateRequire } from 'module';
 import postCssSortMediaQueries from 'postcss-sort-media-queries';
-import { svelte as sveltePlugin } from '@sveltejs/vite-plugin-svelte';
 
-const require = topLevelCreateRequire(import.meta.url);
 const projectRootPath = path.resolve(path.dirname('../../../'));
 const packageJson = JSON.parse(fs.readFileSync(path.join(projectRootPath, 'package.json')));
 const { tsDevKitConfig } = packageJson;
@@ -37,93 +32,87 @@ try {
   process.exit(1);
 }
 
-let useSveltePlugin = false;
-try {
-  require('svelte');
-  useSveltePlugin = true;
-} catch (e) {
-  // No-op.
-}
+export default defineConfig(async () => {
+  const plugins = [];
 
-let useVuePlugin = false;
-try {
-  require('vue');
-  useVuePlugin = true;
-} catch (e) {
-  // No-op.
-}
+  try {
+    await import('svelte');
+    plugins.push((await import('@sveltejs/vite-plugin-svelte')).svelte({
+      experimental: { useVitePreprocess: true },
+      configFile: path.join(path.dirname(fileURLToPath(new URL(import.meta.url))), './svelte.config.js'),
+    }));
+  } catch (e) {
+    // No-op.
+  }
 
-let useReactPlugin = false;
-try {
-  require('react');
-  useReactPlugin = true;
-} catch (e) {
-  // No-op.
-}
+  try {
+    await import('vue');
+    plugins.push((await import('@vitejs/plugin-vue')).default());
+  } catch (e) {
+    // No-op.
+  }
 
-const plugins = []
-  .concat(useVuePlugin ? [vuePlugin()] : [])
-  .concat(useReactPlugin ? [reactPlugin()] : [])
-  .concat(useSveltePlugin ? [sveltePlugin({
-    experimental: { useVitePreprocess: true },
-    configFile: path.join(path.dirname(fileURLToPath(new URL(import.meta.url))), './svelte.config.js'),
-  })] : []);
+  try {
+    await import('react');
+    plugins.push((await import('@vitejs/plugin-react')).default());
+  } catch (e) {
+    // No-op.
+  }
 
-if (process.env.ENV === 'production') {
-  plugins.push(visualizer({
-    filename: path.join(projectRootPath, 'report.html'),
-  }));
-}
+  if (process.env.ENV === 'production') {
+    plugins.push(visualizer({
+      filename: path.join(projectRootPath, 'report.html'),
+    }));
+  }
 
-const viteConfig = defineConfig({
-  root: process.env.ENV === 'test' ? srcPath : projectRootPath,
-  base: tsDevKitConfig.publicPath || '/',
-  resolve: {
-    // Allows absolute imports resolution (e.g. `import 'styles/index.scss'`).
-    alias: srcSubDirectories.reduce((aliases, directory) => ({
-      ...aliases, [directory]: path.join(srcPath, directory),
-    }), {}),
-  },
-  server: tsDevKitConfig.devServer,
-  css: {
-    postcss: {
-      plugins: [autoprefixer].concat((process.env.ENV === 'production') ? [postCssSortMediaQueries] : []),
+  return ({
+    root: process.env.ENV === 'test' ? srcPath : projectRootPath,
+    base: tsDevKitConfig.publicPath || '/',
+    resolve: {
+      // Allows absolute imports resolution (e.g. `import 'styles/index.scss'`).
+      alias: srcSubDirectories.reduce((aliases, directory) => ({
+        ...aliases, [directory]: path.join(srcPath, directory),
+      }), {}),
     },
-  },
-  build: {
-    target: 'es6',
-    outDir: '__dist__',
-    sourcemap: true,
-    chunkSizeWarningLimit: 250,
-    rollupOptions: {
-      output: {
-        banner: tsDevKitConfig.banner,
-        format: (tsDevKitConfig.splitChunks === false) ? 'iife' : 'esm',
-        inlineDynamicImports: tsDevKitConfig.splitChunks === false,
-        assetFileNames: 'assets/[ext]/[name].[hash][extname]',
-        entryFileNames: 'assets/js/[name].[hash].js',
-        chunkFileNames: 'assets/js/[name].[hash].js',
+    server: tsDevKitConfig.devServer,
+    css: {
+      postcss: {
+        plugins: [autoprefixer].concat((process.env.ENV === 'production') ? [postCssSortMediaQueries] : []),
       },
     },
-  },
-  test: {
-    globals: true,
-    passWithNoTests: true,
-    include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    coverage: {
-      all: true,
-      src: srcPath,
-      allowExternal: true,
-      reporter: ['text', 'lcov'],
-      exclude: ['**/__mocks__', '**/__tests__', '**/*.d.ts'],
-      reportsDirectory: path.join(projectRootPath, 'coverage'),
+    build: {
+      target: 'es6',
+      outDir: '__dist__',
+      sourcemap: true,
+      chunkSizeWarningLimit: 250,
+      rollupOptions: {
+        output: {
+          banner: tsDevKitConfig.banner,
+          format: (tsDevKitConfig.splitChunks === false) ? 'iife' : 'esm',
+          inlineDynamicImports: tsDevKitConfig.splitChunks === false,
+          assetFileNames: 'assets/[ext]/[name].[hash][extname]',
+          entryFileNames: 'assets/js/[name].[hash].js',
+          chunkFileNames: 'assets/js/[name].[hash].js',
+        },
+      },
     },
-  },
-  // Statically replaces environment variables in JS code.
-  define: Object.keys(tsDevKitConfig.env?.[process.env.ENV] ?? {}).reduce((envVars, key) => (
-    Object.assign(envVars, { [`process.env.${key}`]: JSON.stringify(tsDevKitConfig.env[process.env.ENV][key]) })
-  ), {}),
-  plugins,
+    test: {
+      globals: true,
+      passWithNoTests: true,
+      include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+      coverage: {
+        all: true,
+        src: srcPath,
+        allowExternal: true,
+        reporter: ['text', 'lcov'],
+        exclude: ['**/__mocks__', '**/__tests__', '**/*.d.ts'],
+        reportsDirectory: path.join(projectRootPath, 'coverage'),
+      },
+    },
+    // Statically replaces environment variables in JS code.
+    define: Object.keys(tsDevKitConfig.env?.[process.env.ENV] ?? {}).reduce((envVars, key) => (
+      Object.assign(envVars, { [`process.env.${key}`]: JSON.stringify(tsDevKitConfig.env[process.env.ENV][key]) })
+    ), {}),
+    plugins,
+  });
 });
-
-export default viteConfig;

@@ -107,7 +107,16 @@ export default async function checkFiles(
   const svelteCheckPromise = (!runSvelteChecker)
     ? Promise.resolve()
     : new Promise((resolve) => {
-      const svelteChecker = spawn(path.join(projectRootPath, 'node_modules/svelte-check/bin/svelte-check'), cliArguments.concat(['--workspace', srcPath, '--tsconfig', path.join(projectRootPath, 'tsconfig.json'), '--use-new-transformation']));
+      const svelteChecker = spawn(
+        path.join(projectRootPath, 'node_modules/svelte-check/bin/svelte-check'),
+        cliArguments.concat([
+          '--workspace',
+          srcPath,
+          '--tsconfig',
+          path.join(projectRootPath, 'tsconfig.json'),
+          '--use-new-transformation',
+        ]),
+      );
       svelteChecker.stdout.on('data', (data) => {
         const message = data.toString().trim();
         if (message !== '') {
