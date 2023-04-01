@@ -34,7 +34,7 @@ async function run() {
     // We manually create the dev server as we want to get control over its built-in
     // middlewares (404 and indexHtml).
     try {
-      const server = await createServer(viteConfig);
+      const server = await createServer(await viteConfig());
 
       // We replace Vite's built-in indexHtml middleware to provide a wider catch-all routing logic,
       // and serve a pre-processed `index.html` located wherever we want.
