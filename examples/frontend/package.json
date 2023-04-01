@@ -3,19 +3,19 @@
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
     "@testing-library/svelte": "^3.2.2",
-    "@testing-library/vue": "^6.6.1",
+    "@testing-library/vue": "^7.0.0",
     "@types/prop-types": "^15.7.4",
-    "@types/react": "^18.0.28",
+    "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
     "typescript-dev-kit": "file:../../../../typescript-dev-kit/dist"
   },
   "dependencies": {
     "basx": "^2.0.1",
-    "diox": "^5.0.3",
+    "diox": "^6.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "svelte": "^3.55.1",
+    "svelte": "^3.58.0",
     "vue": "^3.2.47"
   },
   "eslintConfig": {
