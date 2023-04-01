@@ -47,7 +47,7 @@ async function run() {
       await fs.copy(path.resolve(srcPath, tsDevKitConfig.html), path.join(projectRootPath, 'index.html'));
       await fs.remove(publicIndexHtmlPath);
       await fs.remove(publicAssetsPath);
-      await build(viteConfig);
+      await build(await viteConfig());
       await fs.remove(distPath);
       await fs.remove(path.join(projectRootPath, 'index.html'));
       await fs.rename(path.join(projectRootPath, '__dist__'), distPath);
