@@ -1,4 +1,7 @@
-# typescript-dev-kit
+# ⚠️ Please use [@perseid/dev-kit](https://www.npmjs.com/package/@perseid/dev-kit) instead
+
+This NPM package is deprecated and no longer maintained.
+[@perseid/dev-kit](https://github.com/openizr/perseid/tree/main/dev-kit) is the new official repository.
 
 Build any JavaScript or TypeScript project in minutes, without worrying about the configuration.
 
